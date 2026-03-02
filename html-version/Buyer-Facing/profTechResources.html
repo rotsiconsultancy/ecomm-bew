@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "nav-dark": "#003366",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Bewama | Professional Technical Resources</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation Bar -->
+<header class="bg-nav-dark dark:bg-slate-950 px-4 md:px-10 lg:px-40 py-3 flex items-center justify-between whitespace-nowrap sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight">Bewama</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-white/90 hover:text-primary text-sm font-medium transition-colors" href="#">Technical Guides</a>
+<a class="text-white/90 hover:text-primary text-sm font-medium transition-colors" href="#">Application Guides</a>
+<a class="text-white/90 hover:text-primary text-sm font-medium transition-colors" href="#">Industry Updates</a>
+<a class="text-white/90 hover:text-primary text-sm font-medium transition-colors" href="#">TDS Library</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-white/10 border border-white/20">
+<div class="text-white/60 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent text-white focus:ring-0 h-full placeholder:text-white/40 px-4 pl-2 text-sm font-normal" placeholder="Search resources..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-xl h-10 px-5 bg-primary text-white text-sm font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                        Contact Us
+                    </button>
+</div>
+</header>
+<main class="flex-1 max-w-[1280px] mx-auto w-full px-4 md:px-10 py-8">
+<!-- Hero Section -->
+<section class="@container mb-12">
+<div class="relative min-h-[520px] flex flex-col items-start justify-end overflow-hidden rounded-2xl shadow-2xl group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern industrial manufacturing facility with complex machinery" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.1) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB8yhL6vUOc136Ojs59I4pOS9T5_7s0qxJeJ3NK2GVdvR8uEx_ztGhWf4-cnBX_MVBcqjXOpGuBzKAtXMEtNDSRGox2YcCJcB6bEzj-31DAP5pE4GPPpfUCNPd7fNaPHqMQe-tpt74D1A58rDN3YdAjebu_-eqIFg30lB7D6E6WHf1v9Ci7mm3WjX78Vod4CzKsWBBSa95EHmMrZZnoshzk0Tj2f1AOsjqKZjshzmIwbNNkAIPVUhVSCkxW5xGaIXxG_ZSX9S3JgFNT');">
+</div>
+<div class="relative p-8 md:p-16 max-w-3xl">
+<span class="inline-block px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded mb-4">Featured Resource</span>
+<h1 class="text-white text-4xl md:text-6xl font-black leading-tight mb-4 drop-shadow-md">
+                                The Ultimate Guide to Industrial Silicone Applications
+                            </h1>
+<p class="text-white/90 text-lg md:text-xl font-normal mb-8 max-w-2xl leading-relaxed">
+                                Discover the critical role of silicone in modern industrial manufacturing and how to select the right grade for your specific machinery requirements.
+                            </p>
+<button class="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/30">
+                                Read Full Guide
+                                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Category Navigation -->
+<nav class="mb-10 border-b border-slate-200 dark:border-slate-800">
+<div class="flex gap-10 overflow-x-auto no-scrollbar">
+<a class="pb-4 border-b-2 border-primary text-primary font-bold text-sm uppercase tracking-wider whitespace-nowrap" href="#">All Resources</a>
+<a class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 font-bold text-sm uppercase tracking-wider whitespace-nowrap transition-colors" href="#">Technical Guides</a>
+<a class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 font-bold text-sm uppercase tracking-wider whitespace-nowrap transition-colors" href="#">Application Guides</a>
+<a class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 font-bold text-sm uppercase tracking-wider whitespace-nowrap transition-colors" href="#">Industry Updates</a>
+</div>
+</nav>
+<!-- Article Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+<!-- Card 1 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Close up of construction wood materials and MDF panels" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtFvytlQ36MlC9DkUK3r89Dkab9vieTixk2Toq_fReF9R7oGUUP5t-IzI-jATzYfHw-JqXgPFVou6gfPsbvbPICLZUVIbCHIc1NuVCGRqRvsWoikVlnZtRANG6UCEPe9dEnT2-E1P1Kh38aQQC7Sf311VVdw1LPV5zpo1QEhaTV5uCPKKsE9Erlfahf44EnPFWijZWXUQXEiugGaQa_lXawrkrb512kzppnxd23zKEgL_lQ0cXlnCzfrhP35ipNY4tzrixmltmf8dH');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Technical</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Choosing the Right MDF for High-Moisture Areas</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                Learn the essential factors for selecting moisture-resistant MDF that withstands humidity in commercial construction projects.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Laboratory technician working in a cleanroom environment" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeqyyLWsPPEeVXwQx99EZejtdvxJplVKkK3-3_lPIiRb-ICv9i_j8m4NjXMFHw-PLiKGujkUu7GkjZnhg_D9GOKyszgPBoGhnl3WVLY6kuExsTfI0zZrj0u8Z9ia8A8m5xhUQdvrdS_R-OLCH3SDHtz4t-4WZWvh70HCg5jyao9s4p6LsRFuqYu7x6ekf9rRwQ3_LGL1VVkuiESqTX_i3iLQD1V6kYEjVAojLFLKsquW61z3oJ4iEEbEIHrhik_wN1_i-G19aleDKb');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Application</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Sealing Techniques for Cleanroom Environments</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                A comprehensive look at maintaining airtight seals in sensitive pharmaceutical and electronics manufacturing environments.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Industrial pipes and adhesive sealing joints" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfeM-946rPxlrebeRSn57D5-_r-ITTOpGROh4cLlRXbc-pQdPzLh1E2vsYUSyugttcIhWHBUO_cx4Eo399IzfZYj9VrCb_miFjL9UlPi7pI7sLS2xkLq0bDlU_Jj9sTR2R4Q_KSaMzmup2oE6vC0fm_1tzoAfceNZLUGPXLPSgAzMnZmy6JfayDzQLfGAFZKdjuFBLmvT8hE3rnuv6rc7FscdtsSoajOTOz6peg3_5F0-n1xcTnKIZOVQ6WIrDlL-o6Pe6ujFU60fS');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Technical</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Durability of Polymer-Based Adhesives</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                Evaluating the long-term performance and chemical resistance of industrial adhesives under high-stress conditions.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Structural beams and joists in modern construction" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlSSyXs65AvlYik1XVvVBEVgRhTWTBZqmGI1YlQIAMi-xN1eGPSaYZ1U1RF5-40dm7bTOND38r9e81rNmkkVuC0KRHbtEct8hXTZmdwKtGu6mfKA28px-uwUIwWVCekWQ4xdpWby_wTYHFZ4jHNmSZ4-N9CNF4eZy-yRpfZsIu56f1wplKtwNUy-OjNd19YYRTJ7dU59InK0GzjOCiYsjwSFrDjDCM_htEDnOnFeNNkV4qWYHP2fLbAUmAZxoCJ1inS1wvYdSpXfy5');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Industry</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Optimizing Load-Bearing Joists</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                Structural considerations for heavy-duty floor support systems in modern warehouse developments.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Thermal insulation materials being installed" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_HelDSMbOm4CJQMOUXDnCy-X15riprjyFIQKP8NMMVvTCXIXeHOj_6G2EyKoljJd_Xf5K1-Xci2nTDIS8ZnUnzbaJX8ekiJWTRcn2FBOFUWAOiBZwPGrQI1YjFcm2BAkAhGVGmjbAUPZv7ntDI7ArYQ_KgkWEosRifD1EX8AwC79suyus8sQmjduxsSfkF97hzAWf3kMWbguER57rhgNCAz45NUYErK7GocrdzTyUuBMcIVV6byqI2DO-ONs8PuXtMTwlkinP3grs');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Technical</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Thermal Conductivity in Insulation</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                How new material science is driving efficiency in industrial temperature control systems.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 6 -->
+<article class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-800 group">
+<div class="aspect-video bg-cover bg-center overflow-hidden" data-alt="Fire safety inspector checking building sealants" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBApY-OX_V5V_7y1Gfy5OAcKC_07FtmJm9lm3036BFXUTTFlFsyEoi9j25IumWwBEeLaCzFrNhv_TV2Bd-LfyRY7HNCTWdRWKQKEsGcaKXtOr-emcn196WufcDsq5eusoH41g5kbydxyxzzXgo5IrBeO53YDLzowQ4jX-KxJ8hWZf7YJtSYkLGc79o1LjC_h3hNCCCl-t55YOoI_hGNHE8rQD70dqZeTL5S8e5qE-PZd_sPbJn8RiZJtHPuwRhqA3MX6QAzP_0Yb3hz');">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Technical</span>
+<h3 class="text-xl font-bold leading-snug mb-3 group-hover:text-primary transition-colors">Fire-Rated Sealants Guide</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
+                                Ensuring your industrial projects meet the latest international safety standards for fire containment.
+                            </p>
+<div class="mt-auto flex items-center text-primary font-semibold text-sm">
+                                Read Article <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
+</div>
+</div>
+</article>
+</section>
+<!-- TDS Banner Section -->
+<section class="mb-12">
+<div class="bg-nav-dark dark:bg-slate-900 rounded-2xl p-8 md:p-12 text-center flex flex-col items-center justify-center gap-6 shadow-2xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">description</span>
+</div>
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-white text-3xl md:text-4xl font-bold mb-3">Need Technical Specs?</h2>
+<p class="text-white/80 text-lg mb-8">
+                                Browse our full Technical Data Sheet (TDS) Library for detailed product specifications, compliance documentation, and safety information.
+                            </p>
+<button class="inline-flex items-center gap-3 px-10 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined">library_books</span>
+                                Browse TDS Library
+                            </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-12">
+<div class="max-w-[1280px] mx-auto px-4 md:px-10 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<p class="font-bold text-slate-900 dark:text-white">Bewama</p>
+</div>
+<div class="flex gap-8 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Cookie Settings</a>
+</div>
+<p class="text-sm text-slate-400 dark:text-slate-600">© 2024 Bewama Industrial Solutions. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

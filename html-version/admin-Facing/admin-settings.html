@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bewama Admin Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                        "navy": {
+                            "50": "#eef2f8",
+                            "100": "#d9e2f0",
+                            "200": "#b8c9e4",
+                            "300": "#89a7d3",
+                            "400": "#527dbd",
+                            "500": "#315da2",
+                            "600": "#244985",
+                            "700": "#1e3b6d",
+                            "800": "#1c345a",
+                            "900": "#1b2d4c",
+                            "950": "#111a2d",
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .sidebar-item-active { @apply bg-primary/10 text-primary border-r-4 border-primary; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-40 w-full border-b border-navy-100 bg-white dark:bg-navy-950 dark:border-navy-800 px-4 md:px-8 py-3">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-900 text-white">
+<span class="material-symbols-outlined">dashboard_customize</span>
+</div>
+<div>
+<h2 class="text-xl font-bold tracking-tight text-navy-900 dark:text-white leading-none">Bewama</h2>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Admin Console</span>
+</div>
+</div>
+<div class="flex flex-1 items-center justify-end gap-4">
+<div class="hidden md:flex relative max-w-md w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full rounded-xl border-navy-100 bg-navy-50/50 py-2 pl-10 pr-4 focus:border-primary focus:ring-1 focus:ring-primary dark:bg-navy-900 dark:border-navy-800 dark:text-white" placeholder="Search settings..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-navy-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-navy-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-primary/20 bg-slate-200">
+<img alt="Admin Profile" data-alt="Close up portrait of a professional male administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwcMtEQGEafEXwTc42MuUY6_cA5E82B-VymNuGQiAxlDiva3871NEsUf4frGpcuoUhnAeJFsbmSVOCzTVwdNRjN1EP06-K-rpFQtS5ITK9gReQOVb1BLMoY6Z45IxCDZiANDNWK6NWtjbYMltQV1085uiCCq-PuishGzLLFSJr5rAvbEZlji2VAG5c8DHkXyi4Qx__qLQkvZjX8vflF7GqR_rfI2jDsQ5pBQb_0sloZ6M90qkIIGcebqP1CcupNONm_ngl213pUTZM"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Left Sidebar -->
+<aside class="hidden lg:flex w-72 flex-col border-r border-navy-100 bg-white dark:bg-navy-950 dark:border-navy-800">
+<nav class="flex-1 space-y-1 p-4">
+<div class="pb-4 mb-4 border-b border-slate-100 dark:border-navy-800">
+<p class="px-3 text-xs font-bold uppercase tracking-widest text-slate-400">Main Configuration</p>
+</div>
+<a class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold transition-all hover:bg-slate-50 dark:hover:bg-navy-900 group sidebar-item-active" href="#general">
+<span class="material-symbols-outlined">info</span>
+<span>General Info</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-navy-900 group" href="#logistics">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Logistics &amp; Shipping</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-navy-900 group" href="#payment">
+<span class="material-symbols-outlined">payments</span>
+<span>Payment Methods</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-navy-900 group" href="#taxation">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Taxation</span>
+</a>
+<div class="mt-8 pb-4 mb-4 border-b border-slate-100 dark:border-navy-800">
+<p class="px-3 text-xs font-bold uppercase tracking-widest text-slate-400">Advanced</p>
+</div>
+<a class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 dark:text-slate-400 transition-all hover:bg-slate-50 dark:hover:bg-navy-900 group" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>Security &amp; API</span>
+</a>
+</nav>
+<div class="p-4 bg-navy-50 dark:bg-navy-900/50 m-4 rounded-xl">
+<p class="text-xs font-bold text-navy-800 dark:text-navy-300">Storage Usage</p>
+<div class="mt-2 h-2 w-full rounded-full bg-slate-200 dark:bg-navy-800 overflow-hidden">
+<div class="h-full bg-primary" style="width: 65%"></div>
+</div>
+<p class="mt-2 text-[10px] text-slate-500">65% of 10GB used</p>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 bg-background-light dark:bg-background-dark pb-32">
+<div class="mx-auto max-w-5xl px-4 py-8 md:px-8">
+<div class="mb-8">
+<h1 class="text-3xl font-extrabold tracking-tight text-navy-900 dark:text-white">Store Settings</h1>
+<p class="mt-2 text-slate-600 dark:text-slate-400">Manage your business operations, logistics, and payment preferences.</p>
+</div>
+<div class="space-y-8">
+<!-- Section 1: General Info -->
+<section class="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm dark:border-navy-800 dark:bg-navy-950" id="general">
+<div class="mb-6 flex items-center gap-2 border-b border-slate-50 pb-4 dark:border-navy-900">
+<span class="material-symbols-outlined text-primary">info</span>
+<h3 class="text-lg font-bold text-navy-900 dark:text-white">General Info</h3>
+</div>
+<div class="grid gap-6 md:grid-cols-2">
+<div class="col-span-2">
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Store Name</label>
+<input class="w-full rounded-xl border-navy-100 bg-white px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900 dark:text-white" type="text" value="Bewama Enterprise Solutions"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Support Email</label>
+<input class="w-full rounded-xl border-navy-100 bg-white px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900 dark:text-white" placeholder="support@bewama.com" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Support Phone</label>
+<input class="w-full rounded-xl border-navy-100 bg-white px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900 dark:text-white" placeholder="+254 700 000 000" type="tel"/>
+</div>
+</div>
+</section>
+<!-- Section 2: Logistics Settings -->
+<section class="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm dark:border-navy-800 dark:bg-navy-950" id="logistics">
+<div class="mb-6 flex items-center gap-2 border-b border-slate-50 pb-4 dark:border-navy-900">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<h3 class="text-lg font-bold text-navy-900 dark:text-white">Logistics Settings</h3>
+</div>
+<div class="space-y-8">
+<!-- Pickup Mtaani -->
+<div class="rounded-xl bg-slate-50 p-5 dark:bg-navy-900/50">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white dark:bg-navy-800 shadow-sm">
+<span class="material-symbols-outlined text-navy-600 dark:text-navy-300">location_on</span>
+</div>
+<div>
+<h4 class="font-bold text-navy-900 dark:text-white">Pickup Mtaani</h4>
+<p class="text-xs text-slate-500">Enable local pickup point deliveries</p>
+</div>
+</div>
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="peer h-6 w-11 rounded-full bg-slate-300 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-navy-700"></div>
+</label>
+</div>
+<div class="grid gap-4 md:grid-cols-2">
+<div>
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Weight Limit (KG)</label>
+<input class="w-full rounded-lg border-navy-100 bg-white px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900" type="number" value="15"/>
+</div>
+<div>
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Base Handling Fee (KES)</label>
+<input class="w-full rounded-lg border-navy-100 bg-white px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900" type="number" value="150"/>
+</div>
+</div>
+</div>
+<!-- Truck Delivery -->
+<div class="rounded-xl bg-slate-50 p-5 dark:bg-navy-900/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white dark:bg-navy-800 shadow-sm">
+<span class="material-symbols-outlined text-navy-600 dark:text-navy-300">rainy_heavy</span>
+</div>
+<div>
+<h4 class="font-bold text-navy-900 dark:text-white">Truck Delivery</h4>
+<p class="text-xs text-slate-500">Distance &amp; Zone based rates</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between gap-4 border-b border-slate-100 pb-3 dark:border-navy-800">
+<span class="text-sm font-medium">Zone A (Within 10km)</span>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400">KES</span>
+<input class="w-24 rounded-lg border-navy-100 px-2 py-1 text-right text-sm dark:bg-navy-900 dark:border-navy-800" type="number" value="1500"/>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4 border-b border-slate-100 pb-3 dark:border-navy-800">
+<span class="text-sm font-medium">Zone B (10km - 50km)</span>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400">KES</span>
+<input class="w-24 rounded-lg border-navy-100 px-2 py-1 text-right text-sm dark:bg-navy-900 dark:border-navy-800" type="number" value="3500"/>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<span class="text-sm font-medium">Zone C (Outside Region)</span>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400">KES</span>
+<input class="w-24 rounded-lg border-navy-100 px-2 py-1 text-right text-sm dark:bg-navy-900 dark:border-navy-800" type="number" value="7000"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Payment Methods -->
+<section class="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm dark:border-navy-800 dark:bg-navy-950" id="payment">
+<div class="mb-6 flex items-center gap-2 border-b border-slate-50 pb-4 dark:border-navy-900">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h3 class="text-lg font-bold text-navy-900 dark:text-white">Payment Methods</h3>
+</div>
+<div class="space-y-4">
+<!-- M-Pesa STK Push -->
+<div class="rounded-xl border-2 border-primary/20 bg-primary/5 p-5">
+<div class="flex items-start gap-4">
+<div class="flex h-5 w-5 mt-1 items-center justify-center rounded border border-primary bg-primary text-white">
+<span class="material-symbols-outlined text-xs">check</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-navy-900 dark:text-white">M-Pesa STK Push</h4>
+<p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Direct mobile payment initiation for customers</p>
+<div class="grid gap-4 md:grid-cols-2">
+<div>
+<label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Consumer Key</label>
+<input class="w-full rounded-lg border-navy-100 bg-white px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900" type="password" value="************************"/>
+</div>
+<div>
+<label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Consumer Secret</label>
+<input class="w-full rounded-lg border-navy-100 bg-white px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:border-navy-800 dark:bg-navy-900" type="password" value="************************"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Cheque -->
+<label class="flex items-center gap-4 rounded-xl border border-navy-100 p-5 cursor-pointer hover:bg-slate-50 dark:border-navy-800 dark:hover:bg-navy-900 transition-colors">
+<input class="h-5 w-5 rounded border-navy-200 text-primary focus:ring-primary dark:bg-navy-900 dark:border-navy-800" type="checkbox"/>
+<div>
+<h4 class="font-bold text-navy-900 dark:text-white">Cheque</h4>
+<p class="text-xs text-slate-500">Allow payments via business cheques (subject to clearance)</p>
+</div>
+</label>
+<!-- Payment on Delivery -->
+<label class="flex items-center gap-4 rounded-xl border border-navy-100 p-5 cursor-pointer hover:bg-slate-50 dark:border-navy-800 dark:hover:bg-navy-900 transition-colors">
+<input checked="" class="h-5 w-5 rounded border-navy-200 text-primary focus:ring-primary dark:bg-navy-900 dark:border-navy-800" type="checkbox"/>
+<div>
+<h4 class="font-bold text-navy-900 dark:text-white">Payment on Delivery</h4>
+<p class="text-xs text-slate-500">Collect payment at the point of delivery (Cash or M-Pesa)</p>
+</div>
+</label>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- Sticky Bottom Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-50 border-t border-navy-100 bg-white/80 dark:bg-navy-950/80 dark:border-navy-800 px-6 py-4 backdrop-blur-md">
+<div class="mx-auto flex max-w-5xl items-center justify-between gap-4">
+<div class="hidden sm:block">
+<p class="text-sm font-medium text-slate-500">Last saved: 2 hours ago</p>
+</div>
+<div class="flex flex-1 sm:flex-initial items-center gap-3">
+<button class="flex-1 sm:flex-none rounded-xl border border-navy-200 bg-white px-6 py-3 text-sm font-bold text-navy-900 transition-colors hover:bg-slate-50 dark:bg-navy-900 dark:text-white dark:border-navy-800">
+                        Discard Changes
+                    </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-sm font-black uppercase tracking-widest text-white shadow-lg shadow-primary/30 transition-all hover:bg-[#FF6600] active:scale-95">
+<span class="material-symbols-outlined">save</span>
+                        Save Settings
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

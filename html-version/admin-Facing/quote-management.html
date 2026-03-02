@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bulk Quotes Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF6600", // Bright Orange
+                        "secondary": "#003366", // Navy Blue
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#001a33",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-size: 20px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 bg-secondary text-white flex flex-col fixed h-full z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-white">corporate_fare</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight uppercase tracking-wider">Bewama</h1>
+<p class="text-[10px] text-white/60 uppercase font-semibold">B2B Management</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg" href="#">
+<span class="material-symbols-outlined">request_quote</span>
+<span class="text-sm font-medium">Quotes (Active)</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-[10px] font-bold text-white/40 uppercase tracking-widest">System</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="text-sm font-medium">Content</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-white/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img alt="User" data-alt="Admin user profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvZEr71bdT0a_dXzD0bokqLW92mngwM34j4drhfaLlhMTvDsoU2nQKGK_VsBCER5ZW0swR4wi79CmB06NvKKxz31q3ZNCyN9cWImPMj-ozFaQqC7zJPU4B2_To6rZeI1v2t45FmG_EUV_-Co2_y-xffJh8jbAKluHPERa91YyyBfSc2mR7LgoGwatmDL86w0kjq98VHLk5Fk-uItxbGual6pTYsb7uNc09DG70Z8wZRQAaaUgwXZX640ka2XVVMzuL5HGuWSXojbrf"/>
+</div>
+<div>
+<p class="text-xs font-bold">Admin User</p>
+<p class="text-[10px] text-white/60">Super Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-64 p-8">
+<!-- Header -->
+<header class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-2xl font-bold text-secondary dark:text-slate-100">Bulk Quotes</h2>
+<p class="text-sm text-slate-500">Manage high-volume purchase requests and custom RFQs.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 w-72 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-slate-800 dark:border-slate-700 outline-none text-sm" placeholder="Search RFQ ID, Customer..." type="text"/>
+</div>
+<button class="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between shadow-sm">
+<div>
+<p class="text-sm font-medium text-slate-500">Pending Quotes</p>
+<h3 class="text-3xl font-bold mt-1 text-secondary dark:text-white">24</h3>
+<p class="text-emerald-500 text-xs mt-2 flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined !text-xs">trending_up</span> +12.5% vs last week
+                    </p>
+</div>
+<div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined !text-3xl">pending_actions</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between shadow-sm">
+<div>
+<p class="text-sm font-medium text-slate-500">Avg. Response Time</p>
+<h3 class="text-3xl font-bold mt-1 text-secondary dark:text-white">4.2h</h3>
+<p class="text-emerald-500 text-xs mt-2 flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined !text-xs">trending_down</span> -5% (Improving)
+                    </p>
+</div>
+<div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined !text-3xl">timer</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between shadow-sm">
+<div>
+<p class="text-sm font-medium text-slate-500">Total Quote Value</p>
+<h3 class="text-3xl font-bold mt-1 text-secondary dark:text-white">KES 1.2M</h3>
+<p class="text-slate-400 text-xs mt-2 flex items-center gap-1 font-semibold">
+                        Across active RFQs
+                    </p>
+</div>
+<div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined !text-3xl">payments</span>
+</div>
+</div>
+</div>
+<!-- Quote Table -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+<h4 class="font-bold text-secondary dark:text-white">Active Quotation Requests</h4>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50">Filter</button>
+<button class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-600">Export CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase font-bold tracking-wider">
+<tr>
+<th class="px-6 py-4">Quote ID</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Company</th>
+<th class="px-6 py-4">Items Requested</th>
+<th class="px-6 py-4">Date Submitted</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-bold text-primary text-sm">#RFQ-9021</td>
+<td class="px-6 py-4 text-sm font-medium">John Doe</td>
+<td class="px-6 py-4 text-sm text-slate-500">BuildIt Ltd</td>
+<td class="px-6 py-4 text-sm">500x Somafix Silicone</td>
+<td class="px-6 py-4 text-sm">2023-10-24</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-700">PENDING</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-orange-600 shadow-sm transition-all">Generate Quote</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-bold text-primary text-sm">#RFQ-9022</td>
+<td class="px-6 py-4 text-sm font-medium">Jane Smith</td>
+<td class="px-6 py-4 text-sm text-slate-500">Hardware Hub</td>
+<td class="px-6 py-4 text-sm">200x Steel Rods</td>
+<td class="px-6 py-4 text-sm">2023-10-23</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">QUOTED</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">View Quote</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-bold text-primary text-sm">#RFQ-9023</td>
+<td class="px-6 py-4 text-sm font-medium">Mike Ross</td>
+<td class="px-6 py-4 text-sm text-slate-500">ConstructCo</td>
+<td class="px-6 py-4 text-sm">1000x Paint Buckets</td>
+<td class="px-6 py-4 text-sm">2023-10-22</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-700">PENDING</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-orange-600 shadow-sm transition-all">Generate Quote</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-bold text-primary text-sm">#RFQ-9024</td>
+<td class="px-6 py-4 text-sm font-medium">Sarah Connor</td>
+<td class="px-6 py-4 text-sm text-slate-500">Future Tools</td>
+<td class="px-6 py-4 text-sm">150x Drills (Hilti)</td>
+<td class="px-6 py-4 text-sm">2023-10-21</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">QUOTED</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">View Quote</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
+<p class="text-xs text-slate-500">Showing 4 of 24 active requests</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 text-slate-400 disabled:opacity-50" disabled=""><span class="material-symbols-outlined !text-sm">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 text-secondary bg-white font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 text-slate-600 font-bold text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 text-slate-600 font-bold text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 text-slate-600"><span class="material-symbols-outlined !text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay (Active for 'Generate Quote') -->
+<div class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+<div class="bg-white dark:bg-slate-900 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-700">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<h3 class="font-bold text-secondary dark:text-white">Generate Official Quote</h3>
+<p class="text-xs text-slate-500">RFQ Reference: <span class="text-primary font-bold">#RFQ-9021</span></p>
+</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined !text-xl">close</span>
+</button>
+</div>
+<div class="p-8">
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div class="col-span-2 md:col-span-1">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Custom Volume Pricing (KES)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">KES</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div class="col-span-2 md:col-span-1">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Lead Time (Days)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">schedule</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="e.g. 5" type="number"/>
+</div>
+</div>
+<div class="col-span-2">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Upload Quote PDF</label>
+<div class="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-8 text-center bg-slate-50 dark:bg-slate-800/50 hover:border-primary/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined !text-4xl text-slate-300 mb-3">cloud_upload</span>
+<p class="text-sm font-medium text-slate-600 dark:text-slate-400">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-400 mt-1">Only PDF files are supported (Max 5MB)</p>
+<input class="hidden" type="file"/>
+</div>
+</div>
+<div class="col-span-2">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Additional Remarks (Internal)</label>
+<textarea class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="Notes for procurement team..." rows="3"></textarea>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex-1 bg-primary hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">send</span> Send to Customer
+                </button>
+<button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold py-3.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
+                    Save as Draft
+                </button>
+</div>
+</div>
+<div class="px-8 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-500 !text-sm">info</span>
+<p class="text-[11px] text-slate-500">Sending this quote will notify <span class="font-bold">John Doe</span> via email and platform notification.</p>
+</div>
+</div>
+</div>
+</body></html>

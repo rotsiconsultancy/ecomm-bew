@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ec5b13",
+              "background-light": "#f8f6f6",
+              "background-dark": "#221610",
+            },
+            fontFamily: {
+              "display": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<title>Bewama | Order History</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-tight">Bewama</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Orders</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Inventory</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="hidden sm:flex bg-slate-100 dark:bg-slate-800 rounded-xl px-3 py-1.5 items-center gap-2 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-40 placeholder:text-slate-400 text-slate-900 dark:text-slate-100" placeholder="Search orders..." type="text"/>
+</div>
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-slate-200 dark:border-slate-700" data-alt="User profile avatar of an executive" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtFXDM_fh15ewwFhOJOUYPZLqaKFS5C4A8YsKe1ccrRQMh0vRtL5WI0faWIBL8mz77oBrvFtBcJQZArSZC3muiP3fcegyUUo-q6Z7Lo2caeWVTw6b1Ic0YBSI8kWTnSUQd4fMblQ9bx7qMtPPI524JjyryXWHiZnr3lgR5VJ3MrhN6s_sDQXgy8CshohXEQrvEVkFsr2qvOinKdxnJ3etiipDxC8jdOUmsrSsB3xmSbjeP7JVeQnX74LzNzfnEczg0tlSNGtmdwS8o");'></div>
+</div>
+</header>
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 md:px-10 py-8">
+<!-- Page Header -->
+<div class="mb-8">
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Order History</h1>
+<p class="text-slate-500 dark:text-slate-400">View, track and reorder your previous business supplies.</p>
+</div>
+<!-- Filters Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 mb-6 shadow-sm">
+<div class="flex flex-col lg:flex-row gap-4 items-end lg:items-center">
+<div class="w-full lg:w-1/3">
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">Search Order</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary text-sm dark:text-slate-100" placeholder="Enter Order ID (e.g. #BW-10294)" type="text"/>
+</div>
+</div>
+<div class="w-full lg:w-1/4">
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">Status</label>
+<select class="w-full py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary text-sm dark:text-slate-100">
+<option>All Statuses</option>
+<option>Processing</option>
+<option>Shipped</option>
+<option>Delivered</option>
+</select>
+</div>
+<div class="w-full lg:w-1/4">
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 px-1">Date Range</label>
+<button class="w-full flex items-center justify-between py-2 px-4 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-600 dark:text-slate-300">
+<span>Last 30 Days</span>
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</button>
+</div>
+<div class="w-full lg:w-auto lg:flex-1 flex justify-end">
+<button class="w-full lg:w-auto bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-6 py-2 rounded-lg font-semibold text-sm hover:bg-slate-800 dark:hover:bg-white transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Apply Filters
+                    </button>
+</div>
+</div>
+</div>
+<!-- Table Content -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Order ID</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Date</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Items</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Total Price</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Order Row 1 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">#BW-98241</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400 text-sm whitespace-nowrap">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block size-8 rounded-lg border-2 border-white dark:border-slate-900 bg-slate-100 overflow-hidden">
+<img class="size-full object-cover" data-alt="White minimalist watch accessory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8fB6Bh6D9TXcDvF_cR2svOLPfuGl5Sh7J7579aOXVIocOSqAZ8_O8QdDgoaD-_U-cZGbzOMmpoisU5l-0Fhk1ZqHvwsKbvicHxcvirZH_aokaioqHtCILZIlT6CnaloL3ru4x5gocLDnho0Fu0_JbcxmSAoxPLG2Pw3NhHr-nh2Z3YydRd6w8OHjfRLU3Shwp3yihQVeps3hCcp0bZcSWi84OFdnXG4HLWQLKcnMaMndLhmRKBXshUG6il9tgpgfdECQw9mEWOgZ8"/>
+</div>
+<div class="inline-block size-8 rounded-lg border-2 border-white dark:border-slate-900 bg-slate-100 overflow-hidden">
+<img class="size-full object-cover" data-alt="Black professional wireless headphones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2mSD0YfQ7wnnmVSCq0YgOfym6841acM19vRtdLzwaSZCyN8iueZAEOhsIDzNbj7wfNOLd3R0RfeRryvNHRkWnWotk7SVLsiLFqIW_LEtrqAF9LK-3so9w_a_niqU1NEZi1YJZ-jigdnsd1Psfov0Qn0-RI2DVFFg0W-AHBvS-AP6WZbhTdPzGzEX3B0i2PeCiVllEdM3VaDquFuDC1zODxsoBueYDhxDsCezL-V4eBicgBHzsbuZw7IOjT-sg3VbjkyJpgz5IyoFb"/>
+</div>
+</div>
+<span class="text-xs text-slate-400 ml-1">+2 more</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">$1,240.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                    Delivered
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-3">
+<a class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-medium transition-colors" href="#">View Details</a>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">Reorder</button>
+</div>
+</td>
+</tr>
+<!-- Order Row 2 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">#BW-98235</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400 text-sm whitespace-nowrap">Oct 21, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden border border-slate-200 dark:border-slate-700">
+<img class="size-full object-cover" data-alt="Classic brown leather watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3QWo3FjX-3oNl6f4s8_ajU9_avOk688brzYJGNiji8Oz9x6D2P6KaxyTKLh6S8YmMrx7SMZr9ltQA_ue_8y6Qz3-M9m50e36AYZMKyhme_siwsaZCzCcnvR5BH0riulsdBM97fBQLd0_IgFDAPDs0oEMcoNCDx1osLogqSw_5DXPnXMDig-N1gQfdDHf1ueEnpsvWP6JeOaFUOO9t_qF4KxTYRxIgQ2Mrkmq8LAinW99g6q4q9NaIK2mrdd6E-m7r2RiMjjnRjVCz"/>
+</div>
+<span class="text-xs text-slate-600 dark:text-slate-400 font-medium truncate max-w-[120px]">Leather Strap Watch...</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">$450.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400">
+<span class="size-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                                    Shipped
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-3">
+<a class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-medium transition-colors" href="#">View Details</a>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">Reorder</button>
+</div>
+</td>
+</tr>
+<!-- Order Row 3 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">#BW-98199</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400 text-sm whitespace-nowrap">Oct 18, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block size-8 rounded-lg border-2 border-white dark:border-slate-900 bg-slate-100 overflow-hidden">
+<img class="size-full object-cover" data-alt="Ergonomic office chair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdwWhlDIhGhS_ZkP_TGr7EVFKmJ8hSGhLD23K87rDyBkfo6D5RMooF6cVCLVoHL6zZyRizB8SIZ_-tQ3bpniSJ6NpzCrBsvapBR7wp3kxUQKW5MHJTsJ6-EIdFyFEAHiYQrLp1wh8DycXncBz55X7rLlWQj5Qlcqmnslo026DTzpYtQv9ZtluPX0_wxQJKNRdfrvnUSanEqIzTxhvMteSH8uTH5M8FqCDbkL7liWXYcD6fayAQsJEhsuG_oJwgnhXXdOCBS0CVaM-m"/>
+</div>
+</div>
+<span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Office Furniture Set</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">$3,890.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                    Processing
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-3">
+<a class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-medium transition-colors" href="#">View Details</a>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">Reorder</button>
+</div>
+</td>
+</tr>
+<!-- Order Row 4 -->
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">#BW-97011</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400 text-sm whitespace-nowrap">Oct 02, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden border border-slate-200 dark:border-slate-700">
+<img class="size-full object-cover" data-alt="Modern laptop computer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTtV1Nleu3bRTiPKM3_BfWqWE_BZ5cxtJyzNg4XhPFB5Y49kRudUjVr5_cU87B7iiGpmUZdmV_qhMF2BtRBX_qqDE5MkMN8UtFZ_b3zcnehTUp4mL-BWKDpcU8rC4CKskFZvIuNcj8d854_9otibSMV4llOoIsa2vwv2x0-c8TkWfNPKHWxjYY6tjXEJNQCceruDpEAWeHGva1E48mGPjIcbMDZt0OixSKHukemv8xcxXDPC6t86fDt0fWtY4XRuEfwU3XmSSlN4S5"/>
+</div>
+<span class="text-xs text-slate-600 dark:text-slate-400 font-medium truncate max-w-[120px]">MacBook Pro 16"...</span>
+</div>
+</td>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white text-sm">$2,499.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                    Delivered
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-3">
+<a class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-medium transition-colors" href="#">View Details</a>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">Reorder</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="flex items-center justify-between px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm text-slate-500 dark:text-slate-400">Showing 1 to 4 of 24 orders</p>
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="size-8 rounded-lg bg-primary text-white text-xs font-bold">1</button>
+<button class="size-8 rounded-lg text-slate-600 dark:text-slate-400 text-xs font-medium hover:bg-slate-200/50 dark:hover:bg-slate-700">2</button>
+<button class="size-8 rounded-lg text-slate-600 dark:text-slate-400 text-xs font-medium hover:bg-slate-200/50 dark:hover:bg-slate-700">3</button>
+<button class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Order Statistics / Summary Cards (Optional B2B Insight) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</div>
+<span class="text-xs font-bold text-emerald-500 bg-emerald-100 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Monthly Spend</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$14,582.00</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-blue-500/10 rounded-lg">
+<span class="material-symbols-outlined text-blue-500">local_shipping</span>
+</div>
+<span class="text-xs font-bold text-slate-400">Stable</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Active Deliveries</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">3 Orders</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-amber-500/10 rounded-lg">
+<span class="material-symbols-outlined text-amber-500">pending_actions</span>
+</div>
+<span class="text-xs font-bold text-red-500 bg-red-100 dark:bg-red-500/10 px-2 py-0.5 rounded-full">Action Required</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Invoices</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">2 Pending</h3>
+</div>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 px-10">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="size-6 text-slate-900 dark:text-white">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"></path>
+<path d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"></path>
+</svg>
+</div>
+<span class="font-bold text-slate-900 dark:text-white">Bewama B2B</span>
+</div>
+<div class="flex gap-8 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support Center</a>
+</div>
+<p class="text-sm text-slate-400">© 2023 Bewama Inc. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</body></html>

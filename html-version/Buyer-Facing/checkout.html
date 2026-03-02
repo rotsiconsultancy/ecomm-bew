@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | Bewama B2B</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 antialiased">
+<div class="min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark/95 backdrop-blur">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-2">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="font-display text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">Bewama</h1>
+</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Orders</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Help</a>
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Column: Checkout Details -->
+<div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-8">
+<div>
+<h2 class="text-2xl font-bold font-display mb-2">Checkout</h2>
+<p class="text-slate-500 dark:text-slate-400">Complete your B2B order details below for faster processing.</p>
+</div>
+<!-- Logistics Notice -->
+<div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex gap-3">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">warning</span>
+<p class="text-amber-800 dark:text-amber-200 text-sm font-medium leading-relaxed">
+                        Logistics Notice: To avoid delivery mistakes, kindly use your accurate Google Maps pin for proper logistics.
+                    </p>
+</div>
+<!-- Location Method Toggle -->
+<div class="space-y-4">
+<div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl max-w-md">
+<button class="flex-1 py-2 px-4 text-sm font-bold rounded-lg bg-white dark:bg-slate-700 shadow-sm transition-all">Manual Fill</button>
+<button class="flex-1 py-2 px-4 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-all">Auto-fill with Maps</button>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-blue-600/20">
+<span class="material-symbols-outlined">location_on</span>
+                        Open Maps &amp; Share Location
+                    </button>
+<div class="grid grid-cols-1 gap-4">
+<div class="space-y-1.5">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Paste Google Maps Link Here</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="https://maps.app.goo.gl/..." type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Specific Landmark or Road Name</label>
+<textarea class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="E.g. Opposite National Bank, Enterprise Road" rows="2"></textarea>
+</div>
+</div>
+</div>
+<!-- Contact Section -->
+<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+<h3 class="text-lg font-bold font-display mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">contact_page</span>
+                        Contact Details
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="md:col-span-2 space-y-1.5">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Full Name / Business Name</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Phone Number</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="+254..." type="tel"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Email Address</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" type="email"/>
+</div>
+</div>
+</div>
+<!-- Shipping Method -->
+<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+<h3 class="text-lg font-bold font-display mb-4">Shipping Method</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
+<input checked="" class="sr-only peer" name="shipping" type="radio" value="self"/>
+<span class="flex flex-col">
+<span class="block text-sm font-bold text-slate-900 dark:text-white">Self-Pickup</span>
+<span class="mt-1 flex items-center text-xs text-slate-500">Free</span>
+</span>
+<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
+</label>
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
+<input class="sr-only peer" name="shipping" type="radio" value="mtaani"/>
+<span class="flex flex-col">
+<span class="block text-sm font-bold text-slate-900 dark:text-white">Pickup Mtaani</span>
+<span class="mt-1 flex items-center text-xs text-slate-500">KES 150</span>
+</span>
+<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
+</label>
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
+<input class="sr-only peer" name="shipping" type="radio" value="truck"/>
+<span class="flex flex-col">
+<span class="block text-sm font-bold text-slate-900 dark:text-white">Truck Delivery</span>
+<span class="mt-1 flex items-center text-xs text-slate-500">KES 1,200</span>
+</span>
+<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
+</label>
+</div>
+</div>
+<!-- Payment Method -->
+<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+<h3 class="text-lg font-bold font-display mb-4">Payment Method</h3>
+<div class="space-y-3">
+<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<input checked="" class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
+<div class="ml-3 flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="font-bold text-slate-900 dark:text-white">M-Pesa STK Push</span>
+<span class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Save 2%</span>
+</div>
+<span class="text-sm text-slate-500 mt-1">Instant confirmation and faster processing.</span>
+</div>
+</label>
+<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
+<div class="ml-3 flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white">Cheque</span>
+<span class="text-xs italic text-slate-500 mt-1">Note: Dispatch pending bank confirmation.</span>
+</div>
+</label>
+<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
+<div class="ml-3 flex flex-col">
+<span class="font-bold text-slate-900 dark:text-white">Payment on Delivery</span>
+<span class="text-xs italic text-slate-500 mt-1">Note: Available for Truck Delivery only.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar -->
+<aside class="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+<div class="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-bold font-display mb-6">Order Summary</h3>
+<!-- Cart Items -->
+<div class="space-y-4 mb-6">
+<div class="flex gap-4">
+<div class="h-16 w-16 flex-shrink-0 bg-white dark:bg-slate-700 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600">
+<img alt="Industrial Safety Boots" class="h-full w-full object-cover" data-alt="Brown industrial leather safety boots for construction" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAitgRHKK-4G6nPRK8HAck2gQPQg5P7RhL4bD73TDUwy3N3kHkQcSoK1ZtfwEAR941uag9wsfkOGqJry4Qv8fcWBuBTAeaXIzQjqqitBOeu8igIBrhcGE3rHk66PuFRkrpkUHBNBCGpeMAHh9Yv8HRhb46BhFHfofu75TSz4E2F0NTUotcyRgEG5c--B7PP4nvk0T7rp2mL9dsakNmK7X_PKx-rZlN86juVzMdtzyRYclRj2Yk_4Ss_uGng-basTKltWp0Xxr09Et8k"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h4 class="text-sm font-bold leading-none">Steel Toe Safety Boots</h4>
+<p class="text-xs text-slate-500 mt-1">Qty: 2</p>
+<p class="text-sm font-bold text-primary mt-1">KES 4,500</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="h-16 w-16 flex-shrink-0 bg-white dark:bg-slate-700 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600">
+<img alt="Industrial Drill" class="h-full w-full object-cover" data-alt="Professional grade electric power drill tool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7CMH7koAzLoS0oMUb09cJ4BNIPAXORxEKPBKIDlpL9lskdhSkHeEYAe-5mZkv1gtNc79gZxHVO8vGZda12Cy3KW7hOZ79OiFpXiMtCxEhLMcdbIdMEkASnEBTrPsbgWKeFHMHcEGH1qs1HUNmjmBtmhZlJwsVdpfs9gGFV48yx8WM1Dy_EKX2iPFuUgJCWH9wTV6Pm9rj-6A_x58T79SdM648XWIFSwKpW3gcrjc41jEA3IE5QzRgNmFr9xSlJYhjbodUakO555GQ"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h4 class="text-sm font-bold leading-none">Heavy-Duty Rotary Drill</h4>
+<p class="text-xs text-slate-500 mt-1">Qty: 1</p>
+<p class="text-sm font-bold text-primary mt-1">KES 12,800</p>
+</div>
+</div>
+</div>
+<!-- Totals -->
+<div class="border-t border-slate-200 dark:border-slate-700 pt-4 space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-slate-600 dark:text-slate-400">Subtotal</span>
+<span class="font-semibold">KES 17,300</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-600 dark:text-slate-400">Shipping</span>
+<span class="font-semibold text-green-600">Free</span>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-700 mt-2">
+<span class="text-base font-bold">Grand Total</span>
+<span class="text-xl font-black text-slate-900 dark:text-white">KES 17,300</span>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full mt-8 bg-primary hover:brightness-110 text-white font-black text-lg py-4 rounded-xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2">
+                        Proceed to Checkout
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-bold">Secure B2B Transaction</p>
+</div>
+<!-- Assistance Card -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-4 flex items-center gap-4">
+<div class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div>
+<p class="text-xs font-bold text-primary uppercase">Need Help?</p>
+<p class="text-sm text-slate-700 dark:text-slate-300">Call 0700-123-456</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-6 bg-white dark:bg-background-dark">
+<div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500">© 2024 Bewama Industrial Supplies. All Rights Reserved.</p>
+<div class="flex gap-6">
+<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Terms &amp; Conditions</a>
+<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Refund Policy</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "navy": "#003366",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .prose h2 { @apply text-2xl font-bold text-navy mt-8 mb-4; }
+        .prose h3 { @apply text-xl font-semibold text-navy mt-6 mb-3; }
+        .prose p { @apply text-slate-700 leading-relaxed mb-4; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<!-- Sticky Navigation Bar -->
+<header class="sticky top-0 z-50 w-full bg-white/95 dark:bg-background-dark/95 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-navy dark:text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">architecture</span>
+<h2 class="text-xl font-bold tracking-tight">BEWAMA</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Solutions</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Products</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Case Studies</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Blog</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-3 py-1.5">
+<span class="material-symbols-outlined text-slate-500 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-40" placeholder="Search insights..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg text-sm font-bold transition-all">
+                        Contact Us
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-slate-500 mb-8">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Resources</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-navy dark:text-slate-300 font-medium">Construction Blog</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Article Content -->
+<article class="lg:col-span-8">
+<h1 class="text-4xl md:text-5xl font-extrabold text-navy dark:text-white leading-tight mb-6">
+                    The Importance of High-Grade Silicones in Modern Construction
+                </h1>
+<!-- Author Meta -->
+<div class="flex items-center justify-between py-6 border-y border-slate-200 dark:border-slate-800 mb-8">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-slate-300 overflow-hidden">
+<img alt="Alex Thompson" class="h-full w-full object-cover" data-alt="Professional headshot of a male engineer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgf9wLfCH83cYaz1Oa7FOpKjwCRTvWfqUospfpQbQ04TZE8qUhbWRxb3mBegQcjKfIBE48XokF8UrJj_eTZMXiqXaGCHjc7cMNb_FXKgefObOTVv8LnkZtBROwBvT3mGc5l77_EnbqGnfNDBIkVRn-_Xxqx9eaD7pQEuP2Nbl4aC1ouQB2hsZUzMJTsnkJDuwIYVZ2Ew_dKxMaH1O5nrTGA4fCwO0opN_uS10x13TaE4u1IzAfF7ns6E-krfAcxMKfXf7M12Jb3qaa"/>
+</div>
+<div>
+<p class="font-bold text-navy dark:text-white">Alex Thompson</p>
+<p class="text-sm text-slate-500">Technical Director • Oct 24, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-sm font-medium">8 min read</span>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Hero Image -->
+<div class="rounded-xl overflow-hidden mb-10 shadow-lg">
+<img alt="Industrial construction" class="w-full h-auto max-h-[480px] object-cover" data-alt="Modern glass skyscraper construction site with machinery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB85tpw2YO0iP4NyPFxG6O95mG6E_BD9wwnxDH7233c5R5mBZVpONfpTSXEzv7P6M_Du4wZPg9HnN5up3GLEBla7ei_ml9QnhYaOMWya_SFcVivV7n2dtPyrv_ouENyIocGBlodEh1Ajdr0I2EM4CMS3Do2NW5b5WdP-e_497MmGzN2jTxPdBDFSzmmwKrRjbQbnmEbkf2Qxv7V5ZyToDX1hostIRo2cN0zyl9JfKy71_Lyh0W51d5Yp3GVxS7V4BAlW2YGuFc82ydR"/>
+</div>
+<!-- Main Text Body -->
+<div class="prose max-w-none">
+<p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-8 italic">
+                        In the rapidly evolving landscape of urban development, the integrity of structural seals has become more than just a matter of aesthetics—it is a critical factor in longevity and safety.
+                    </p>
+<h2>The Role of Silicone in Structural Integrity</h2>
+<p>
+                        Modern architectural designs often feature expansive glass facades and complex joints that require exceptional flexibility. High-grade silicones provide the necessary elasticity to accommodate thermal expansion and contraction without compromising the seal's weather-tight properties.
+                    </p>
+<div class="my-10 bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg">
+<p class="font-medium text-navy dark:text-slate-200 m-0">
+                            "The difference between standard sealant and high-grade industrial silicone can mean the difference between a 10-year and a 50-year maintenance cycle for large-scale commercial buildings."
+                        </p>
+</div>
+<h3>Weather Resistance and Durability</h3>
+<p>
+                        High-grade silicones are engineered to withstand extreme UV radiation, temperature fluctuations, and moisture. Unlike traditional organic sealants, silicone retains its physical properties over decades of exposure to harsh environmental conditions.
+                    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+<div class="rounded-lg overflow-hidden">
+<img alt="Construction detail" class="w-full h-48 object-cover" data-alt="Close up of structural sealant application on glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBRxg0PiufrlrjZzoNTHaBPjfzb7ucVfLvribUMqTen4fv0MXmw_bUO5evp7Yhvb0yCvDrwKiVAarvPBvM3wFIEPuv7BtwmMrZPtL1t4oA8Pfo2hbdvUjKeGZ3fDxa4f5TZtX9CZe3htU2LScU-cXh9hpoRIHfntb2RWY5KjsiaEARbZu7dhZEuokx1PWSaqZWXlV0FhX-sm4DiPROY_WqpJNhJ36VPu8NpC1QMA8D3qp3aira0gNPROVmCyGEZOMjc1b3PzbYkiym"/>
+</div>
+<div class="rounded-lg overflow-hidden">
+<img alt="Worker on site" class="w-full h-48 object-cover" data-alt="Construction worker applying silicone sealant to building joint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzTEE297beZ8Rx2HF3nkvo7a4wChWNiPl0-lUm9R7WFA1cic_a8XEA_QVi6HtPVUumYhN8U74XcNzF07coRN25-UmjJreculRVMBygihVXsKJc4qi-7sFx6Qh8fl6g2hGgRN3XKDd3WqUDfSx-Xfxvw9h6eNYY6wyWk5f2XAjgPkZuKNxfsYVdE6SxD4XdGjqXgD7AAg2q59t5qBzWKBMhSjpsVFLl1wSX4G1YAlFQp8Ou-4oUPjQz0Y56xFQmhTk4PqyBheP98x8T"/>
+</div>
+</div>
+<h3>Chemical Compatibility and Adhesion</h3>
+<p>
+                        One of the primary advantages of Somafix high-performance silicones is their superior adhesion to a wide variety of substrates, including anodized aluminum, stainless steel, and various types of glass. This versatility makes them the preferred choice for complex multi-material assemblies.
+                    </p>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold uppercase tracking-wider">Construction</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold uppercase tracking-wider">Engineering</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-xs font-bold uppercase tracking-wider">Somafix</span>
+</div>
+</article>
+<!-- Sidebar -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- Related Products Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-navy dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_basket</span>
+                        Featured Somafix Products
+                    </h3>
+<div class="space-y-6">
+<!-- Product Item -->
+<div class="group cursor-pointer">
+<div class="aspect-square w-full rounded-lg bg-slate-100 dark:bg-slate-800 mb-3 overflow-hidden">
+<img alt="Somafix S911" class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Industrial silicone tube with orange branding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByA1-HQj1Xng_-h6HKxyk7-YHoREMoBmLUS4_Qk8woBJttdY_P4oIDOEjEbDOhG09Oa-218vkl8Ibk3h5FvoReUSpyZHevJT6XxIBDhvQoyt0HQhPkyCR48WOrEnKucxmPm3qJg4BRlGN460fAMocm8QQN0pp1o-NT8p_eqgvFQcDsYnAsLiEu1lGk6waeJXm5cwPJGX9xkoaar6_yhFWuxDot_LmJxL8-CYtYYz_b2JCUyxO8s7iKeunTxyPGAJ-7aA1T5WgvLvw7"/>
+</div>
+<h4 class="font-bold text-navy dark:text-slate-100 group-hover:text-primary transition-colors">Somafix S911 Neutral Silicone</h4>
+<p class="text-sm text-slate-500 line-clamp-2">High-performance neutral curing silicone for architectural glazing.</p>
+</div>
+<!-- Product Item -->
+<div class="group cursor-pointer">
+<div class="aspect-square w-full rounded-lg bg-slate-100 dark:bg-slate-800 mb-3 overflow-hidden">
+<img alt="Somafix Polyurethane" class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Sealant tube for construction joints" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5vz7sAFQvbYjhqeAwEfDTLa4LcNKoh1MylXsF7PuEG7SAUXUN5cfkDWwxs6LEGlRwEBtGEsVB96z0hW08h4ZC2KmTjXZlxN_ylhXmUR3RdiMjMLzcqX9JwnyhXI0kMc0LbpUhH7gJTRWAUpkQ1RI5Hk-OrEOT8c6sb8hIxKKilme60yxDOpHejvaPrN1S0MKxcJeh8zKi2eLeYNGfvA64gs4-bWiczmEaRPCEkjPVjmcYXkWn-x2ZJtuHPHo6g9usDhaywb9wV5Wg"/>
+</div>
+<h4 class="font-bold text-navy dark:text-slate-100 group-hover:text-primary transition-colors">Somafix PU Sealant 40</h4>
+<p class="text-sm text-slate-500 line-clamp-2">Elastic polyurethane sealant for expansion and connection joints.</p>
+</div>
+<!-- Product Item -->
+<div class="group cursor-pointer">
+<div class="aspect-square w-full rounded-lg bg-slate-100 dark:bg-slate-800 mb-3 overflow-hidden">
+<img alt="Somafix Foam" class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="Expanding foam canister with applicator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADrvTbrzoiKCsqWuUTLShfo-GZ1ET4X_sMS2xslQ1iIninebc5wguh8BZt1KMgoC4lXQd6IJSiqY5JFTwAuui61YT57930VIzAnNamCDrJ0ZM3H8b980lHIK8cMjis3x2ymhE6q-hrAEJ-Vv1SY9uKDG-SZTphDCdzxmt3WnRRWngD3JHvvBzTAOcrc3hYZqFpPQv4Mlo_L0DlgZgge0jBinWbcr-kymnVRXVbZuLEcplMZ3ItRc1Cgbyon3S9T3l4p-rjhpRb0vbo"/>
+</div>
+<h4 class="font-bold text-navy dark:text-slate-100 group-hover:text-primary transition-colors">Somafix Multi-Purpose Foam</h4>
+<p class="text-sm text-slate-500 line-clamp-2">Premium expanding foam for insulation and mounting.</p>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold rounded-lg transition-all text-sm uppercase tracking-widest">
+                        View Full Catalog
+                    </button>
+</div>
+<!-- Newsletter Card -->
+<div class="bg-navy text-white rounded-xl p-8 text-center">
+<span class="material-symbols-outlined text-4xl mb-4 text-primary">mail</span>
+<h3 class="text-xl font-bold mb-2">Technical Insights</h3>
+<p class="text-slate-300 text-sm mb-6">Get the latest construction trends and product technical data sheets delivered monthly.</p>
+<input class="w-full bg-white/10 border-white/20 rounded-lg py-2 px-4 mb-3 text-sm focus:ring-primary focus:border-primary" placeholder="Email address" type="email"/>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 rounded-lg transition-colors">Subscribe</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-navy dark:bg-black text-white mt-20 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 text-primary mb-6">
+<span class="material-symbols-outlined text-3xl font-bold">architecture</span>
+<h2 class="text-xl font-bold tracking-tight text-white">BEWAMA</h2>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">
+                        Leading provider of chemical solutions and industrial building materials for the global construction industry. Partnering with Somafix for excellence.
+                    </p>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-primary uppercase tracking-widest text-sm">Solutions</h4>
+<ul class="space-y-4 text-slate-400 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Structural Glazing</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Expansion Joints</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Facade Insulation</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Waterproofing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-primary uppercase tracking-widest text-sm">Company</h4>
+<ul class="space-y-4 text-slate-400 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Our Partners</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Sustainability</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-primary uppercase tracking-widest text-sm">Support</h4>
+<ul class="space-y-4 text-slate-400 text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Technical Data Sheets</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Safety Data</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Support</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Global Network</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
+<p>© 2023 Bewama International. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Cookie Policy</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
