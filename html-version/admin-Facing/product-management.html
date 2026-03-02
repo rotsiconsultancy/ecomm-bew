@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Order Management | Bewama Admin</title>
+    <title>Product Management | Bewama Admin</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -18,7 +18,9 @@
                         "background-light": "#f8f6f6",
                         "background-dark": "#221610",
                     },
-                    fontFamily: { "display": ["Public Sans", "sans-serif"] },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
                     borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
@@ -31,7 +33,7 @@
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
     <div class="flex min-h-screen">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar Navigation (Same as Dashboard) -->
         <aside class="w-64 bg-secondary text-white flex-shrink-0 hidden lg:flex flex-col border-r border-secondary/20">
             <div class="p-6 flex items-center gap-3">
                 <div class="bg-primary p-2 rounded-lg"><span class="material-symbols-outlined text-white">factory</span></div>
@@ -41,13 +43,13 @@
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="dashboard.html">
                     <span class="material-symbols-outlined">dashboard</span><span class="font-medium">Dashboard</span>
                 </a>
-                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="product-management.html">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl sidebar-item-active text-primary" href="product-management.html">
                     <span class="material-symbols-outlined">inventory_2</span><span class="font-medium">Products</span>
                 </a>
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="product-management.html">
                     <span class="material-symbols-outlined">warehouse</span><span class="font-medium">Inventory</span>
                 </a>
-                <a class="flex items-center gap-3 px-4 py-3 rounded-xl sidebar-item-active text-primary" href="order-management.html">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="order-management.html">
                     <span class="material-symbols-outlined">shopping_cart</span><span class="font-medium">Orders</span>
                 </a>
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="quote-management.html">
@@ -64,6 +66,13 @@
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200" href="admin-settings.html">
                     <span class="material-symbols-outlined">settings</span><span class="font-medium">Settings</span>
                 </a>
+                <div class="mt-4 flex items-center gap-3 px-4 py-2 bg-primary/10 rounded-xl border border-primary/20">
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold">JD</div>
+                    <div class="overflow-hidden">
+                        <p class="text-xs font-semibold truncate">John Doe</p>
+                        <p class="text-[10px] text-slate-400 truncate">Admin Access</p>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -71,10 +80,9 @@
         <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
             <header class="h-16 bg-white dark:bg-background-dark/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 z-10">
                 <div class="flex items-center gap-4 flex-1">
-                    <button class="lg:hidden text-secondary"><span class="material-symbols-outlined">menu</span></button>
                     <div class="relative max-w-md w-full">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-                        <input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/50" placeholder="Search orders..." type="text"/>
+                        <input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/50" placeholder="Search products..." type="text"/>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
@@ -86,12 +94,11 @@
             <div class="flex-1 overflow-y-auto p-8 space-y-8">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-secondary dark:text-slate-100">Order Management</h2>
-                        <p class="text-slate-500 dark:text-slate-400">Track and fulfill customer orders.</p>
+                        <h2 class="text-2xl font-bold text-secondary dark:text-slate-100">Product Management</h2>
+                        <p class="text-slate-500 dark:text-slate-400">Manage your industrial product catalog.</p>
                     </div>
-                    <button class="px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-                        <span class="material-symbols-outlined text-sm">add</span>
-                        Create New Order
+                    <button class="px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-sm">add</span>Add New Product
                     </button>
                 </div>
 
@@ -100,27 +107,33 @@
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 dark:bg-slate-900/50">
                                 <tr>
-                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Order ID</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Customer</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Product</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Category</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Stock</th>
+                                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Price</th>
                                     <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
-                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors">
-                                    <td class="px-6 py-4 text-sm font-medium">#ORD-7721</td>
-                                    <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">John Kamau</td>
-                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 text-xs font-bold rounded-full">Processing</span></td>
-                                    <td class="px-6 py-4 text-sm font-semibold">KES 45,000</td>
-                                    <td class="px-6 py-4"><button class="px-4 py-1.5 bg-slate-100 dark:bg-slate-700 text-secondary dark:text-slate-100 text-xs font-bold rounded-lg hover:bg-slate-200 transition-colors">View</button></td>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4 flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-slate-100 rounded flex items-center justify-center"><span class="material-symbols-outlined text-slate-400">image</span></div>
+                                        <span class="text-sm font-medium">Somafix S50 Silicone</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">Silicones</td>
+                                    <td class="px-6 py-4 text-sm font-semibold">1,240 units</td>
+                                    <td class="px-6 py-4 text-sm font-semibold">€5.50</td>
+                                    <td class="px-6 py-4"><button class="text-primary hover:underline font-bold text-xs">Edit</button></td>
                                 </tr>
-                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors">
-                                    <td class="px-6 py-4 text-sm font-medium">#ORD-7720</td>
-                                    <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Sarah Chen</td>
-                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 text-xs font-bold rounded-full">Completed</span></td>
-                                    <td class="px-6 py-4 text-sm font-semibold">KES 12,500</td>
-                                    <td class="px-6 py-4"><button class="px-4 py-1.5 bg-slate-100 dark:bg-slate-700 text-secondary dark:text-slate-100 text-xs font-bold rounded-lg hover:bg-slate-200 transition-colors">View</button></td>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4 flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-slate-100 rounded flex items-center justify-center"><span class="material-symbols-outlined text-slate-400">image</span></div>
+                                        <span class="text-sm font-medium">Premium MDF Board 18mm</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">MDF Boards</td>
+                                    <td class="px-6 py-4 text-sm font-semibold">450 sheets</td>
+                                    <td class="px-6 py-4 text-sm font-semibold">€42.00</td>
+                                    <td class="px-6 py-4"><button class="text-primary hover:underline font-bold text-xs">Edit</button></td>
                                 </tr>
                             </tbody>
                         </table>
