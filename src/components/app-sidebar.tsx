@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils"
 const items = [
   {
     title: "Dashboard",
-    url: "/admin/dashboard",
+    url: "/admin",
     icon: LayoutDashboard,
   },
   {

@@ -69,7 +69,7 @@ export default function LoginPage() {
 
             <div>
               <Button asChild className="group relative w-full flex justify-center py-6 px-4 border border-transparent text-sm font-bold rounded-[8px] text-white bg-brand-navy hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-navy transition-all">
-                <Link href="/admin/dashboard">
+                <Link href="/admin">
                   Sign in
                 </Link>
               </Button>
