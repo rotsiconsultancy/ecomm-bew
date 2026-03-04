@@ -11,7 +11,7 @@ import {
   Warehouse,
   Factory,
   LogOut,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react"
 import {
   Sidebar,
@@ -26,50 +26,49 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
 
 const items = [
-  {
-    title: "Dashboard",
-    url: "/admin",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Products",
-    url: "/admin/product-management",
-    icon: Package,
-  },
-  {
-    title: "Inventory",
-    url: "/admin/inventory", // Mapping to inventory
-    icon: Warehouse,
-  },
-  {
-    title: "Orders",
-    url: "/admin/order-management",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Quotes",
-    url: "/admin/quote-management",
-    icon: MessageSquare,
-  },
-  {
-    title: "Users",
-    url: "/admin/user-management",
-    icon: Users,
-  },
-  {
-    title: "Content",
-    url: "/admin/content-management",
-    icon: FileText,
-  },
+  { title: "Dashboard",  url: "/admin",                      icon: LayoutDashboard },
+  { title: "Products",   url: "/admin/product-management",   icon: Package },
+  { title: "Inventory",  url: "/admin/inventory",            icon: Warehouse },
+  { title: "Orders",     url: "/admin/order-management",     icon: ShoppingCart },
+  { title: "Quotes",     url: "/admin/quote-management",     icon: MessageSquare },
+  { title: "Users",      url: "/admin/user-management",      icon: Users },
+  { title: "Content",    url: "/admin/content-management",   icon: FileText },
 ]
 
-export function AppSidebar() {
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+}
+
+interface AppSidebarProps {
+  userName: string
+  userEmail: string
+  userRole: string
+}
+
+export function AppSidebar({ userName, userEmail, userRole }: AppSidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const { state } = useSidebar()
+  const supabase = createClient()
+
+  const initials = getInitials(userName)
+  const roleLabel = userRole.charAt(0).toUpperCase() + userRole.slice(1)
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    router.push('/login')
+    router.refresh()
+  }
 
   return (
     <Sidebar className="bg-sidebar border-r-0 shadow-xl">
@@ -81,7 +80,7 @@ export function AppSidebar() {
           {state !== "collapsed" && (
             <div>
               <h1 className="text-xl font-bold tracking-tight text-white">BEWAMA</h1>
-              <p className="text-[10px] text-slate-300 uppercase tracking-widest font-semibold">Industrial Solutions</p>
+              <p className="text-[10px] text-slate-300 uppercase tracking-widest font-semibold">Admin Panel</p>
             </div>
           )}
         </div>
@@ -133,16 +132,20 @@ export function AppSidebar() {
           </SidebarMenuItem>
 
           <div className="mt-4 p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shadow-inner">
-              JD
+            <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shadow-inner shrink-0">
+              {initials}
             </div>
             {state !== "collapsed" && (
               <div className="flex-1 overflow-hidden">
-                <p className="text-xs font-semibold text-white truncate">John Doe</p>
-                <p className="text-[10px] text-slate-400 truncate tracking-tight">Super Admin</p>
+                <p className="text-xs font-semibold text-white truncate">{userName}</p>
+                <p className="text-[10px] text-slate-400 truncate">{roleLabel}</p>
               </div>
             )}
-            <button className="text-slate-400 hover:text-white transition-colors">
+            <button
+              onClick={handleLogout}
+              title="Log out"
+              className="text-slate-400 hover:text-red-400 transition-colors shrink-0"
+            >
               <LogOut className="w-4 h-4" />
             </button>
           </div>

@@ -35,7 +35,7 @@ export default function HomePage() {
               <div className="absolute -inset-4 bg-brand-orange/10 rounded-[8px] blur-3xl"></div>
               <img
                 alt="Industrial materials"
-                className="relative z-10 w-full h-[512px] object-cover rounded-[8px] shadow-2xl border border-white/10"
+                className="relative z-10 w-full h-128 object-cover rounded-[8px] shadow-2xl border border-white/10"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRP3Wq9G1cgCmFsfxnYrpIWanIV-1QpyQgxWp_V6L9vTPhSICNedPGgDr2ssfEepI5t1My3GGv0Afgi2Q1eyG_S-Cj85IKKy8gRzabizfM03akbfIPBoIpMpZwth0AiRBIqN_A5GSJfC8DasJlR29ouaAOEE7OVNf6aQL_GcHSZfHCjrws8BHaxaKvC3KB_4dVhbXbvWSZYP37AWrQpY_R-72yUgZwnFD1pzc5gzlKK2ZxMAaJ6nGZYzJgsvZDZB9cJ2jZKhnw6Kvp"
               />
             </div>
@@ -113,13 +113,13 @@ export default function HomePage() {
 
 function CategoryCard({ title, subtitle, image }: { title: string, subtitle: string, image: string }) {
   return (
-    <div className="group relative overflow-hidden rounded-[8px] bg-gray-100 aspect-[4/3] cursor-pointer">
+    <div className="group relative overflow-hidden rounded-[8px] bg-gray-100 aspect-4/3 cursor-pointer">
       <img
         alt={title}
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         src={image}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-brand-navy/80 to-transparent"></div>
       <div className="absolute bottom-6 left-6">
         <h3 className="text-2xl font-bold text-white">{title}</h3>
         <p className="text-gray-200 mt-1">{subtitle}</p>

@@ -2,33 +2,10 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-    ArrowUpRight,
-    ArrowDownRight,
-    Users,
-    Package,
-    ShoppingCart,
-    MessageSquare,
-    TrendingUp,
-    TrendingDown,
-    Clock,
-    CheckCircle2,
-    CalendarDays,
-    Plus,
-    Truck,
-    AlertTriangle,
-    Hammer,
-    Search,
-    ChevronRight,
-    MoreVertical,
-    Activity,
-    Zap,
-    Box,
-    ClipboardList,
-    BarChart3,
-    DollarSign,
-    Briefcase
-} from 'lucide-react';
+import {ArrowUpRight,ArrowDownRight,Users,Package,ShoppingCart,MessageSquare,TrendingUp,TrendingDown,
+    Clock,CheckCircle2,CalendarDays,Plus,Truck,AlertTriangle,Hammer,Search,ChevronRight, MoreVertical, Activity,Zap,Box,ClipboardList,
+    BarChart3,DollarSign, 
+Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function AdminDashboardPage() {
