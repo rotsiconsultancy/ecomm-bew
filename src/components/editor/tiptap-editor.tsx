@@ -74,7 +74,7 @@ export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
   function addLink() {
     const url = window.prompt('Enter URL:')
     if (!url) return
-    editor?.chain().focus().extendMarkToLink({ href: url }).run()
+    // editor?.chain().focus().extendMarkToLink({ href: url }).run()
     editor?.chain().focus().setLink({ href: url }).run()
   }
 

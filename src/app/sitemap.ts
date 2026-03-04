@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createBuildClient } from '@/lib/supabase/server'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
 
@@ -12,7 +12,7 @@ const staticRoutes: MetadataRoute.Sitemap = [
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = await createClient()
+  const supabase = createBuildClient()
 
   const { data: posts } = await supabase
     .from('blog_posts')

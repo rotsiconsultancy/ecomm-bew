@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createBuildClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ type Props = {
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const supabase = await createClient()
+  const supabase = createBuildClient()
   const { data } = await supabase
     .from('blog_posts')
     .select('slug')

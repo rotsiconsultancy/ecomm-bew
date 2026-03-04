@@ -9,7 +9,7 @@ export default function DeletePostButton({ id }: { id: string }) {
 
   function handleClick() {
     if (!confirm('Delete this post? This cannot be undone.')) return
-    startTransition(() => deletePost(id))
+    startTransition(async () => { await deletePost(id) })
   }
 
   return (
