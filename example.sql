@@ -260,4 +260,5 @@ ALTER TABLE public.blog_posts
   ADD COLUMN content_type text NOT NULL DEFAULT 'blog'
     CHECK (content_type IN ('blog', 'resource')),
   ADD COLUMN category text,
+  ADD COLUMN pdf_url text,
   ADD COLUMN read_time_minutes integer;

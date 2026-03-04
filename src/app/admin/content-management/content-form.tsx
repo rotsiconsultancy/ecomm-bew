@@ -2,12 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import dynamic from 'next/dynamic'
 import { createPost, updatePost } from './actions'
 import { Save, X, FileText, Image as ImageIcon, Globe } from 'lucide-react'
-
-// Load TipTap editor client-side only (no SSR)
-const TiptapEditor = dynamic(() => import('@/components/editor/tiptap-editor'), { ssr: false })
+import TiptapEditor from '@/components/editor/tiptap-editor'
 
 const CATEGORIES = [
   'Supply Chain', 'Timber Tech', 'Industrial Chemicals',
