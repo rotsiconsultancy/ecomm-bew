@@ -251,3 +251,13 @@ $$;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+
+-- Replace author_id with a free-text name
+ALTER TABLE public.blog_posts
+  DROP COLUMN author_id,
+  ADD COLUMN author_name text NOT NULL DEFAULT 'Bewama Team',
+  ADD COLUMN content_type text NOT NULL DEFAULT 'blog'
+    CHECK (content_type IN ('blog', 'resource')),
+  ADD COLUMN category text,
+  ADD COLUMN read_time_minutes integer;

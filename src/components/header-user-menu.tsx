@@ -90,7 +90,7 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
 
             {isAdmin && (
               <Link
-                href="/admin"
+                href="/admin/dashboard"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
               >

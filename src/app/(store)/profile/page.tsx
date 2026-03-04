@@ -88,7 +88,7 @@ export default async function ProfilePage() {
             </Link>
             {isAdmin && (
               <Link
-                href="/admin"
+                href="/admin/dashboard"
                 className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
               >
                 <LayoutDashboard className="h-5 w-5" />

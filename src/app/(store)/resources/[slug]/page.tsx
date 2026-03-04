@@ -24,7 +24,7 @@ export async function generateStaticParams() {
     .from('blog_posts')
     .select('slug')
     .eq('status', 'published')
-    .eq('content_type', 'blog')
+    .eq('content_type', 'resource')
   return (data ?? []).map((p) => ({ slug: p.slug }))
 }
 
@@ -38,7 +38,7 @@ export async function generateMetadata(
     .from('blog_posts')
     .select('title, excerpt, cover_image, seo_title, seo_description, seo_keywords, author_name, created_at')
     .eq('slug', slug)
-    .eq('content_type', 'blog')
+    .eq('content_type', 'resource')
     .maybeSingle()
 
   if (!post) return { title: 'Not Found' }
@@ -47,7 +47,7 @@ export async function generateMetadata(
   const description = post.seo_description ?? post.excerpt ?? ''
 
   return {
-    title: `${title} | Bewama Industrial`,
+    title: `${title} | Bewama Technical Resources`,
     description,
     keywords: post.seo_keywords ?? undefined,
     openGraph: {
@@ -67,7 +67,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function ResourceDetailPage({ params }: Props) {
   const { slug } = await params
   const supabase = await createClient()
 
@@ -75,13 +75,12 @@ export default async function BlogPostPage({ params }: Props) {
     .from('blog_posts')
     .select('*')
     .eq('slug', slug)
-    .eq('content_type', 'blog')
+    .eq('content_type', 'resource')
     .eq('status', 'published')
     .maybeSingle()
 
   if (!post) notFound()
 
-  // Parse stored TipTap JSON and render to HTML
   let htmlContent = ''
   try {
     const tiptapJson = JSON.parse(post.content ?? '{}')
@@ -92,7 +91,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': 'TechArticle',
     headline: post.title,
     description: post.excerpt ?? post.seo_description,
     image: post.cover_image,
@@ -104,7 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
       name: 'Bewama',
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png` },
     },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${slug}` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/resources/${slug}` },
   }
 
   return (
@@ -116,16 +115,16 @@ export default async function BlogPostPage({ params }: Props) {
 
       <div className="max-w-4xl mx-auto px-4 pt-12 pb-8">
         <Link
-          href="/blog"
+          href="/resources"
           className="inline-flex items-center text-slate-500 hover:text-primary mb-8 transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-          Back to all articles
+          Back to all resources
         </Link>
 
         <div className="space-y-6">
-          <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700">
-            {post.category ?? 'Blog'}
+          <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-50 text-orange-700">
+            {post.category ?? 'Technical Resource'}
           </span>
 
           <h1 className="text-4xl md:text-5xl font-extrabold text-secondary leading-tight">
@@ -187,7 +186,7 @@ export default async function BlogPostPage({ params }: Props) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200 hover:border-primary transition-colors group"
                 >
-                  <span className="text-xs font-bold text-slate-600 truncate mr-2">Technical Guide.pdf</span>
+                  <span className="text-xs font-bold text-slate-600 truncate mr-2">Technical Spec Sheet.pdf</span>
                   <Download className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
                 </a>
               </div>
@@ -196,7 +195,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="bg-primary/5 p-6 rounded-3xl border border-primary/10">
               <h4 className="font-bold text-secondary mb-2 text-sm">Need help?</h4>
               <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-                Contact our Nairobi-based logistics team for direct support.
+                Contact our Nairobi-based logistics team for sourcing and technical support.
               </p>
               <Link
                 href="/contact"
@@ -204,6 +203,16 @@ export default async function BlogPostPage({ params }: Props) {
               >
                 Contact Sales
               </Link>
+            </div>
+
+            <div className="bg-secondary p-6 rounded-3xl text-white space-y-3">
+              <h4 className="font-bold text-sm flex items-center gap-2">
+                <User className="w-4 h-4" /> About the Author
+              </h4>
+              <p className="font-bold">{post.author_name ?? 'Bewama Team'}</p>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Industrial specialist at Bewama with deep expertise in supply chain, construction materials, and logistics.
+              </p>
             </div>
           </div>
         </div>

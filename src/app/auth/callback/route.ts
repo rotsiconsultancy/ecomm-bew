@@ -58,7 +58,7 @@ export async function GET(request: Request) {
   // Admins and staff always land on the admin dashboard when next is '/'
   const isAdmin =
     profile?.role === 'admin' || profile?.role === 'staff'
-  const destination = isAdmin && next === '/' ? '/admin' : next
+  const destination = isAdmin && next === '/' ? '/admin/dashboard' : next
 
   const redirectTo = destination.startsWith('/') ? `${origin}${destination}` : origin
   return NextResponse.redirect(redirectTo)

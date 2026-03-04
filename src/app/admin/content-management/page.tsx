@@ -1,12 +1,17 @@
-import prisma from '@/lib/prisma'
+import { createClient } from '@/lib/supabase/server'
+import { getAdminContext } from '@/lib/auth'
 import Link from 'next/link'
-import { Plus, Edit, Trash2, Globe, FileText } from 'lucide-react'
-import { ContentType } from '@prisma/client'
+import { Plus, Edit, Globe, FileText } from 'lucide-react'
+import DeletePostButton from './delete-post-button'
 
 export default async function ContentManagementPage() {
-  const contents = await prisma.content.findMany({
-    orderBy: { createdAt: 'desc' }
-  })
+  await getAdminContext()
+  const supabase = await createClient()
+
+  const { data: contents } = await supabase
+    .from('blog_posts')
+    .select('id, title, slug, content_type, status, created_at')
+    .order('created_at', { ascending: false })
 
   return (
     <div className="space-y-6">
@@ -36,7 +41,7 @@ export default async function ContentManagementPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {contents.map((item) => (
+            {(contents ?? []).map((item) => (
               <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="font-semibold text-slate-800">{item.title}</div>
@@ -44,23 +49,23 @@ export default async function ContentManagementPage() {
                 </td>
                 <td className="px-6 py-4">
                   <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${
-                    item.type === ContentType.BLOG
+                    item.content_type === 'blog'
                       ? 'bg-blue-50 text-blue-700'
                       : 'bg-purple-50 text-purple-700'
                   }`}>
-                    {item.type === ContentType.BLOG ? <Globe className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
-                    {item.type.replace('_', ' ')}
+                    {item.content_type === 'blog' ? <Globe className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
+                    {item.content_type === 'blog' ? 'Blog Post' : 'Technical Resource'}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    item.published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                    item.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                   }`}>
-                    {item.published ? 'Published' : 'Draft'}
+                    {item.status === 'published' ? 'Published' : 'Draft'}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-slate-500">
-                  {new Date(item.createdAt).toLocaleDateString()}
+                  {new Date(item.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <Link
@@ -69,13 +74,11 @@ export default async function ContentManagementPage() {
                   >
                     <Edit className="w-4 h-4" />
                   </Link>
-                  <button className="p-2 text-slate-400 hover:text-red-500 transition-colors">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <DeletePostButton id={item.id} />
                 </td>
               </tr>
             ))}
-            {contents.length === 0 && (
+            {(contents ?? []).length === 0 && (
               <tr>
                 <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
                   No content found. Start by creating your first post!

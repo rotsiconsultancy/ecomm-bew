@@ -83,7 +83,7 @@ export default function LoginPage() {
         .maybeSingle()
 
       if (profile?.role === 'admin' || profile?.role === 'staff') {
-        router.push('/admin')
+        router.push('/admin/dashboard')
       } else {
         router.push(redirectTo)
       }

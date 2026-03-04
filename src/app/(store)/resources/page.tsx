@@ -1,118 +1,145 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Mail, Phone, MapPin, Send, FileText, CheckCircle2, Search, Calendar, User, Clock, ChevronRight } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { createClient } from '@/lib/supabase/server'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Metadata } from 'next'
+import { Calendar, User, ArrowRight, Settings, FileText, Clock } from 'lucide-react'
 
-export default function ProfessionalResourcesPage() {
-  const blogs = [
-    { id: 1, title: 'Optimizing Your Industrial Supply Chain for 2024', category: 'Supply Chain', author: 'Dr. Sarah Mitchell', date: 'Oct 24, 2023', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRP3Wq9G1cgCmFsfxnYrpIWanIV-1QpyQgxWp_V6L9vTPhSICNedPGgDr2ssfEepI5t1My3GGv0Afgi2Q1eyG_S-Cj85IKKy8gRzabizfM03akbfIPBoIpMpZwth0AiRBIqN_A5GSJfC8DasJlR29ouaAOEE7OVNf6aQL_GcHSZfHCjrws8BHaxaKvC3KB_4dVhbXbvWSZYP37AWrQpY_R-72yUgZwnFD1pzc5gzlKK2ZxMAaJ6nGZYzJgsvZDZB9cJ2jZKhnw6Kvp' },
-    { id: 2, title: 'Sustainable Timber: Regulations and Standards in Europe', category: 'Sustainability', author: 'Mark Henderson', date: 'Oct 18, 2023', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBIR0i1TUi9x4VneDk2A5LWpVl5VarrpO8sAPEk_DX8Z7gyAaOgzym9eyvzgWHwaPsuii3e9KgisZeMos3ycsjdhigta5hNpE08lhoMEl_MJ9mOEkuowTa8FwSr2WFu4SjAjx0fKgJKCByP0nvScDIPH5sEeBYFrnOrKu0Br9r1PWcpC55MeAHWYEKrgK3uHtJwl5d52_gnw_8n2LzR43GN0GzSCU4UuU_mPNGGRPQB73KoSVwhj3MWdZzS3uE0fS1E4NXsRXveKPMa' },
-    { id: 3, title: 'Advanced Sealants: Choosing the Right Adhesive for Construction', category: 'Chemicals', author: 'Emma Collins', date: 'Oct 12, 2023', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCid193PAd9zWoNGZaJw-eQ4YAhSaAyxfJl_E7bWuOwpyLnv79PWlZRuRG20HzqspE1s3Vrv62fa1jH_Mu26W1kdtk1ejwR-cQw3tBcRc9aS3FiljjmyDOpIA449o7jOMcGzzwsn1QpPe4hRiU1LO27crgfBopSGKe_6cJdQ71pTe799bxtB9vJdzLsaz9Eoq3KT4w3v4JLLJqw3othFd_tnikNWK2ZEle1U__V1fz0omOgTWbwhZsbX6KIIiKhIs78UA4NDSZ7p7E0' },
-  ];
+export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Technical Resources | Bewama Industrial',
+  description: 'Industry insights, technical guides, spec sheets, and professional advice from Bewama\'s industrial specialists.',
+}
+
+export default async function ResourcesPage() {
+  const supabase = await createClient()
+
+  const { data: resources } = await supabase
+    .from('blog_posts')
+    .select('id, title, slug, category, author_name, excerpt, cover_image, pdf_url, read_time_minutes, created_at')
+    .eq('status', 'published')
+    .eq('content_type', 'resource')
+    .order('created_at', { ascending: false })
+
+  const categories = [...new Set((resources ?? []).map((r) => r.category).filter(Boolean))]
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div>
-          <h1 className="text-4xl font-extrabold text-brand-navy mb-2">Technical Resources</h1>
-          <p className="text-gray-500">Industry insights, technical guides, and professional advice.</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="relative">
-            <Input className="pl-10 pr-4 py-2 border border-gray-300 rounded-[8px] w-64" placeholder="Search resources..." type="text" />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-          </div>
-          <Button className="bg-brand-orange hover:bg-brand-orange-hover text-white rounded-[8px] font-bold">Subscribe</Button>
+          <h1 className="text-4xl font-extrabold text-secondary mb-2">Technical Resources</h1>
+          <p className="text-slate-500">Industry insights, technical guides, and professional advice.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-        {/* Blog Feed */}
-        <div className="lg:col-span-3 space-y-12">
-          {blogs.map((blog) => (
-            <Link key={blog.id} className="group block" href="/blog/individual">
-              <Card className="rounded-[8px] border-none shadow-none group-hover:shadow-xl transition-all overflow-hidden flex flex-col md:flex-row gap-8">
-                <div className="md:w-80 h-64 flex-shrink-0 overflow-hidden rounded-[8px]">
-                    <img alt={blog.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={blog.image} />
-                </div>
-                <div className="flex-1 py-4 space-y-4 pr-4">
-                    <Badge className="bg-brand-orange">{blog.category}</Badge>
-                    <h2 className="text-3xl font-extrabold text-brand-navy group-hover:text-brand-orange transition-colors line-clamp-2">{blog.title}</h2>
-                    <div className="flex items-center gap-6 text-sm text-gray-500">
-                        <div className="flex items-center gap-2">
-                            <User className="h-4 w-4" />
-                            <span>{blog.author}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4" />
-                            <span>{blog.date}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4" />
-                            <span>6 min read</span>
-                        </div>
+        {/* Resource Feed */}
+        <div className="lg:col-span-3 space-y-10">
+          {(resources ?? []).map((resource) => (
+            <Link key={resource.id} href={`/resources/${resource.slug}`} className="group block">
+              <div className="rounded-2xl border border-slate-200 overflow-hidden flex flex-col md:flex-row gap-0 group-hover:shadow-xl transition-all bg-white">
+                <div className="md:w-72 h-56 shrink-0 overflow-hidden bg-slate-100 relative">
+                  {resource.cover_image ? (
+                    <Image
+                      src={resource.cover_image}
+                      alt={resource.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-slate-300">
+                      <Settings className="w-16 h-16" />
                     </div>
-                    <p className="text-gray-600 line-clamp-3 leading-relaxed">
-                        Industry leaders are increasingly focusing on the integration of digital technologies and sustainable practices to streamline operations and reduce environmental impact. In this comprehensive guide, we explore the key trends and strategies that will define the industrial supply chain in 2024...
+                  )}
+                </div>
+                <div className="flex-1 p-8 space-y-3">
+                  {resource.category && (
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700">
+                      {resource.category}
+                    </span>
+                  )}
+                  <h2 className="text-2xl font-extrabold text-secondary group-hover:text-primary transition-colors line-clamp-2">
+                    {resource.title}
+                  </h2>
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <User className="h-4 w-4" />
+                      {resource.author_name ?? 'Bewama Team'}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="h-4 w-4" />
+                      {new Date(resource.created_at).toLocaleDateString()}
+                    </span>
+                    {resource.read_time_minutes && (
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="h-4 w-4" />
+                        {resource.read_time_minutes} min read
+                      </span>
+                    )}
+                    {resource.pdf_url && (
+                      <span className="flex items-center gap-1.5 text-orange-600 font-medium">
+                        <FileText className="h-4 w-4" />
+                        PDF available
+                      </span>
+                    )}
+                  </div>
+                  {resource.excerpt && (
+                    <p className="text-slate-600 line-clamp-2 text-sm leading-relaxed">
+                      {resource.excerpt}
                     </p>
-                    <div className="pt-4 flex items-center gap-2 text-brand-orange font-bold group-hover:gap-4 transition-all">
-                        <span>Read Full Article</span>
-                        <ChevronRight className="h-5 w-5" />
-                    </div>
+                  )}
+                  <div className="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-4 transition-all pt-2">
+                    <span>Read Full Article</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
                 </div>
-              </Card>
+              </div>
             </Link>
           ))}
 
-          {/* Pagination */}
-          <div className="pt-8 flex justify-center">
-            <nav className="flex items-center space-x-2">
-              <Button variant="outline" className="rounded-[8px]">Previous</Button>
-              <Button className="bg-brand-navy text-white rounded-[8px]">1</Button>
-              <Button variant="ghost" className="rounded-[8px]">2</Button>
-              <Button variant="ghost" className="rounded-[8px]">3</Button>
-              <Button variant="outline" className="rounded-[8px]">Next</Button>
-            </nav>
-          </div>
+          {(resources ?? []).length === 0 && (
+            <div className="text-center py-20">
+              <div className="bg-white p-12 rounded-3xl border border-dashed border-slate-300 inline-block">
+                <Settings className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-secondary">No resources yet</h3>
+                <p className="text-slate-500">Check back soon for technical guides.</p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Sidebar */}
-        <aside className="space-y-12">
-            <div className="bg-brand-navy p-8 rounded-[8px] text-white space-y-6 shadow-xl">
-                <h3 className="text-xl font-bold">Download Catalog</h3>
-                <p className="text-sm text-gray-300">Get our full 2024 Product Catalog with technical specs and wholesale pricing tiers.</p>
-                <Button className="w-full bg-brand-orange hover:bg-brand-orange-hover text-white rounded-[8px] font-bold h-12">
-                    <FileText className="mr-2 h-5 w-5" />
-                    Download PDF (45MB)
-                </Button>
+        <aside className="space-y-10">
+          {categories.length > 0 && (
+            <div className="space-y-4">
+              <h4 className="text-lg font-bold text-secondary border-l-4 border-primary pl-4">Categories</h4>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-4 py-2 rounded-full text-sm bg-slate-100 text-slate-600 font-medium hover:bg-primary hover:text-white transition-colors cursor-pointer"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
+          )}
 
-            <div className="space-y-6">
-                <h4 className="text-lg font-bold text-brand-navy border-l-4 border-brand-orange pl-4">Popular Categories</h4>
-                <div className="flex flex-wrap gap-2">
-                    {['Supply Chain', 'Timber Tech', 'Industrial Chemicals', 'Sustainability', 'Market Trends', 'Logistics', 'Regulations'].map((tag) => (
-                        <Badge key={tag} variant="secondary" className="px-4 py-2 rounded-full cursor-pointer hover:bg-brand-orange hover:text-white transition-colors">
-                            {tag}
-                        </Badge>
-                    ))}
-                </div>
-            </div>
-
-            <Card className="rounded-[8px] border-gray-200 overflow-hidden">
-                <div className="bg-gray-50 p-6 border-b">
-                    <h4 className="font-bold text-brand-navy">Newsletter</h4>
-                </div>
-                <CardContent className="p-6 space-y-4">
-                    <p className="text-sm text-gray-500">Join 5,000+ industry professionals receiving our monthly insights.</p>
-                    <Input className="rounded-[8px]" placeholder="Email address" />
-                    <Button className="w-full bg-brand-navy hover:bg-blue-800 text-white rounded-[8px] font-bold">Sign Up</Button>
-                </CardContent>
-            </Card>
+          <div className="bg-secondary p-8 rounded-2xl text-white space-y-4 shadow-xl">
+            <h3 className="text-xl font-bold">Get Expert Support</h3>
+            <p className="text-sm text-slate-300">
+              Our Nairobi-based specialists are ready to help with sourcing, logistics, and technical questions.
+            </p>
+            <Link
+              href="/contact"
+              className="block w-full text-center py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-bold text-sm transition-all"
+            >
+              Contact Our Team
+            </Link>
+          </div>
         </aside>
       </div>
     </div>
-  );
+  )
 }
