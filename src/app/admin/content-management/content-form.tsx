@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createPost, updatePost } from './actions'
 import { Save, X, FileText, Image as ImageIcon, Globe } from 'lucide-react'
 import TiptapEditor from '@/components/editor/tiptap-editor'
+import { ImageUpload } from '@/components/ui/image-upload'
 
 const CATEGORIES = [
   'Supply Chain', 'Timber Tech', 'Industrial Chemicals',
@@ -39,8 +40,9 @@ interface ContentFormProps {
 
 export default function ContentForm({ initialData }: ContentFormProps) {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [slug, setSlug] = useState(initialData?.slug ?? '')
+  const [loading, setLoading]       = useState(false)
+  const [slug, setSlug]             = useState(initialData?.slug ?? '')
+  const [coverImage, setCoverImage] = useState(initialData?.cover_image ?? '')
 
   const parsedContent = (() => {
     if (!initialData?.content) return null
@@ -202,12 +204,14 @@ export default function ContentForm({ initialData }: ContentFormProps) {
               <ImageIcon className="w-4 h-4 text-slate-400" /> Media & Files
             </h3>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700">Cover Image URL</label>
-              <input
-                name="cover_image"
-                defaultValue={initialData?.cover_image ?? ''}
-                placeholder="https://…"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+              <label className="text-sm font-semibold text-slate-700">Cover Image</label>
+              {/* Hidden input so FormData picks up the URL */}
+              <input type="hidden" name="cover_image" value={coverImage} />
+              <ImageUpload
+                bucket="blog-images"
+                value={coverImage || null}
+                onChange={setCoverImage}
+                aspectRatio="video"
               />
             </div>
             <div className="space-y-2">

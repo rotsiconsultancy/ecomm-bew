@@ -31,9 +31,9 @@ import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 
 const items = [
-  { title: "Dashboard",  url: "/admin",                      icon: LayoutDashboard },
+  { title: "Dashboard",  url: "/admin/dashboard",                      icon: LayoutDashboard },
   { title: "Products",   url: "/admin/product-management",   icon: Package },
-  { title: "Inventory",  url: "/admin/inventory",            icon: Warehouse },
+  // { title: "Inventory",  url: "/admin/inventory",            icon: Warehouse },
   { title: "Orders",     url: "/admin/order-management",     icon: ShoppingCart },
   { title: "Quotes",     url: "/admin/quote-management",     icon: MessageSquare },
   { title: "Users",      url: "/admin/user-management",      icon: Users },

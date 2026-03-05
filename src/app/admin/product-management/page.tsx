@@ -1,168 +1,192 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import Link from 'next/link'
+import { getAdminContext } from '@/lib/auth'
+import { createServiceClient } from '@/lib/supabase/server'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import DeleteProductButton from './delete-product-button'
+import ToggleStatusButton from './toggle-status-button'
 import {
-  Package,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit2,
-  Trash2,
-  ExternalLink,
-  ChevronRight,
-  TrendingUp,
-  AlertCircle
-} from 'lucide-react';
+  Package, Plus, Edit2, TrendingDown, AlertCircle,
+} from 'lucide-react'
 
-export default function ProductManagementPage() {
-  const products = [
-    { id: 'BW-TIM-MDF18-2412', name: 'Premium MDF Board 18mm', category: 'Timber & Boards', stock: 450, price: '€45.50', status: 'Active', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAsE8gZ4V4PPHEYSE7qCjJNoeFLSBiRnt3YfNDzd-QAk3VMv1m75VGcWtigh4E5aytAWmayB98ZPoF068oLY3B78Cs48m-Pbbnbsuohuf5JxfsSrUDy70PU7_yMKZGbFgfFPT8E-oJX8M6SbrL9KFFRDfXPGxwKNQXeQC2DjtiVz7JFjwNDQzouYxmSx1ze3wqmntOcHGtFir767ahdA-TiRKuGW-T_PxL2S0BFkAgn3cK6CrOGEc4lQ7b87NtXXYRMdh-v-x42Q-NC' },
-    { id: 'BW-CHM-PSA500', name: 'Pro-Seal Adhesive 500ml', category: 'Chemicals', stock: 1200, price: '€29.99', status: 'Active', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCid193PAd9zWoNGZaJw-eQ4YAhSaAyxfJl_E7bWuOwpyLnv79PWlZRuRG20HzqspE1s3Vrv62fa1jH_Mu26W1kdtk1ejwR-cQw3tBcRc9aS3FiljjmyDOpIA449o7jOMcGzzwsn1QpPe4hRiU1LO27crgfBopSGKe_6cJdQ71pTe799bxtB9vJdzLsaz9Eoq3KT4w3v4JLLJqw3othFd_tnikNWK2ZEle1U__V1fz0omOgTWbwhZsbX6KIIiKhIs78UA4NDSZ7p7E0' },
-    { id: 'BW-TLS-BIT12', name: 'Industrial Drill Bit Set', category: 'Tools', stock: 85, price: '€89.00', status: 'Low Stock', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCBW0GJckaeJnpjc-ZC1LbFY1DGGWqDqDUjycKNHZGQBaMZk9PuaRcTCnVg3V3_74AID-YaACf4fEy0MHzVXWUK0OCxGvyTP7IGNA-_zA8En4Hqc4dXLgr1hIeHLTvk0-1MzKqxW2X_0l_xdhmBDBa3YIUJb7w9vI2qzuss64lVyEEb4KyMA7WJfy9NjPu5VLZRFrTAwJvPl6KC6rAAqxsfbAIgNMYj4SqTAo4Lc88J1MY2Tbbxm67NrfFhiZXbcHvitBf9y429q' },
-    { id: 'BW-TIM-C24-48', name: 'C24 Treated Timber 4.8m', category: 'Timber & Boards', stock: 15, price: '€12.95', status: 'Out of Stock', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBIR0i1TUi9x4VneDk2A5LWpVl5VarrpO8sAPEk_DX8Z7gyAaOgzym9eyvzgWHwaPsuii3e9KgisZeMos3ycsjdhigta5hNpE08lhoMEl_MJ9mOEkuowTa8FwSr2WFu4SjAjx0fKgJKCByP0nvScDIPH5sEeBYFrnOrKu0Br9r1PWcpC55MeAHWYEKrgK3uHtJwl5d52_gnw_8n2LzR43GN0GzSCU4UuU_mPNGGRPQB73KoSVwhj3MWdZzS3uE0fS1E4NXsRXveKPMa' },
-  ];
+export default async function ProductManagementPage() {
+  await getAdminContext()
+  const supabase = await createServiceClient()
+
+  const { data: products } = await supabase
+    .from('products')
+    .select('id, name, slug, category, brand, price, currency, stock, images, is_active, created_at')
+    .order('created_at', { ascending: false })
+
+  const all       = products ?? []
+  const total     = all.length
+  const active    = all.filter((p) => p.is_active).length
+  const outOfStock = all.filter((p) => p.stock === 0).length
+
+  const formatPrice = (price: number, currency: string) => {
+    const symbols: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
+    return `${symbols[currency] ?? currency} ${price.toLocaleString()}`
+  }
+
+  const stockBadge = (stock: number) => {
+    if (stock === 0) return { label: 'Out of Stock', cls: 'bg-red-100 text-red-600' }
+    if (stock < 20)  return { label: 'Low Stock',    cls: 'bg-yellow-100 text-yellow-600' }
+    return               { label: 'In Stock',       cls: 'bg-green-100 text-green-600' }
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-extrabold text-brand-navy tracking-tight">Product Management</h1>
+          <h1 className="text-4xl font-extrabold text-[#003366] tracking-tight">Product Management</h1>
           <p className="text-gray-500 mt-2">Manage your inventory, pricing, and product details.</p>
         </div>
-        <div className="flex items-center gap-4">
-            <Button className="bg-brand-orange hover:bg-brand-orange-hover text-white rounded-[8px] font-bold h-12 px-8">
-                <Plus className="mr-2 h-5 w-5" />
-                Add New Product
-            </Button>
-        </div>
+        <Link href="/admin/product-management/new">
+          <Button className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold h-12 px-8">
+            <Plus className="mr-2 h-5 w-5" />
+            Add New Product
+          </Button>
+        </Link>
       </div>
 
-      {/* Quick Stats Summary */}
+      {/* Stat cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="rounded-[8px] border-none shadow-sm p-6 flex items-center gap-6">
-            <div className="h-12 w-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                <Package className="h-6 w-6" />
-            </div>
-            <div>
-                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Total SKU</p>
-                <p className="text-2xl font-extrabold text-brand-navy">248 Products</p>
-            </div>
+        <Card className="rounded-xl border-none shadow-sm p-6 flex items-center gap-6">
+          <div className="h-12 w-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+            <Package className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Total Products</p>
+            <p className="text-2xl font-extrabold text-[#003366]">{total}</p>
+            <p className="text-xs text-gray-400">{active} active</p>
+          </div>
         </Card>
-        <Card className="rounded-[8px] border-none shadow-sm p-6 flex items-center gap-6">
-            <div className="h-12 w-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center">
-                <AlertCircle className="h-6 w-6" />
-            </div>
-            <div>
-                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Low Stock Alert</p>
-                <p className="text-2xl font-extrabold text-brand-navy">12 SKU</p>
-            </div>
+
+        <Card className="rounded-xl border-none shadow-sm p-6 flex items-center gap-6">
+          <div className="h-12 w-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center shrink-0">
+            <AlertCircle className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Out of Stock</p>
+            <p className="text-2xl font-extrabold text-[#003366]">{outOfStock}</p>
+            <p className="text-xs text-gray-400">Need restocking</p>
+          </div>
         </Card>
-        <Card className="rounded-[8px] border-none shadow-sm p-6 flex items-center gap-6">
-            <div className="h-12 w-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
-                <TrendingUp className="h-6 w-6" />
-            </div>
-            <div>
-                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Price Updates</p>
-                <p className="text-2xl font-extrabold text-brand-navy">3 Scheduled</p>
-            </div>
+
+        <Card className="rounded-xl border-none shadow-sm p-6 flex items-center gap-6">
+          <div className="h-12 w-12 bg-orange-100 text-[#ec5b13] rounded-full flex items-center justify-center shrink-0">
+            <TrendingDown className="h-6 w-6" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Inactive</p>
+            <p className="text-2xl font-extrabold text-[#003366]">{total - active}</p>
+            <p className="text-xs text-gray-400">Hidden from store</p>
+          </div>
         </Card>
       </div>
-
-      {/* Filters & Actions */}
-      <Card className="rounded-[8px] border-none shadow-sm p-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex flex-wrap items-center gap-4 flex-1">
-                <div className="relative flex-1 max-w-sm">
-                    <Input className="pl-10 pr-4 py-2 border border-gray-200 rounded-[8px] w-full" placeholder="Search by SKU, Name, or Category..." type="text" />
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                </div>
-                <Button variant="outline" className="flex items-center gap-2 border-gray-200 rounded-[8px]">
-                    <Filter className="h-4 w-4" />
-                    <span>Filter</span>
-                </Button>
-            </div>
-            <div className="flex items-center gap-2">
-                <Button variant="ghost" className="text-gray-400 hover:text-brand-navy"><ExternalLink className="h-5 w-5" /></Button>
-                <Button variant="ghost" className="text-gray-400 hover:text-red-600"><Trash2 className="h-5 w-5" /></Button>
-            </div>
-        </div>
-      </Card>
 
       {/* Product Table */}
-      <Card className="rounded-[8px] border-none shadow-sm overflow-hidden">
-        <table className="w-full text-left">
+      {all.length === 0 ? (
+        <Card className="rounded-xl border-none shadow-sm p-16 text-center">
+          <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
+          <p className="text-gray-500 font-medium">No products yet.</p>
+          <Link href="/admin/product-management/new" className="mt-4 inline-block">
+            <Button className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white mt-4">
+              <Plus className="w-4 h-4 mr-2" /> Add your first product
+            </Button>
+          </Link>
+        </Card>
+      ) : (
+        <Card className="rounded-xl border-none shadow-sm overflow-hidden">
+          <table className="w-full text-left">
             <thead className="bg-gray-50 text-xs font-extrabold text-gray-500 uppercase tracking-wider border-b">
-                <tr>
-                    <th className="px-8 py-4">Product Details</th>
-                    <th className="px-8 py-4">Category</th>
-                    <th className="px-8 py-4 text-center">Stock Level</th>
-                    <th className="px-8 py-4 text-center">Status</th>
-                    <th className="px-8 py-4 text-right">Wholesale Price</th>
-                    <th className="px-8 py-4 text-right">Actions</th>
-                </tr>
+              <tr>
+                <th className="px-6 py-4">Product</th>
+                <th className="px-6 py-4">Category / Brand</th>
+                <th className="px-6 py-4 text-center">Stock</th>
+                <th className="px-6 py-4 text-center">Status</th>
+                <th className="px-6 py-4 text-right">Price</th>
+                <th className="px-6 py-4 text-right">Actions</th>
+              </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 text-sm">
-                {products.map((product) => (
-                    <tr key={product.id} className="hover:bg-gray-50/50 cursor-pointer group">
-                        <td className="px-8 py-6">
-                            <div className="flex items-center gap-4">
-                                <div className="h-12 w-12 bg-gray-50 rounded-[8px] border flex items-center justify-center flex-shrink-0">
-                                    <img alt={product.name} className="h-4/5 w-4/5 object-contain" src={product.image} />
-                                </div>
-                                <div>
-                                    <p className="font-bold text-brand-navy group-hover:text-brand-orange transition-colors">{product.name}</p>
-                                    <p className="text-xs text-gray-400">SKU: {product.id}</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td className="px-8 py-6 font-semibold text-gray-600">{product.category}</td>
-                        <td className="px-8 py-6 text-center">
-                            <div className="flex flex-col items-center gap-1">
-                                <span className="font-extrabold text-brand-navy">{product.stock} units</span>
-                                <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                    <div className={`h-full rounded-full ${
-                                        product.stock > 100 ? 'bg-green-500 w-full' :
-                                        product.stock > 50 ? 'bg-yellow-500 w-1/2' :
-                                        'bg-red-500 w-1/4'
-                                    }`}></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td className="px-8 py-6">
-                            <div className="flex justify-center">
-                                <Badge className={`border-none px-3 py-1 font-bold ${
-                                    product.status === 'Active' ? 'bg-green-100 text-green-600' :
-                                    product.status === 'Low Stock' ? 'bg-yellow-100 text-yellow-600' :
-                                    'bg-red-100 text-red-600'
-                                }`}>
-                                    {product.status}
-                                </Badge>
-                            </div>
-                        </td>
-                        <td className="px-8 py-6 text-right font-extrabold text-brand-navy">{product.price}</td>
-                        <td className="px-8 py-6 text-right">
-                            <div className="flex items-center justify-end gap-2">
-                                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-brand-orange"><Edit2 className="h-4 w-4" /></Button>
-                                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-brand-navy"><MoreVertical className="h-4 w-4" /></Button>
-                            </div>
-                        </td>
-                    </tr>
-                ))}
+              {all.map((product) => {
+                const badge = stockBadge(product.stock)
+                const thumb = product.images?.[0]
+                return (
+                  <tr key={product.id} className="hover:bg-gray-50/50 group">
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 bg-gray-50 rounded-lg border flex items-center justify-center shrink-0 overflow-hidden">
+                          {thumb ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={thumb} alt={product.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <Package className="w-5 h-5 text-gray-300" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-bold text-[#003366] group-hover:text-[#ec5b13] transition-colors line-clamp-1">
+                            {product.name}
+                          </p>
+                          <p className="text-xs text-gray-400 font-mono">{product.slug}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5">
+                      <p className="font-semibold text-gray-700">{product.category ?? '—'}</p>
+                      <p className="text-xs text-gray-400">{product.brand ?? ''}</p>
+                    </td>
+                    <td className="px-6 py-5 text-center">
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="font-extrabold text-[#003366]">{product.stock}</span>
+                        <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              product.stock === 0 ? 'bg-red-400 w-0' :
+                              product.stock < 20  ? 'bg-yellow-400 w-1/4' :
+                              product.stock < 100 ? 'bg-blue-400 w-1/2' :
+                              'bg-green-400 w-full'
+                            }`}
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5">
+                      <div className="flex flex-col items-center gap-1.5">
+                        <Badge className={`border-none text-xs font-bold px-3 py-1 ${badge.cls}`}>
+                          {badge.label}
+                        </Badge>
+                        <Badge className={`border-none text-[10px] font-semibold px-2 py-0.5 ${
+                          product.is_active ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'
+                        }`}>
+                          {product.is_active ? 'Active' : 'Inactive'}
+                        </Badge>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5 text-right font-extrabold text-[#003366]">
+                      {formatPrice(product.price, product.currency)}
+                    </td>
+                    <td className="px-6 py-5 text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <ToggleStatusButton id={product.id} isActive={product.is_active} />
+                        <Link href={`/admin/product-management/${product.id}/edit`}>
+                          <button className="p-2 text-slate-400 hover:text-[#ec5b13] transition-colors">
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                        </Link>
+                        <DeleteProductButton id={product.id} />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
-        </table>
-      </Card>
-
-      {/* Pagination Placeholder */}
-      <div className="flex items-center justify-between pt-4">
-          <p className="text-sm text-gray-500">Showing 1 to 4 of 248 products</p>
-          <div className="flex gap-2">
-              <Button variant="outline" disabled className="rounded-[8px]">Previous</Button>
-              <Button variant="outline" className="rounded-[8px] hover:bg-brand-navy hover:text-white transition-colors">Next</Button>
-          </div>
-      </div>
+          </table>
+        </Card>
+      )}
     </div>
-  );
+  )
 }

@@ -1,117 +1,232 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Filter, Search } from 'lucide-react';
+import Link from 'next/link'
+import Image from 'next/image'
+import { Metadata } from 'next'
+import { createBuildClient } from '@/lib/supabase/server'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Package, FileText } from 'lucide-react'
 
-export default function ProductListingPage() {
-  const products = [
-    { id: 1, title: 'Pro-Seal Adhesive 500ml', category: 'Chemical & Sealants', price: '29.99', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCid193PAd9zWoNGZaJw-eQ4YAhSaAyxfJl_E7bWuOwpyLnv79PWlZRuRG20HzqspE1s3Vrv62fa1jH_Mu26W1kdtk1ejwR-cQw3tBcRc9aS3FiljjmyDOpIA449o7jOMcGzzwsn1QpPe4hRiU1LO27crgfBopSGKe_6cJdQ71pTe799bxtB9vJdzLsaz9Eoq3KT4w3v4JLLJqw3othFd_tnikNWK2ZEle1U__V1fz0omOgTWbwhZsbX6KIIiKhIs78UA4NDSZ7p7E0' },
-    { id: 2, title: 'Premium MDF Board 18mm', category: 'Timber & Boards', price: '45.50', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAsE8gZ4V4PPHEYSE7qCjJNoeFLSBiRnt3YfNDzd-QAk3VMv1m75VGcWtigh4E5aytAWmayB98ZPoF068oLY3B78Cs48m-Pbbnbsuohuf5JxfsSrUDy70PU7_yMKZGbFgfFPT8E-oJX8M6SbrL9KFFRDfXPGxwKNQXeQC2DjtiVz7JFjwNDQzouYxmSx1ze3wqmntOcHGtFir767ahdA-TiRKuGW-T_PxL2S0BFkAgn3cK6CrOGEc4lQ7b87NtXXYRMdh-v-x42Q-NC' },
-    { id: 3, title: 'Industrial Drill Bit Set (12pc)', category: 'Professional Tools', price: '89.00', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCBW0GJckaeJnpjc-ZC1LbFY1DGGWqDqDUjycKNHZGQBaMZk9PuaRcTCnVg3V3_74AID-YaACf4fEy0MHzVXWUK0OCxGvyTP7IGNA-_zA8En4Hqc4dXLgr1hIeHLTvk0-1MzKqxW2X_0l_xdhmBDBa3YIUJb7w9vI2qzuss64lVyEEb4KyMA7WJfy9NjPu5VLZRFrTAwJvPl6KC6rAAqxsfbAIgNMYj4SqTAo4Lc88J1MY2Tbbxm67NrfFhiZXbcHvitBf9y429q' },
-    { id: 4, title: 'C24 Treated Timber 4.8m', category: 'Timber & Construction', price: '12.95', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBIR0i1TUi9x4VneDk2A5LWpVl5VarrpO8sAPEk_DX8Z7gyAaOgzym9eyvzgWHwaPsuii3e9KgisZeMos3ycsjdhigta5hNpE08lhoMEl_MJ9mOEkuowTa8FwSr2WFu4SjAjx0fKgJKCByP0nvScDIPH5sEeBYFrnOrKu0Br9r1PWcpC55MeAHWYEKrgK3uHtJwl5d52_gnw_8n2LzR43GN0GzSCU4UuU_mPNGGRPQB73KoSVwhj3MWdZzS3uE0fS1E4NXsRXveKPMa' },
-    { id: 5, title: 'Structural Steel Beam', category: 'Metals & Construction', price: '215.00', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRP3Wq9G1cgCmFsfxnYrpIWanIV-1QpyQgxWp_V6L9vTPhSICNedPGgDr2ssfEepI5t1My3GGv0Afgi2Q1eyG_S-Cj85IKKy8gRzabizfM03akbfIPBoIpMpZwth0AiRBIqN_A5GSJfC8DasJlR29ouaAOEE7OVNf6aQL_GcHSZfHCjrws8BHaxaKvC3KB_4dVhbXbvWSZYP37AWrQpY_R-72yUgZwnFD1pzc5gzlKK2ZxMAaJ6nGZYzJgsvZDZB9cJ2jZKhnw6Kvp' },
-    { id: 6, title: 'Heavy Duty Caster Wheels', category: 'Hardware', price: '14.99', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCHBV2Qk3-Wmw5dN4v0kEF1dZtKYhmt5EXmCaVyr32KTEYllmkCzgbL6ZaB9Mveadt8dTOQVl4TO2GPc5H3Yjn0DPtzQOyRuTAZGwHMdXtMgLSy2UnX0-lQVp7bHp6ZmQ2apl4B8ukBqakZMoeM0-uKSR97E_NdbK3xEBB09KCmPZWEtAWYBWiBpPPR6me2_j-e2OTOdr1TGF0cCsIMZbAnEClzOU2N9ZIJwjQAh7he-VIgRO2l1WW8MGch9n4WOvdtvld3ExppBZDf' },
-  ];
+export const revalidate = 1800
+
+export const metadata: Metadata = {
+  title: 'Products | Bewama',
+  description:
+    'Browse our industrial product catalog — silicones, timber, adhesives, tools and more. Quality materials sourced for professionals across Europe.',
+}
+
+type SearchParams = {
+  category?: string
+  brand?: string
+}
+
+type Props = {
+  searchParams: Promise<SearchParams>
+}
+
+const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
+
+export default async function ProductsPage({ searchParams }: Props) {
+  const { category, brand } = await searchParams
+  const supabase = createBuildClient()
+
+  let query = supabase
+    .from('products')
+    .select('id, name, slug, category, brand, price, currency, stock, images, is_active')
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
+
+  if (category) query = query.eq('category', category)
+  if (brand)    query = query.ilike('brand', `%${brand}%`)
+
+  const { data: products } = await query
+  const all = products ?? []
+
+  // Derive filter options from all active products (without filters applied)
+  const { data: allProducts } = await supabase
+    .from('products')
+    .select('category, brand')
+    .eq('is_active', true)
+
+  const categories = [...new Set((allProducts ?? []).map((p) => p.category).filter(Boolean))] as string[]
+  const brands     = [...new Set((allProducts ?? []).map((p) => p.brand).filter(Boolean))] as string[]
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-        <div>
-          <h1 className="text-4xl font-extrabold text-brand-navy mb-2">Product Catalog</h1>
-          <p className="text-gray-500">Discover quality materials for your industrial needs.</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="relative">
-            <Input className="pl-10 pr-4 py-2 border border-gray-300 rounded-[8px] w-64" placeholder="Search products..." type="text" />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-          </div>
-          <Button variant="outline" className="flex items-center gap-2 border-gray-300 rounded-[8px]">
-            <Filter className="h-4 w-4" />
-            <span>Filters</span>
-          </Button>
-        </div>
+      {/* Header */}
+      <div className="mb-10">
+        <h1 className="text-4xl font-extrabold text-[#003366] mb-2">Product Catalog</h1>
+        <p className="text-gray-500">
+          {all.length === 0 && (category || brand)
+            ? 'No products match your filters.'
+            : `${all.length} product${all.length !== 1 ? 's' : ''} available`}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
-        <div className="hidden lg:block space-y-8">
-          <div>
-            <h3 className="text-lg font-bold text-brand-navy mb-4">Categories</h3>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-gray-600 hover:text-brand-orange cursor-pointer">
-                <span>Chemicals & Sealants</span>
-                <Badge variant="secondary">24</Badge>
-              </div>
-              <div className="flex items-center justify-between text-gray-600 hover:text-brand-orange cursor-pointer font-semibold text-brand-orange">
-                <span>Timber & Boards</span>
-                <Badge className="bg-brand-orange">18</Badge>
-              </div>
-              <div className="flex items-center justify-between text-gray-600 hover:text-brand-orange cursor-pointer">
-                <span>Metals & Construction</span>
-                <Badge variant="secondary">15</Badge>
-              </div>
-              <div className="flex items-center justify-between text-gray-600 hover:text-brand-orange cursor-pointer">
-                <span>Tools & Equipment</span>
-                <Badge variant="secondary">42</Badge>
+        <aside className="hidden lg:block space-y-8">
+          {/* Categories */}
+          {categories.length > 0 && (
+            <div>
+              <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
+                Categories
+              </h3>
+              <div className="space-y-2">
+                <Link
+                  href="/products"
+                  className={`flex items-center justify-between text-sm py-1 transition-colors ${
+                    !category ? 'text-[#ec5b13] font-semibold' : 'text-gray-600 hover:text-[#ec5b13]'
+                  }`}
+                >
+                  All Categories
+                  <Badge variant="secondary" className="text-xs">{(allProducts ?? []).length}</Badge>
+                </Link>
+                {categories.map((cat) => {
+                  const count = (allProducts ?? []).filter((p) => p.category === cat).length
+                  return (
+                    <Link
+                      key={cat}
+                      href={`/products?category=${encodeURIComponent(cat)}`}
+                      className={`flex items-center justify-between text-sm py-1 transition-colors ${
+                        category === cat
+                          ? 'text-[#ec5b13] font-semibold'
+                          : 'text-gray-600 hover:text-[#ec5b13]'
+                      }`}
+                    >
+                      {cat}
+                      <Badge
+                        className={`text-xs border-none ${
+                          category === cat ? 'bg-[#ec5b13] text-white' : ''
+                        }`}
+                        variant={category === cat ? 'default' : 'secondary'}
+                      >
+                        {count}
+                      </Badge>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
-          </div>
-          <div className="pt-8 border-t">
-            <h3 className="text-lg font-bold text-brand-navy mb-4">Price Range</h3>
-            <div className="space-y-4">
-              <input className="w-full accent-brand-orange" max="1000" min="0" type="range" />
-              <div className="flex items-center justify-between text-sm text-gray-500">
-                <span>€0</span>
-                <span>€1000+</span>
+          )}
+
+          {/* Brands */}
+          {brands.length > 0 && (
+            <div className="pt-6 border-t border-gray-100">
+              <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
+                Brands
+              </h3>
+              <div className="space-y-2">
+                {brands.map((b) => (
+                  <Link
+                    key={b}
+                    href={`/products?brand=${encodeURIComponent(b)}${category ? `&category=${encodeURIComponent(category)}` : ''}`}
+                    className={`block text-sm py-1 transition-colors ${
+                      brand?.toLowerCase() === b.toLowerCase()
+                        ? 'text-[#ec5b13] font-semibold'
+                        : 'text-gray-600 hover:text-[#ec5b13]'
+                    }`}
+                  >
+                    {b}
+                  </Link>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
+          )}
+
+          {/* Clear filters */}
+          {(category || brand) && (
+            <Link href="/products">
+              <Button variant="outline" size="sm" className="w-full text-xs">
+                Clear filters
+              </Button>
+            </Link>
+          )}
+        </aside>
 
         {/* Product Grid */}
         <div className="lg:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+          {all.length === 0 ? (
+            <div className="text-center py-20 text-gray-400">
+              <Package className="w-12 h-12 mx-auto mb-4 opacity-40" />
+              <p className="font-medium">No products found.</p>
+              {(category || brand) && (
+                <Link href="/products" className="mt-3 inline-block text-sm text-[#ec5b13] hover:underline">
+                  Clear filters
+                </Link>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {all.map((product) => {
+                const thumb = product.images?.[0]
+                const symbol = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
+                const inStock = product.stock > 0
 
-          {/* Pagination */}
-          <div className="mt-12 flex justify-center">
-            <nav className="flex items-center space-x-2">
-              <Button variant="outline" className="rounded-[8px]">&larr; Previous</Button>
-              <Button className="bg-brand-navy text-white rounded-[8px]">1</Button>
-              <Button variant="ghost" className="rounded-[8px]">2</Button>
-              <Button variant="ghost" className="rounded-[8px]">3</Button>
-              <Button variant="outline" className="rounded-[8px]">Next &rarr;</Button>
-            </nav>
-          </div>
+                return (
+                  <div
+                    key={product.id}
+                    className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col group"
+                  >
+                    {/* Image */}
+                    <Link href={`/products/${product.slug}`} className="block">
+                      <div className="bg-gray-50 rounded-t-xl aspect-square flex items-center justify-center overflow-hidden">
+                        {thumb ? (
+                          <Image
+                            src={thumb}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <Package className="w-16 h-16 text-gray-200" />
+                        )}
+                      </div>
+                    </Link>
+
+                    {/* Info */}
+                    <div className="p-4 flex flex-col flex-1">
+                      {product.category && (
+                        <Badge className="self-start mb-2 text-xs bg-orange-50 text-orange-700 border-none font-semibold">
+                          {product.category}
+                        </Badge>
+                      )}
+                      <Link href={`/products/${product.slug}`}>
+                        <h3 className="font-bold text-[#003366] line-clamp-2 hover:text-[#ec5b13] transition-colors leading-snug">
+                          {product.name}
+                        </h3>
+                      </Link>
+                      {product.brand && (
+                        <p className="text-xs text-gray-400 mt-1">{product.brand}</p>
+                      )}
+
+                      <div className="mt-auto pt-4 flex items-center justify-between">
+                        <div>
+                          <span className="text-xl font-extrabold text-[#003366]">
+                            {symbol}{product.price.toLocaleString()}
+                          </span>
+                          {!inStock && (
+                            <p className="text-xs text-red-500 font-semibold mt-0.5">Out of stock</p>
+                          )}
+                        </div>
+                        <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`}>
+                          <Button
+                            size="sm"
+                            className="bg-[#003366] hover:bg-[#002244] text-white text-xs h-9"
+                          >
+                            <FileText className="w-3.5 h-3.5 mr-1.5" />
+                            Quote
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  );
-}
-
-function ProductCard({ id, title, category, price, image }: { id: number, title: string, category: string, price: string, image: string }) {
-  return (
-    <div className="bg-white p-4 rounded-[8px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow group">
-      <Link className="block" href={`/products/${id}`}>
-        <div className="bg-gray-50 rounded-[8px] mb-4 aspect-square flex items-center justify-center overflow-hidden">
-          <img alt={title} className="object-contain w-4/5 h-4/5 group-hover:scale-110 transition-transform duration-500" src={image} />
-        </div>
-      </Link>
-      <Link href={`/products/${id}`}>
-        <h4 className="font-bold text-brand-navy text-lg line-clamp-1 hover:text-brand-orange transition-colors">{title}</h4>
-      </Link>
-      <p className="text-sm text-gray-500 mb-4">{category}</p>
-      <div className="mt-auto flex items-center justify-between">
-        <span className="text-2xl font-extrabold text-brand-navy">€{price}</span>
-        <Button size="icon" className="bg-brand-navy hover:bg-blue-800 text-white p-2 rounded-[8px] transition-colors">
-          <Plus className="w-6 h-6" />
-        </Button>
-      </div>
-    </div>
-  );
+  )
 }
