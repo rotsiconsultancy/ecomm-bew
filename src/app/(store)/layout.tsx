@@ -1,5 +1,6 @@
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { CartProvider } from '@/components/cart-provider'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function StoreLayout({
@@ -26,10 +27,10 @@ export default async function StoreLayout({
     : null
 
   return (
-    <>
+    <CartProvider>
       <Header user={authUser} profile={profile} />
       <main>{children}</main>
       <Footer />
-    </>
+    </CartProvider>
   )
 }

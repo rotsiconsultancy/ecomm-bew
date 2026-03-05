@@ -32,7 +32,8 @@ export async function createProduct(
 
   const name         = String(formData.get('name') ?? '')
   const slug         = String(formData.get('slug') ?? '') || slugify(name)
-  const price        = parseFloat(String(formData.get('price') ?? '0'))
+  const pricing_type = String(formData.get('pricing_type') ?? 'fixed') as 'fixed' | 'quote'
+  const price        = pricing_type === 'quote' ? 0 : parseFloat(String(formData.get('price') ?? '0'))
   const currency     = String(formData.get('currency') ?? 'KES')
   const category     = String(formData.get('category') ?? '') || null
   const brand        = String(formData.get('brand') ?? '') || null
@@ -50,6 +51,7 @@ export async function createProduct(
       description: JSON.stringify(description),
       price,
       currency,
+      pricing_type,
       category,
       brand,
       stock,
@@ -81,7 +83,8 @@ export async function updateProduct(
 
   const name         = String(formData.get('name') ?? '')
   const slug         = String(formData.get('slug') ?? '') || slugify(name)
-  const price        = parseFloat(String(formData.get('price') ?? '0'))
+  const pricing_type = String(formData.get('pricing_type') ?? 'fixed') as 'fixed' | 'quote'
+  const price        = pricing_type === 'quote' ? 0 : parseFloat(String(formData.get('price') ?? '0'))
   const currency     = String(formData.get('currency') ?? 'KES')
   const category     = String(formData.get('category') ?? '') || null
   const brand        = String(formData.get('brand') ?? '') || null
@@ -99,6 +102,7 @@ export async function updateProduct(
       description: JSON.stringify(description),
       price,
       currency,
+      pricing_type,
       category,
       brand,
       stock,
@@ -128,7 +132,6 @@ export async function deleteProduct(id: string) {
     .eq('id', id)
     .maybeSingle()
 
-  // Soft delete — never hard delete products
   const { error } = await supabase
     .from('products')
     .update({ is_active: false })

@@ -62,7 +62,7 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
         <div className="w-9 h-9 rounded-full bg-[#003366] flex items-center justify-center text-white text-sm font-bold shrink-0">
           {initials}
         </div>
-        <span className="hidden sm:block text-sm font-semibold text-gray-700 max-w-[120px] truncate">
+        <span className="hidden sm:block text-sm font-semibold text-gray-700 max-w-30 truncate">
           {displayName}
         </span>
         <ChevronDown

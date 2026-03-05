@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeaderUserMenu } from '@/components/header-user-menu'
+import { CartDrawer } from '@/components/cart-drawer'
 
 type AuthUser = { id: string; email: string } | null
 type AuthProfile = { full_name: string | null; role: string } | null
@@ -56,6 +57,9 @@ export function Header({ user = null, profile = null }: HeaderProps) {
               </Link>
             </>
           )}
+
+          <CartDrawer />
+
           <Button
             asChild
             className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm active:scale-95"

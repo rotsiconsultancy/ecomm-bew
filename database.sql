@@ -262,3 +262,7 @@ ALTER TABLE public.blog_posts
   ADD COLUMN category text,
   ADD COLUMN pdf_url text,
   ADD COLUMN read_time_minutes integer;
+
+ALTER TABLE public.products 
+ADD COLUMN pricing_type text NOT NULL DEFAULT 'fixed'
+CHECK (pricing_type IN ('fixed', 'quote'));

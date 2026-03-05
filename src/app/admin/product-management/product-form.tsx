@@ -9,7 +9,7 @@ import TiptapEditor from '@/components/editor/tiptap-editor'
 import { ImageUploadButton } from '@/components/ui/image-upload'
 import { createProduct, updateProduct } from './actions'
 import {
-  Plus, Trash2, ChevronDown, ChevronUp, Image as ImageIcon, Loader2,
+  Plus, Trash2, ChevronDown, ChevronUp, Image as ImageIcon, Loader2, Tag, FileText,
 } from 'lucide-react'
 
 const CATEGORIES = ['Silicones', 'Timber & Boards', 'Tools', 'Adhesives', 'Chemicals', 'Other']
@@ -22,6 +22,7 @@ type Product = {
   description: string | null
   price: number
   currency: string
+  pricing_type: 'fixed' | 'quote'
   category: string | null
   brand: string | null
   stock: number
@@ -49,24 +50,24 @@ export default function ProductForm({ mode, product }: Props) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
 
-  // Deserialize stored TipTap JSON
   let initialContent: object | null = null
   if (product?.description) {
     try { initialContent = JSON.parse(product.description) } catch { /* ignore */ }
   }
 
-  const [name, setName]           = useState(product?.name ?? '')
-  const [slug, setSlug]           = useState(product?.slug ?? '')
-  const [slugEdited, setSlugEdited] = useState(false)
-  const [tiptapContent, setTiptapContent] = useState<object>(initialContent ?? {})
-  const [images, setImages]       = useState<string[]>(product?.images ?? [])
-  const [newImageUrl, setNewImageUrl] = useState('')
-  const [isActive, setIsActive]   = useState(product?.is_active ?? true)
-  const [seoOpen, setSeoOpen]     = useState(false)
-  const [seoTitle, setSeoTitle]   = useState(product?.seo_title ?? '')
-  const [seoDesc, setSeoDesc]     = useState(product?.seo_description ?? '')
-  const [loading, setLoading]     = useState(false)
-  const [error, setError]         = useState<string | null>(null)
+  const [name, setName]                     = useState(product?.name ?? '')
+  const [slug, setSlug]                     = useState(product?.slug ?? '')
+  const [slugEdited, setSlugEdited]         = useState(false)
+  const [tiptapContent, setTiptapContent]   = useState<object>(initialContent ?? {})
+  const [images, setImages]                 = useState<string[]>(product?.images ?? [])
+  const [newImageUrl, setNewImageUrl]       = useState('')
+  const [isActive, setIsActive]             = useState(product?.is_active ?? true)
+  const [pricingType, setPricingType]       = useState<'fixed' | 'quote'>(product?.pricing_type ?? 'fixed')
+  const [seoOpen, setSeoOpen]               = useState(false)
+  const [seoTitle, setSeoTitle]             = useState(product?.seo_title ?? '')
+  const [seoDesc, setSeoDesc]               = useState(product?.seo_description ?? '')
+  const [loading, setLoading]               = useState(false)
+  const [error, setError]                   = useState<string | null>(null)
 
   function handleNameChange(v: string) {
     setName(v)
@@ -91,6 +92,7 @@ export default function ProductForm({ mode, product }: Props) {
 
     const formData = new FormData(formRef.current!)
     formData.set('is_active', String(isActive))
+    formData.set('pricing_type', pricingType)
 
     let result
     if (mode === 'edit') {
@@ -116,6 +118,62 @@ export default function ProductForm({ mode, product }: Props) {
           {error}
         </div>
       )}
+
+      {/* ── Pricing Type Toggle ── */}
+      <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
+        <h2 className="font-bold text-[#003366] text-lg mb-4">Pricing Type</h2>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setPricingType('fixed')}
+            className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+              pricingType === 'fixed'
+                ? 'border-[#003366] bg-[#003366]/5'
+                : 'border-slate-200 hover:border-slate-300'
+            }`}
+          >
+            <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${
+              pricingType === 'fixed' ? 'bg-[#003366] text-white' : 'bg-slate-100 text-slate-400'
+            }`}>
+              <Tag className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <p className={`font-bold text-sm ${pricingType === 'fixed' ? 'text-[#003366]' : 'text-slate-600'}`}>
+                Fixed Price
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">Price shown publicly; buyers can add to cart</p>
+            </div>
+            <div className={`ml-auto h-4 w-4 rounded-full border-2 shrink-0 ${
+              pricingType === 'fixed' ? 'border-[#003366] bg-[#003366]' : 'border-slate-300'
+            }`} />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPricingType('quote')}
+            className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+              pricingType === 'quote'
+                ? 'border-[#ec5b13] bg-orange-50'
+                : 'border-slate-200 hover:border-slate-300'
+            }`}
+          >
+            <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${
+              pricingType === 'quote' ? 'bg-[#ec5b13] text-white' : 'bg-slate-100 text-slate-400'
+            }`}>
+              <FileText className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <p className={`font-bold text-sm ${pricingType === 'quote' ? 'text-[#ec5b13]' : 'text-slate-600'}`}>
+                Quote Only
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">Buyers request a quote; no price shown</p>
+            </div>
+            <div className={`ml-auto h-4 w-4 rounded-full border-2 shrink-0 ${
+              pricingType === 'quote' ? 'border-[#ec5b13] bg-[#ec5b13]' : 'border-slate-300'
+            }`} />
+          </button>
+        </div>
+      </div>
 
       {/* ── Core fields ── */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
@@ -181,18 +239,25 @@ export default function ProductForm({ mode, product }: Props) {
           {/* Price */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Price <span className="text-red-500">*</span>
+              Price
+              {pricingType === 'fixed' && <span className="text-red-500 ml-1">*</span>}
             </label>
             <Input
               name="price"
               type="number"
               step="0.01"
               min="0"
-              required
-              defaultValue={product?.price ?? ''}
-              placeholder="0.00"
-              className="h-11"
+              required={pricingType === 'fixed'}
+              disabled={pricingType === 'quote'}
+              defaultValue={product?.pricing_type !== 'quote' ? (product?.price ?? '') : ''}
+              placeholder={pricingType === 'quote' ? 'Not required for quote-only' : '0.00'}
+              className={`h-11 ${pricingType === 'quote' ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : ''}`}
             />
+            {pricingType === 'quote' && (
+              <p className="mt-1 text-xs text-[#ec5b13] font-medium">
+                Buyers will request a quote for this product
+              </p>
+            )}
           </div>
 
           {/* Currency */}
@@ -201,7 +266,10 @@ export default function ProductForm({ mode, product }: Props) {
             <select
               name="currency"
               defaultValue={product?.currency ?? 'KES'}
-              className="h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              disabled={pricingType === 'quote'}
+              className={`h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                pricingType === 'quote' ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : ''
+              }`}
             >
               {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -257,7 +325,6 @@ export default function ProductForm({ mode, product }: Props) {
         <h2 className="font-bold text-[#003366] text-lg">Product Images</h2>
         <p className="text-sm text-gray-500">Add image URLs. First image is used as the primary thumbnail.</p>
 
-        {/* Add image — URL or file upload */}
         <div className="flex gap-2">
           <Input
             value={newImageUrl}
@@ -275,7 +342,6 @@ export default function ProductForm({ mode, product }: Props) {
           />
         </div>
 
-        {/* Image list */}
         {images.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {images.map((url, idx) => (

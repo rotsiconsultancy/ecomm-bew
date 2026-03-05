@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { AddToCartButton } from '@/components/add-to-cart-button'
 import { Package, FileText } from 'lucide-react'
 
 export const revalidate = 1800
@@ -31,7 +32,7 @@ export default async function ProductsPage({ searchParams }: Props) {
 
   let query = supabase
     .from('products')
-    .select('id, name, slug, category, brand, price, currency, stock, images, is_active')
+    .select('id, name, slug, category, brand, price, currency, pricing_type, stock, images, is_active')
     .eq('is_active', true)
     .order('created_at', { ascending: false })
 
@@ -41,7 +42,6 @@ export default async function ProductsPage({ searchParams }: Props) {
   const { data: products } = await query
   const all = products ?? []
 
-  // Derive filter options from all active products (without filters applied)
   const { data: allProducts } = await supabase
     .from('products')
     .select('category, brand')
@@ -65,7 +65,6 @@ export default async function ProductsPage({ searchParams }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
         <aside className="hidden lg:block space-y-8">
-          {/* Categories */}
           {categories.length > 0 && (
             <div>
               <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
@@ -95,9 +94,7 @@ export default async function ProductsPage({ searchParams }: Props) {
                     >
                       {cat}
                       <Badge
-                        className={`text-xs border-none ${
-                          category === cat ? 'bg-[#ec5b13] text-white' : ''
-                        }`}
+                        className={`text-xs border-none ${category === cat ? 'bg-[#ec5b13] text-white' : ''}`}
                         variant={category === cat ? 'default' : 'secondary'}
                       >
                         {count}
@@ -109,7 +106,6 @@ export default async function ProductsPage({ searchParams }: Props) {
             </div>
           )}
 
-          {/* Brands */}
           {brands.length > 0 && (
             <div className="pt-6 border-t border-gray-100">
               <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
@@ -133,7 +129,6 @@ export default async function ProductsPage({ searchParams }: Props) {
             </div>
           )}
 
-          {/* Clear filters */}
           {(category || brand) && (
             <Link href="/products">
               <Button variant="outline" size="sm" className="w-full text-xs">
@@ -158,9 +153,10 @@ export default async function ProductsPage({ searchParams }: Props) {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {all.map((product) => {
-                const thumb = product.images?.[0]
-                const symbol = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
-                const inStock = product.stock > 0
+                const thumb       = product.images?.[0] ?? null
+                const symbol      = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
+                const inStock     = product.stock > 0
+                const isQuote     = product.pricing_type === 'quote'
 
                 return (
                   <div
@@ -200,24 +196,53 @@ export default async function ProductsPage({ searchParams }: Props) {
                         <p className="text-xs text-gray-400 mt-1">{product.brand}</p>
                       )}
 
-                      <div className="mt-auto pt-4 flex items-center justify-between">
-                        <div>
-                          <span className="text-xl font-extrabold text-[#003366]">
-                            {symbol}{product.price.toLocaleString()}
-                          </span>
-                          {!inStock && (
-                            <p className="text-xs text-red-500 font-semibold mt-0.5">Out of stock</p>
+                      <div className="mt-auto pt-4">
+                        {/* Price */}
+                        <div className="mb-3">
+                          {isQuote ? (
+                            <span className="text-lg font-extrabold text-[#ec5b13]">Price on Request</span>
+                          ) : (
+                            <>
+                              <span className="text-xl font-extrabold text-[#003366]">
+                                {symbol}{product.price.toLocaleString()}
+                              </span>
+                              {!inStock && (
+                                <p className="text-xs text-red-500 font-semibold mt-0.5">Out of stock</p>
+                              )}
+                            </>
                           )}
                         </div>
-                        <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`}>
-                          <Button
-                            size="sm"
-                            className="bg-[#003366] hover:bg-[#002244] text-white text-xs h-9"
-                          >
-                            <FileText className="w-3.5 h-3.5 mr-1.5" />
-                            Quote
-                          </Button>
-                        </Link>
+
+                        {/* CTAs */}
+                        <div className="flex items-center gap-2">
+                          {isQuote ? (
+                            <Link
+                              href={`/request-quote?product=${encodeURIComponent(product.name)}`}
+                              className="flex-1"
+                            >
+                              <Button
+                                size="sm"
+                                className="w-full bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-xs h-9"
+                              >
+                                <FileText className="w-3.5 h-3.5 mr-1.5" />
+                                Request Quote
+                              </Button>
+                            </Link>
+                          ) : (
+                            <>
+                              <AddToCartButton
+                                product={{ id: product.id, name: product.name, slug: product.slug, price: product.price, currency: product.currency, image: thumb }}
+                                size="sm"
+                                className="flex-1 text-xs h-9"
+                              />
+                              <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`}>
+                                <Button size="sm" variant="outline" className="text-xs h-9 text-[#003366] border-[#003366]">
+                                  <FileText className="w-3.5 h-3.5" />
+                                </Button>
+                              </Link>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

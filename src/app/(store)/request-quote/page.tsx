@@ -1,144 +1,274 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Mail, Phone, MapPin, Send, FileText, CheckCircle2 } from 'lucide-react';
+'use client'
+
+import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Plus, Trash2, Loader2, CheckCircle2, Phone, Mail, MapPin } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
+import { createQuote } from './actions'
+
+interface QuoteItem {
+  product_name: string
+  quantity: number
+  unit: string
+}
 
 export default function RequestQuotePage() {
+  const router       = useRouter()
+  const searchParams = useSearchParams()
+  const productParam = searchParams.get('product') ?? ''
+
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail]       = useState('')
+  const [phone, setPhone]       = useState('')
+  const [company, setCompany]   = useState('')
+  const [message, setMessage]   = useState('')
+  const [items, setItems]       = useState<QuoteItem[]>([
+    { product_name: productParam, quantity: 1, unit: 'units' },
+  ])
+  const [loading, setLoading]   = useState(false)
+  const [error, setError]       = useState<string | null>(null)
+
+  function addItem() {
+    setItems((prev) => [...prev, { product_name: '', quantity: 1, unit: 'units' }])
+  }
+
+  function removeItem(idx: number) {
+    if (items.length === 1) return
+    setItems((prev) => prev.filter((_, i) => i !== idx))
+  }
+
+  function updateItem(idx: number, field: keyof QuoteItem, value: string | number) {
+    setItems((prev) => prev.map((item, i) => i === idx ? { ...item, [field]: value } : item))
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const validItems = items.filter((i) => i.product_name.trim())
+    if (validItems.length === 0) {
+      setError('Please add at least one product item.')
+      return
+    }
+    setError(null)
+    setLoading(true)
+
+    const result = await createQuote({ full_name: fullName, email, phone, company, message, items: validItems })
+    if (!result.success) {
+      setError(result.error ?? 'Failed to submit. Please try again.')
+      setLoading(false)
+      return
+    }
+
+    router.push(`/quote-submitted?id=${result.id}`)
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col lg:flex-row gap-12">
+
         {/* Quote Form */}
         <div className="lg:flex-1 space-y-8">
           <div>
-            <h1 className="text-4xl font-extrabold text-brand-navy mb-4">Request a Bulk Quote</h1>
-            <p className="text-gray-500 max-w-2xl text-lg">
-              Get personalized pricing for large orders or custom industrial material requirements.
-              Our team responds within 24 hours on business days.
+            <h1 className="text-4xl font-extrabold text-[#003366] mb-3">Request a Quote</h1>
+            <p className="text-gray-500 text-lg max-w-2xl">
+              For bulk orders or custom pricing, fill in the form below and we&apos;ll get back to you within 24 hours.
             </p>
           </div>
 
-          <Card className="rounded-[8px] border-gray-200 shadow-sm overflow-hidden">
-            <div className="bg-brand-navy/5 p-8 border-b border-gray-100">
-                <div className="flex items-center gap-3">
-                    <FileText className="h-6 w-6 text-brand-navy" />
-                    <h3 className="text-xl font-bold text-brand-navy">Project Information</h3>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                {error}
+              </div>
+            )}
+
+            {/* Contact Info */}
+            <Card className="p-6 rounded-2xl border-none shadow-sm space-y-5">
+              <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Contact Information</h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    placeholder="John Doe"
+                    className="h-11"
+                  />
                 </div>
-            </div>
-            <CardContent className="p-8">
-                <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Contact Info */}
-                    <div className="space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Company Name</label>
-                        <Input className="rounded-[8px]" placeholder="Global Construct Ltd" />
-                    </div>
-                    <div className="space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Business Email</label>
-                        <Input className="rounded-[8px]" placeholder="purchasing@company.com" />
-                    </div>
-                    <div className="space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Phone Number</label>
-                        <Input className="rounded-[8px]" placeholder="+44 20 7946 0958" />
-                    </div>
-                    <div className="space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Preferred Timeline</label>
-                        <select className="w-full p-3 border border-gray-300 rounded-[8px] focus:ring-2 focus:ring-brand-navy focus:border-brand-navy outline-none bg-white transition-all">
-                            <option>Immediate (within 1 week)</option>
-                            <option>Near Future (1-4 weeks)</option>
-                            <option>Long Term (1 month+)</option>
-                        </select>
-                    </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="you@company.com"
+                    className="h-11"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Phone <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    placeholder="+254 7XX XXX XXX"
+                    className="h-11"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Company (optional)
+                  </label>
+                  <Input
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="Acme Corp Ltd"
+                    className="h-11"
+                  />
+                </div>
+              </div>
 
-                    {/* Requirement Details */}
-                    <div className="md:col-span-2 space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Tell us what you need (SKU, Quantities, Specs)</label>
-                        <textarea className="w-full p-4 border border-gray-300 rounded-[8px] min-h-[150px] focus:ring-2 focus:ring-brand-navy focus:border-brand-navy outline-none transition-all" placeholder="E.g. We require 250 units of Pro-Seal Adhesive 500ml and 100 sheets of 18mm MDF board..."></textarea>
-                    </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  rows={4}
+                  placeholder="Describe what you need, timeline, special requirements..."
+                  className="w-full px-3 py-2 border border-input rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
+                />
+              </div>
+            </Card>
 
-                    <div className="md:col-span-2 space-y-4">
-                        <label className="text-sm font-bold text-gray-700">Attach Technical Specifications (Optional)</label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-[8px] p-8 text-center bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer">
-                            <p className="text-sm text-gray-500 mb-2 font-semibold">Drop files here or click to upload</p>
-                            <p className="text-xs text-gray-400">PDF, XLS, JPG (Max 10MB)</p>
-                        </div>
-                    </div>
+            {/* Items */}
+            <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
+              <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Products Required</h2>
 
-                    <div className="md:col-span-2">
-                        <Button className="w-full md:w-auto px-12 h-14 bg-brand-orange hover:bg-brand-orange-hover text-white rounded-[8px] font-extrabold text-lg shadow-lg active:scale-95 transition-all">
-                            Submit Quote Request
-                        </Button>
-                        <p className="mt-4 text-xs text-gray-400 flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            Your data is securely stored and processed according to our Privacy Policy.
-                        </p>
+              <div className="space-y-3">
+                {items.map((item, idx) => (
+                  <div key={idx} className="flex gap-3 items-start">
+                    <div className="flex-1">
+                      <Input
+                        value={item.product_name}
+                        onChange={(e) => updateItem(idx, 'product_name', e.target.value)}
+                        placeholder="Product name or description"
+                        className="h-10"
+                      />
                     </div>
-                </form>
-            </CardContent>
-          </Card>
+                    <div className="w-24">
+                      <Input
+                        type="number"
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) => updateItem(idx, 'quantity', parseInt(e.target.value) || 1)}
+                        className="h-10 text-center"
+                        placeholder="Qty"
+                      />
+                    </div>
+                    <div className="w-28">
+                      <Input
+                        value={item.unit}
+                        onChange={(e) => updateItem(idx, 'unit', e.target.value)}
+                        placeholder="units"
+                        className="h-10"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeItem(idx)}
+                      disabled={items.length === 1}
+                      className="p-2 rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-30 disabled:cursor-not-allowed mt-0.5"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={addItem}
+                className="flex items-center gap-2 text-sm font-semibold text-[#003366] hover:text-[#ec5b13] transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Add Another Item
+              </button>
+            </Card>
+
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-extrabold text-lg rounded-xl shadow-lg active:scale-95 transition-all"
+            >
+              {loading ? (
+                <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Submitting…</>
+              ) : (
+                'Submit Quote Request'
+              )}
+            </Button>
+
+            <p className="text-xs text-gray-400 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+              Your data is securely stored according to our Privacy Policy.
+            </p>
+          </form>
         </div>
 
-        {/* Sidebar Info */}
+        {/* Sidebar */}
         <aside className="w-full lg:w-96 space-y-8">
-            <div className="bg-brand-navy text-white p-8 rounded-[8px] shadow-xl">
-                <h3 className="text-2xl font-bold mb-6">Why Choose Bewama?</h3>
-                <div className="space-y-6">
-                    <div className="flex gap-4">
-                        <div className="h-10 w-10 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Badge className="bg-brand-orange">01</Badge>
-                        </div>
-                        <div>
-                            <p className="font-bold">Competitive Wholesale Rates</p>
-                            <p className="text-sm text-gray-300 mt-1">Direct from manufacturer pricing for bulk orders.</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <div className="h-10 w-10 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Badge className="bg-brand-orange">02</Badge>
-                        </div>
-                        <div>
-                            <p className="font-bold">Global Logistics Support</p>
-                            <p className="text-sm text-gray-300 mt-1">Managing shipping, customs, and delivery door-to-door.</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-4">
-                        <div className="h-10 w-10 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Badge className="bg-brand-orange">03</Badge>
-                        </div>
-                        <div>
-                            <p className="font-bold">Dedicated Account Manager</p>
-                            <p className="text-sm text-gray-300 mt-1">One point of contact for all your industrial needs.</p>
-                        </div>
-                    </div>
+          <div className="bg-[#003366] text-white p-8 rounded-2xl shadow-xl">
+            <h3 className="text-2xl font-bold mb-6">Why Choose Bewama?</h3>
+            <div className="space-y-6">
+              {[
+                { n: '01', title: 'Competitive Wholesale Rates', desc: 'Direct from manufacturer pricing for bulk orders.' },
+                { n: '02', title: 'Global Logistics Support', desc: 'Managing shipping, customs, and delivery door-to-door.' },
+                { n: '03', title: 'Dedicated Account Manager', desc: 'One point of contact for all your industrial needs.' },
+              ].map(({ n, title, desc }) => (
+                <div key={n} className="flex gap-4">
+                  <div className="h-10 w-10 bg-[#ec5b13]/20 rounded-full flex items-center justify-center text-[#ec5b13] font-bold text-sm shrink-0">
+                    {n}
+                  </div>
+                  <div>
+                    <p className="font-bold">{title}</p>
+                    <p className="text-sm text-gray-300 mt-1">{desc}</p>
+                  </div>
                 </div>
+              ))}
             </div>
+          </div>
 
-            <div className="bg-white p-8 rounded-[8px] border border-gray-200 shadow-sm">
-                <h4 className="text-xl font-bold text-brand-navy mb-6">Direct Contact</h4>
-                <div className="space-y-4">
-                    <div className="flex items-center gap-4 text-gray-600">
-                        <Phone className="h-5 w-5 text-brand-orange" />
-                        <span>+44 20 7946 0958</span>
-                    </div>
-                    <div className="flex items-center gap-4 text-gray-600">
-                        <Mail className="h-5 w-5 text-brand-orange" />
-                        <span>sales@bewama.com</span>
-                    </div>
-                    <div className="flex items-center gap-4 text-gray-600">
-                        <MapPin className="h-5 w-5 text-brand-orange" />
-                        <span>128 Industrial Way, London, UK</span>
-                    </div>
-                </div>
-                <div className="mt-8 pt-8 border-t">
-                    <p className="text-sm text-gray-500 mb-4">Urgent enquiry?</p>
-                    <Button variant="outline" className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white rounded-[8px] font-bold">
-                        Speak to Sales Now
-                    </Button>
-                </div>
+          <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+            <h4 className="text-xl font-bold text-[#003366] mb-6">Direct Contact</h4>
+            <div className="space-y-4 text-gray-600">
+              <div className="flex items-center gap-4">
+                <Phone className="h-5 w-5 text-[#ec5b13] shrink-0" />
+                <span>+254 700 000 000</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <Mail className="h-5 w-5 text-[#ec5b13] shrink-0" />
+                <span>sales@bewama.com</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <MapPin className="h-5 w-5 text-[#ec5b13] shrink-0" />
+                <span>Nairobi, Kenya</span>
+              </div>
             </div>
+          </div>
         </aside>
       </div>
     </div>
-  );
+  )
 }

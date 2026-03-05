@@ -7,6 +7,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 import { ShieldCheck, Truck, RefreshCw, FileText, ArrowLeft, Package } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { AddToCartButton } from '@/components/add-to-cart-button'
 import { createClient, createBuildClient } from '@/lib/supabase/server'
 import { generateProductSchema } from '@/lib/seo/product-schema'
 import { generateHTML } from '@tiptap/html'
@@ -27,7 +28,6 @@ export async function generateStaticParams() {
     .from('products')
     .select('slug')
     .eq('is_active', true)
-  // Return as { id: slug } because the folder segment is named [id]
   return (data ?? []).map((p) => ({ id: p.slug }))
 }
 
@@ -54,18 +54,8 @@ export async function generateMetadata(
     title: `${title} | Bewama`,
     description,
     keywords: product.seo_keywords ?? undefined,
-    openGraph: {
-      title,
-      description,
-      images: image ? [image] : [],
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: image ? [image] : [],
-    },
+    openGraph: { title, description, images: image ? [image] : [], type: 'website' },
+    twitter: { card: 'summary_large_image', title, description, images: image ? [image] : [] },
   }
 }
 
@@ -82,18 +72,16 @@ export default async function ProductDetailPage({ params }: Props) {
 
   if (!product) notFound()
 
-  // Related products (same category, excluding this one)
   const { data: related } = product.category
     ? await supabase
         .from('products')
-        .select('id, name, slug, images, price, currency, category')
+        .select('id, name, slug, images, price, currency, pricing_type, category')
         .eq('is_active', true)
         .eq('category', product.category)
         .neq('id', product.id)
         .limit(4)
     : { data: [] }
 
-  // Render TipTap description to HTML
   let htmlContent = ''
   if (product.description) {
     try {
@@ -104,10 +92,11 @@ export default async function ProductDetailPage({ params }: Props) {
     }
   }
 
-  const jsonLd = generateProductSchema(product)
-  const inStock = product.stock > 0
+  const jsonLd   = generateProductSchema(product)
+  const inStock  = product.stock > 0
+  const isQuote  = product.pricing_type === 'quote'
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
-  const symbol = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
+  const symbol   = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
   const images: string[] = product.images ?? []
 
   return (
@@ -139,10 +128,9 @@ export default async function ProductDetailPage({ params }: Props) {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* ── Image Gallery ── */}
           <ImageGallery images={images} name={product.name} />
 
-          {/* ── Product Info ── */}
+          {/* Product Info */}
           <div className="space-y-6">
             <div>
               {product.category && (
@@ -160,35 +148,78 @@ export default async function ProductDetailPage({ params }: Props) {
 
             {/* Price & stock */}
             <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
-              <div className="flex items-baseline gap-3">
-                <span className="text-4xl font-extrabold text-[#003366]">
-                  {symbol}{product.price.toLocaleString()}
-                </span>
-              </div>
-              <p className="text-xs text-gray-400 mt-1">Excluding taxes &amp; shipping</p>
-              <div className="mt-3 flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${inStock ? 'bg-green-400' : 'bg-red-400'}`} />
-                <span className={`text-sm font-semibold ${inStock ? 'text-green-600' : 'text-red-500'}`}>
-                  {inStock ? `In Stock (${product.stock} units)` : 'Out of Stock'}
-                </span>
-              </div>
+              {isQuote ? (
+                <>
+                  <span className="text-3xl font-extrabold text-[#ec5b13]">Price on Request</span>
+                  <p className="text-sm text-gray-400 mt-2">
+                    Submit a quote request and our team will respond within 24 hours.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-4xl font-extrabold text-[#003366]">
+                      {symbol}{product.price.toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">Excluding taxes &amp; shipping</p>
+                  <div className="mt-3 flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${inStock ? 'bg-green-400' : 'bg-red-400'}`} />
+                    <span className={`text-sm font-semibold ${inStock ? 'text-green-600' : 'text-red-500'}`}>
+                      {inStock ? `In Stock (${product.stock} units)` : 'Out of Stock'}
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* CTAs */}
             <div className="space-y-3">
+              {!isQuote && inStock && (
+                <AddToCartButton
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    price: product.price,
+                    currency: product.currency,
+                    image: images[0] ?? null,
+                  }}
+                  size="default"
+                  className="w-full h-12 text-base font-bold shadow-lg"
+                />
+              )}
+
+              {!isQuote && !inStock && (
+                <Button
+                  disabled
+                  className="w-full h-12 bg-gray-200 text-gray-500 font-bold text-base cursor-not-allowed"
+                >
+                  Out of Stock
+                </Button>
+              )}
+
               <Link
                 href={`/request-quote?product=${encodeURIComponent(product.name)}`}
                 className="block"
               >
-                <Button className="w-full h-12 bg-[#003366] hover:bg-[#002244] text-white font-bold text-base transition-all shadow-lg">
+                <Button
+                  variant={isQuote ? 'default' : 'outline'}
+                  className={`w-full h-12 font-bold text-base transition-all ${
+                    isQuote
+                      ? 'bg-[#ec5b13] hover:bg-[#d14d0d] text-white shadow-lg'
+                      : 'border-2 border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white'
+                  }`}
+                >
                   <FileText className="w-5 h-5 mr-2" />
                   Request a Quote
                 </Button>
               </Link>
+
               <Link href="/products" className="block">
                 <Button
                   variant="outline"
-                  className="w-full h-12 border-2 border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white font-bold transition-all"
+                  className="w-full h-10 border border-gray-200 text-gray-500 hover:text-[#003366] hover:border-[#003366] font-medium transition-all"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Browse More Products
@@ -214,7 +245,7 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* ── Description ── */}
+        {/* Description */}
         {htmlContent && (
           <div className="mt-16 max-w-3xl">
             <h2 className="text-2xl font-bold text-[#003366] mb-6">Product Description</h2>
@@ -225,7 +256,7 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* ── Related Products ── */}
+        {/* Related Products */}
         {related && related.length > 0 && (
           <div className="mt-20">
             <h2 className="text-2xl font-bold text-[#003366] mb-8">
@@ -233,7 +264,7 @@ export default async function ProductDetailPage({ params }: Props) {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {related.map((rel) => {
-                const sym = CURRENCY_SYMBOLS[rel.currency] ?? rel.currency + ' '
+                const sym   = CURRENCY_SYMBOLS[rel.currency] ?? rel.currency + ' '
                 const thumb = rel.images?.[0]
                 return (
                   <Link key={rel.id} href={`/products/${rel.slug}`} className="group">
@@ -254,7 +285,9 @@ export default async function ProductDetailPage({ params }: Props) {
                       {rel.name}
                     </p>
                     <p className="text-sm font-semibold text-gray-500 mt-1">
-                      {sym}{rel.price.toLocaleString()}
+                      {rel.pricing_type === 'quote'
+                        ? <span className="text-[#ec5b13]">Price on Request</span>
+                        : `${sym}${rel.price.toLocaleString()}`}
                     </p>
                   </Link>
                 )
@@ -299,13 +332,7 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
               key={i}
               className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden aspect-square flex items-center justify-center p-2"
             >
-              <Image
-                src={img}
-                alt={`${name} ${i + 2}`}
-                width={80}
-                height={80}
-                className="object-contain"
-              />
+              <Image src={img} alt={`${name} ${i + 2}`} width={80} height={80} className="object-contain" />
             </div>
           ))}
         </div>

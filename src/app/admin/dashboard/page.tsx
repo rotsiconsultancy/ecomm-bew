@@ -1,224 +1,307 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {ArrowUpRight,ArrowDownRight,Users,Package,ShoppingCart,MessageSquare,TrendingUp,TrendingDown,
-    Clock,CheckCircle2,CalendarDays,Plus,Truck,AlertTriangle,Hammer,Search,ChevronRight, MoreVertical, Activity,Zap,Box,ClipboardList,
-    BarChart3,DollarSign, 
-Briefcase } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Metadata } from 'next'
+import Link from 'next/link'
+import {
+  DollarSign, ShoppingCart, MessageSquare, Package,
+  Clock, Truck, CheckCircle2, AlertTriangle, Users,
+  FileText, Edit2, TrendingUp,
+} from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { StatCard } from '@/components/admin/stat-card'
+import { fetchDashboardData } from './data'
+import { formatCurrency, formatPercent, timeAgo, shortenId } from '@/lib/format'
 
-export default function AdminDashboardPage() {
-    const stats = [
-        { title: 'Total Sales (KES)', value: '1,250,000', change: '+5.2%', icon: DollarSign, color: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600', trend: 'up' },
-        { title: 'Pending Quotes', value: '48', change: '12 New', icon: ClipboardList, color: 'bg-orange-50 dark:bg-orange-900/20 text-orange-600', trend: 'neutral' },
-        { title: 'New Orders', value: '156', change: '+12%', icon: Truck, color: 'bg-green-50 dark:bg-green-900/20 text-green-600', trend: 'up' },
-        { title: 'Low Stock Alerts', value: '5 Items', change: '-3.5%', icon: AlertTriangle, color: 'bg-red-50 dark:bg-red-900/20 text-red-600', trend: 'down' },
-    ];
+export const metadata: Metadata = { title: 'Dashboard | Bewama Admin' }
+export const revalidate = 300
 
-    const recentOrders = [
-        { id: '#ORD-7721', customer: 'John Kamau', status: 'Processing', amount: 'KES 45,000', statusColor: 'bg-blue-100 text-blue-600' },
-        { id: '#ORD-7720', customer: 'Sarah Chen', status: 'Completed', amount: 'KES 12,500', statusColor: 'bg-green-100 text-green-600' },
-        { id: '#ORD-7719', customer: 'Mike Omollo', status: 'Pending', amount: 'KES 89,000', statusColor: 'bg-orange-100 text-orange-600' },
-        { id: '#ORD-7718', customer: 'Industrial Corp', status: 'Shipped', amount: 'KES 156,000', statusColor: 'bg-indigo-100 text-indigo-600' },
-    ];
+// ─── Status styles ────────────────────────────────────────────────────────────
 
-    const pendingQuotes = [
-        { customer: 'Coastal Mining Ltd', subject: '24x Industrial Drill Bit Set', priority: 'HIGH PRIORITY', time: '2h ago', priorityColor: 'text-primary bg-primary/10' },
-        { customer: 'Nairobi Dev Co', subject: '100m Armoured Power Cable', priority: 'BULK', time: '5h ago', priorityColor: 'text-slate-500 bg-slate-200 dark:bg-slate-800' },
-        { customer: 'Greenway Farms', subject: '5x Submersible Water Pumps', priority: 'STANDARD', time: '8h ago', priorityColor: 'text-slate-500 bg-slate-200 dark:bg-slate-800' },
-    ];
+const ORDER_STATUS: Record<string, string> = {
+  pending:    'bg-yellow-100 text-yellow-700',
+  confirmed:  'bg-blue-100 text-blue-700',
+  processing: 'bg-purple-100 text-purple-700',
+  shipped:    'bg-indigo-100 text-indigo-700',
+  delivered:  'bg-green-100 text-green-700',
+  cancelled:  'bg-red-100 text-red-600',
+}
 
-    return (
-        <div className="space-y-8 animate-in fade-in duration-700">
-            {/* Page Title & Actions */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Dashboard Overview</h2>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">Welcome back, here&apos;s what&apos;s happening today.</p>
+const QUOTE_STATUS: Record<string, string> = {
+  pending:   'bg-yellow-100 text-yellow-700',
+  reviewing: 'bg-blue-100 text-blue-700',
+  responded: 'bg-purple-100 text-purple-700',
+  converted: 'bg-green-100 text-green-700',
+  rejected:  'bg-red-100 text-red-600',
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default async function AdminDashboardPage() {
+  const d = await fetchDashboardData()
+
+  const revenueChangeColor = d.revenue.change_percent >= 0 ? 'green' : 'red'
+  const totalOrders = d.orders.total
+
+  // For the order status bar widths
+  const pct = (n: number) => (totalOrders === 0 ? 0 : Math.round((n / totalOrders) * 100))
+
+  return (
+    <div className="space-y-8">
+
+      {/* ── Header ────────────────────────────────────────────────────────── */}
+      <div>
+        <h1 className="text-3xl font-extrabold text-[#003366]">Dashboard Overview</h1>
+        <p className="text-gray-500 mt-1">Here&apos;s what&apos;s happening right now.</p>
+      </div>
+
+      {/* ── Row 1 — 4 KPI Cards ───────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <StatCard
+          title="Total Revenue"
+          value={formatCurrency(d.revenue.total)}
+          subtext={`${formatPercent(d.revenue.change_percent)} from last month`}
+          subtextColor={revenueChangeColor}
+          icon={DollarSign}
+          iconBg="bg-blue-50"
+          iconColor="text-[#003366]"
+        />
+        <StatCard
+          title="Total Orders"
+          value={d.orders.total}
+          subtext={`${d.orders.pending} pending`}
+          subtextColor={d.orders.pending > 0 ? 'red' : 'gray'}
+          icon={ShoppingCart}
+          iconBg="bg-orange-50"
+          iconColor="text-[#ec5b13]"
+        />
+        <StatCard
+          title="Total Quotes"
+          value={d.quotes.total}
+          subtext={`${d.quotes.conversion_rate.toFixed(1)}% conversion rate`}
+          subtextColor="gray"
+          icon={MessageSquare}
+          iconBg="bg-purple-50"
+          iconColor="text-purple-600"
+        />
+        <StatCard
+          title="Active Products"
+          value={d.products.total}
+          subtext={d.products.out_of_stock > 0 ? `${d.products.out_of_stock} out of stock` : 'All in stock'}
+          subtextColor={d.products.out_of_stock > 0 ? 'red' : 'green'}
+          icon={Package}
+          iconBg="bg-green-50"
+          iconColor="text-green-600"
+        />
+      </div>
+
+      {/* ── Row 2 — Recent Orders (60%) + Recent Quotes (40%) ─────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+        {/* Recent Orders — col-span-3 ≈ 60% */}
+        <Card className="lg:col-span-3 rounded-2xl border-none shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-bold text-[#003366]">Recent Orders</h2>
+            <Link
+              href="/admin/order-management"
+              className="text-xs font-semibold text-[#ec5b13] hover:underline"
+            >
+              View all →
+            </Link>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <tr>
+                  <th className="px-6 py-3">Order</th>
+                  <th className="px-6 py-3">Customer</th>
+                  <th className="px-6 py-3">Amount</th>
+                  <th className="px-6 py-3">Status</th>
+                  <th className="px-6 py-3">When</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {d.orders.recent.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-8 text-center text-gray-400">No orders yet.</td>
+                  </tr>
+                ) : (
+                  d.orders.recent.map((o) => (
+                    <tr key={o.id} className="hover:bg-gray-50/60">
+                      <td className="px-6 py-4">
+                        <Link
+                          href={`/admin/order-management/${o.id}`}
+                          className="font-bold text-[#003366] hover:text-[#ec5b13] font-mono text-xs transition-colors"
+                        >
+                          {shortenId(o.id)}
+                        </Link>
+                      </td>
+                      <td className="px-6 py-4 text-gray-700 font-medium">{o.customer_name}</td>
+                      <td className="px-6 py-4 font-bold text-[#003366]">{formatCurrency(o.total_amount, o.currency)}</td>
+                      <td className="px-6 py-4">
+                        <Badge className={`border-none capitalize font-semibold ${ORDER_STATUS[o.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                          {o.status}
+                        </Badge>
+                      </td>
+                      <td className="px-6 py-4 text-gray-400 text-xs">{timeAgo(o.created_at)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {/* Recent Quotes — col-span-2 ≈ 40% */}
+        <Card className="lg:col-span-2 rounded-2xl border-none shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="font-bold text-[#003366]">Recent Quotes</h2>
+            <Link
+              href="/admin/quote-management"
+              className="text-xs font-semibold text-[#ec5b13] hover:underline"
+            >
+              View all →
+            </Link>
+          </div>
+          <div className="divide-y divide-gray-100">
+            {d.quotes.recent.length === 0 ? (
+              <p className="px-6 py-8 text-center text-gray-400 text-sm">No quotes yet.</p>
+            ) : (
+              d.quotes.recent.map((q) => (
+                <Link
+                  key={q.id}
+                  href={`/admin/quote-management/${q.id}`}
+                  className="flex items-start justify-between px-6 py-4 hover:bg-gray-50/60 transition-colors"
+                >
+                  <div className="min-w-0 flex-1 pr-3">
+                    <p className="font-semibold text-[#003366] text-sm truncate">{q.full_name}</p>
+                    {q.company && (
+                      <p className="text-xs text-gray-400 truncate">{q.company}</p>
+                    )}
+                    <p className="text-xs text-gray-400 mt-0.5">{q.item_count} item{q.item_count !== 1 ? 's' : ''} · {timeAgo(q.created_at)}</p>
+                  </div>
+                  <Badge className={`border-none capitalize font-semibold shrink-0 ${QUOTE_STATUS[q.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                    {q.status}
+                  </Badge>
+                </Link>
+              ))
+            )}
+          </div>
+        </Card>
+      </div>
+
+      {/* ── Row 3 — Status Breakdown / Low Stock / Quick Stats ────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {/* Order Status Breakdown */}
+        <Card className="p-6 rounded-2xl border-none shadow-sm">
+          <h2 className="font-bold text-[#003366] mb-5">Order Status Breakdown</h2>
+          <div className="space-y-4">
+            {[
+              { label: 'Pending',    count: d.orders.pending,    dot: 'bg-yellow-400' },
+              { label: 'Processing', count: d.orders.processing, dot: 'bg-purple-400' },
+              { label: 'Shipped',    count: d.orders.shipped,    dot: 'bg-blue-400' },
+              { label: 'Delivered',  count: d.orders.delivered,  dot: 'bg-green-400' },
+            ].map(({ label, count, dot }) => (
+              <div key={label}>
+                <div className="flex items-center justify-between text-sm mb-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2.5 h-2.5 rounded-full ${dot} shrink-0`} />
+                    <span className="font-medium text-gray-700">{label}</span>
+                  </div>
+                  <span className="font-bold text-[#003366]">{count}</span>
                 </div>
-                <div className="flex gap-3">
-                    <Button variant="outline" className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold flex items-center gap-2">
-                        <CalendarDays className="w-4 h-4" />
-                        Oct 24 - Oct 31
-                    </Button>
-                    <Button className="bg-primary hover:bg-primary/90 text-white rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all px-6">
-                        <Plus className="w-4 h-4" />
-                        Create Quote
-                    </Button>
+                <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${dot} transition-all`}
+                    style={{ width: `${pct(count)}%` }}
+                  />
                 </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-sm">
+            <span className="text-gray-500">This month</span>
+            <span className="font-bold text-[#003366]">{d.orders.this_month} orders</span>
+          </div>
+        </Card>
+
+        {/* Low Stock Alert */}
+        <Card className="p-6 rounded-2xl border-none shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <AlertTriangle className="w-4 h-4 text-[#ec5b13]" />
+            <h2 className="font-bold text-[#003366]">Low Stock Alert</h2>
+          </div>
+
+          {d.products.low_stock.length === 0 ? (
+            <div className="flex items-center gap-2 text-green-600 text-sm font-semibold py-4">
+              <CheckCircle2 className="w-4 h-4 shrink-0" />
+              All products well stocked
             </div>
-
-            {/* Top Metrics Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((stat, idx) => (
-                    <Card key={idx} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all group">
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={cn("p-2.5 rounded-xl transition-transform group-hover:scale-110", stat.color)}>
-                                <stat.icon className="w-6 h-6" />
-                            </div>
-                            <span className={cn(
-                                "text-[10px] font-bold flex items-center px-2 py-1 rounded-full",
-                                stat.trend === 'up' ? 'text-green-600 bg-green-50 dark:bg-green-900/20' :
-                                    stat.trend === 'down' ? 'text-red-600 bg-red-50 dark:bg-red-900/20' :
-                                        'text-orange-600 bg-orange-50 dark:bg-orange-900/20'
-                            )}>
-                                {stat.trend === 'up' && <TrendingUp className="w-3 h-3 mr-1" />}
-                                {stat.trend === 'down' && <TrendingDown className="w-3 h-3 mr-1" />}
-                                {stat.change}
-                            </span>
-                        </div>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium tracking-tight uppercase">{stat.title}</p>
-                        <h3 className="text-3xl font-extrabold text-secondary dark:text-slate-100 mt-1">{stat.value}</h3>
-                    </Card>
-                ))}
+          ) : (
+            <div className="space-y-3">
+              {d.products.low_stock.map((p) => (
+                <Link
+                  key={p.id}
+                  href="/admin/product-management"
+                  className="flex items-center justify-between py-2 border-b last:border-0 hover:opacity-75 transition-opacity"
+                >
+                  <div className="min-w-0 flex-1 pr-2">
+                    <p className="text-sm font-semibold text-gray-800 truncate">{p.name}</p>
+                    {p.category && <p className="text-xs text-gray-400">{p.category}</p>}
+                  </div>
+                  <span
+                    className={`text-xs font-extrabold shrink-0 ${
+                      p.stock <= 5 ? 'text-red-500' : 'text-[#ec5b13]'
+                    }`}
+                  >
+                    {p.stock} left
+                  </span>
+                </Link>
+              ))}
             </div>
+          )}
 
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                {/* Activity Feed */}
-                <div className="lg:col-span-2 space-y-6">
-                    <Card className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden border-none">
-                        <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                            <h3 className="font-bold text-lg text-secondary dark:text-slate-100">Recent Orders</h3>
-                            <Button variant="ghost" className="text-primary text-sm font-bold hover:underline p-0">View All</Button>
-                        </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left">
-                                <thead className="bg-slate-50 dark:bg-slate-900/50">
-                                    <tr>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Order ID</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Customer</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Status</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Amount</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-                                    {recentOrders.map((order) => (
-                                        <tr key={order.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/10 transition-colors group">
-                                            <td className="px-6 py-4 text-sm font-semibold text-secondary dark:text-slate-200">{order.id}</td>
-                                            <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">{order.customer}</td>
-                                            <td className="px-6 py-4">
-                                                <Badge className={cn("px-3 py-1 text-[10px] font-bold rounded-full border-none", order.statusColor)}>
-                                                    {order.status}
-                                                </Badge>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm font-bold text-secondary dark:text-slate-100">{order.amount}</td>
-                                            <td className="px-6 py-4">
-                                                <Button variant="outline" size="sm" className="bg-slate-50 dark:bg-slate-700 text-secondary dark:text-slate-100 text-xs font-bold rounded-lg border-none hover:bg-slate-200 group-hover:bg-primary group-hover:text-white transition-all h-8">
-                                                    View
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </Card>
+          <div className="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-400">
+            {d.products.low_stock_count} product{d.products.low_stock_count !== 1 ? 's' : ''} with stock ≤ 10
+          </div>
+        </Card>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                            <h4 className="font-bold text-secondary dark:text-slate-100 mb-4 flex items-center gap-2">
-                                <BarChart3 className="w-5 h-5 text-primary" />
-                                Stock Utilization
-                            </h4>
-                            <div className="space-y-5">
-                                {[
-                                    { label: 'Industrial Pumps', value: 85, color: 'bg-primary' },
-                                    { label: 'Copper Wiring', value: 32, color: 'bg-orange-400' }
-                                ].map((item, i) => (
-                                    <div key={i} className="space-y-2">
-                                        <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                                            <span>{item.label}</span>
-                                            <span>{item.value}%</span>
-                                        </div>
-                                        <div className="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                                            <div className={cn("h-full rounded-full transition-all duration-1000", item.color)} style={{ width: `${item.value}%` }}></div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </Card>
-
-                        <Card className="bg-secondary p-6 rounded-2xl text-white relative overflow-hidden group border-none shadow-lg">
-                            <div className="relative z-10">
-                                <div className="bg-white/10 w-fit p-2 rounded-lg mb-3">
-                                    <Zap className="w-5 h-5 text-primary" />
-                                </div>
-                                <h4 className="font-bold mb-2 text-lg">Inventory Upgrade</h4>
-                                <p className="text-xs text-slate-300 mb-4 leading-relaxed font-medium">System upgrade scheduled for 02:00 AM. Please ensure all quotes are saved.</p>
-                                <Button className="text-xs font-bold py-2 px-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all border-none">
-                                    Learn More
-                                </Button>
-                            </div>
-                            <Hammer className="absolute -bottom-8 -right-8 text-[120px] text-white/5 rotate-12 group-hover:scale-110 transition-transform duration-500" />
-                        </Card>
-                    </div>
+        {/* Quick Stats */}
+        <Card className="p-6 rounded-2xl border-none shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <TrendingUp className="w-4 h-4 text-[#003366]" />
+            <h2 className="font-bold text-[#003366]">Quick Stats</h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { icon: Users,       label: 'New users this month',  value: d.users.new_this_month,   color: 'bg-blue-50',   iconColor: 'text-blue-600' },
+              { icon: Users,       label: 'Wholesale buyers',      value: d.users.wholesale,        color: 'bg-orange-50', iconColor: 'text-[#ec5b13]' },
+              { icon: FileText,    label: 'Published posts',       value: d.blog.published,         color: 'bg-green-50',  iconColor: 'text-green-600' },
+              { icon: Edit2,       label: 'Draft posts',           value: d.blog.draft,             color: 'bg-gray-50',   iconColor: 'text-gray-500' },
+            ].map(({ icon: Icon, label, value, color, iconColor }) => (
+              <div key={label} className="flex items-center gap-4">
+                <div className={`p-2 rounded-lg ${color} shrink-0`}>
+                  <Icon className={`w-4 h-4 ${iconColor}`} />
                 </div>
-
-                {/* Sidebar Panel */}
-                <div className="space-y-6">
-                    <Card className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm border-none">
-                        <div className="p-6 border-b border-slate-100 dark:border-slate-700">
-                            <h3 className="font-bold text-lg text-secondary dark:text-slate-100">Pending Bulk Quotes</h3>
-                            <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-bold">Action Required</p>
-                        </div>
-                        <div className="p-4 space-y-4">
-                            {pendingQuotes.map((quote, i) => (
-                                <div key={i} className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-all group cursor-pointer">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div>
-                                            <p className="font-bold text-sm text-secondary dark:text-slate-100 group-hover:text-primary transition-colors">{quote.customer}</p>
-                                            <p className="text-[10px] text-slate-500 font-medium mt-0.5">{quote.subject}</p>
-                                        </div>
-                                        <Badge className={cn("text-[8px] font-black px-2 py-0.5 rounded border-none", quote.priorityColor)}>
-                                            {quote.priority}
-                                        </Badge>
-                                    </div>
-                                    <div className="flex items-center justify-between mt-4">
-                                        <div className="flex items-center gap-1.5 opacity-60">
-                                            <Clock className="w-3 h-3" />
-                                            <span className="text-[10px] font-bold">{quote.time}</span>
-                                        </div>
-                                        <Button size="sm" className="h-7 px-3 bg-primary text-white text-[10px] font-black rounded-lg hover:shadow-lg transition-all border-none">
-                                            Review
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 text-center">
-                            <button className="text-[10px] font-black text-secondary dark:text-slate-300 hover:text-primary transition-colors uppercase tracking-widest">
-                                View All Pending Quotes (12)
-                            </button>
-                        </div>
-                    </Card>
-
-                    <Card className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden border-none shadow-sm">
-                        <h3 className="font-bold text-secondary dark:text-slate-100 mb-4 tracking-tight flex items-center gap-2">
-                            <Activity className="w-5 h-5 text-primary" />
-                            Quick Shortcuts
-                        </h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            {[
-                                { icon: Plus, label: 'New Item', bg: 'hover:bg-blue-50 hover:text-blue-600' },
-                                { icon: ClipboardList, label: 'Audit Logs', bg: 'hover:bg-orange-50 hover:text-orange-600' },
-                                { icon: Briefcase, label: 'Shipping', bg: 'hover:bg-purple-50 hover:text-purple-600' },
-                                { icon: BarChart3, label: 'Reports', bg: 'hover:bg-green-50 hover:text-green-600' }
-                            ].map((item, i) => (
-                                <button key={i} className={cn(
-                                    "flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl transition-all group border border-transparent hover:border-current/20 hover:shadow-sm",
-                                    item.bg
-                                )}>
-                                    <item.icon className="w-6 h-6 mb-2 group-hover:scale-110 transition-transform duration-300" />
-                                    <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </Card>
+                <div className="flex-1 flex items-center justify-between">
+                  <span className="text-sm text-gray-600">{label}</span>
+                  <span className="text-sm font-extrabold text-[#003366]">{value}</span>
                 </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 pt-4 border-t border-gray-100 grid grid-cols-2 gap-3 text-center">
+            <div>
+              <p className="text-xl font-extrabold text-[#003366]">{d.users.total}</p>
+              <p className="text-xs text-gray-400 mt-0.5">Total users</p>
             </div>
-        </div>
-    );
+            <div>
+              <p className="text-xl font-extrabold text-[#003366]">{d.products.quote_only}</p>
+              <p className="text-xs text-gray-400 mt-0.5">Quote-only products</p>
+            </div>
+          </div>
+        </Card>
+
+      </div>
+    </div>
+  )
 }
