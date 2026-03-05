@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth'
+import { sendQuoteNotifications } from '@/lib/notifications'
 
 export interface QuoteItem {
   product_name: string
@@ -47,5 +48,18 @@ export async function createQuote(data: {
   if (error) return { success: false, error: error.message }
 
   revalidatePath('/admin/quote-management')
+
+  // Fire-and-forget — never block quote submission on email/SMS
+  if (quote?.id) {
+    void sendQuoteNotifications({
+      id:       quote.id,
+      full_name: data.full_name,
+      email:    data.email,
+      phone:    data.phone || undefined,
+      items:    data.items,
+      message:  data.message || undefined,
+    })
+  }
+
   return { success: true, id: quote?.id }
 }

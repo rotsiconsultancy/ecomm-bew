@@ -14,6 +14,16 @@ const nextConfig = {
         hostname: '*.supabase.in',
         pathname: '/storage/v1/object/public/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.somafixkenya.co.ke',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.somafix.com.tr',
+        pathname: '/**',
+      },
     ],
   },
 };

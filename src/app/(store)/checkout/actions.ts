@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/server'
+import { sendOrderNotifications } from '@/lib/notifications'
 
 export async function createOrder(
   userId: string,
@@ -28,5 +29,20 @@ export async function createOrder(
   if (error) return { success: false, error: error.message }
 
   revalidatePath('/admin/order-management')
+
+  // Fire-and-forget — never block order confirmation on email/SMS
+  if (data?.id) {
+    void sendOrderNotifications({
+      id:              data.id,
+      customer_name:   shippingAddress.full_name,
+      customer_email:  shippingAddress.email,
+      customer_phone:  shippingAddress.phone || undefined,
+      items:           items.map((i) => ({ name: i.name, quantity: i.quantity, price: i.price, currency: i.currency })),
+      total:           totalAmount,
+      currency:        items[0]?.currency ?? 'KES',
+      delivery_method: shippingAddress.city ? `Delivery to ${shippingAddress.city}` : 'Delivery',
+    })
+  }
+
   return { success: true, id: data?.id }
 }
