@@ -8,6 +8,7 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/products`,      changeFrequency: 'weekly',  priority: 0.9 },
   { url: `${SITE_URL}/blog`,          changeFrequency: 'daily',   priority: 0.8 },
   { url: `${SITE_URL}/resources`,     changeFrequency: 'daily',   priority: 0.8 },
+  { url: `${SITE_URL}/categories`,    changeFrequency: 'weekly',  priority: 0.8 },
   { url: `${SITE_URL}/request-quote`, changeFrequency: 'monthly', priority: 0.7 },
 ]
 

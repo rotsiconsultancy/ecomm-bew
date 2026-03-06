@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeaderUserMenu } from '@/components/header-user-menu'
 import { CartDrawer } from '@/components/cart-drawer'
+import { SearchCommand } from '@/components/search-command'
 
 type AuthUser = { id: string; email: string } | null
 type AuthProfile = { full_name: string | null; role: string } | null
@@ -23,19 +23,8 @@ export function Header({ user = null, profile = null }: HeaderProps) {
           </Link>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex-1 max-w-2xl hidden md:block">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search industrial products, SKU, or categories..."
-              className="w-full pl-4 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003366] focus:border-[#003366] text-sm transition-all"
-            />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400" />
-            </div>
-          </div>
-        </div>
+        {/* Search */}
+        <SearchCommand />
 
         {/* Actions */}
         <div className="flex items-center gap-3">

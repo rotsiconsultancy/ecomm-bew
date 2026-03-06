@@ -30,6 +30,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "resend": "^6.9.3",
+    "shimmer-from-structure": "^2.3.2",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
