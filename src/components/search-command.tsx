@@ -178,7 +178,7 @@ export function SearchCommand() {
   const showEmpty = query.length >= 2 && !loading && !hasResults
 
   return (
-    <div className="fixed inset-0 z-[100]">
+    <div className="fixed inset-0 z-100">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"

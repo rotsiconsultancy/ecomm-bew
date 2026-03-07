@@ -219,10 +219,10 @@ export default async function HomePage() {
                 </h2>
               </div>
               <Link
-                href="/products"
+                href="/categories"
                 className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-[#003366] hover:text-[#ec5b13] transition-colors"
               >
-                All products <ChevronRight className="w-4 h-4" />
+                All categories <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
 
@@ -236,7 +236,7 @@ export default async function HomePage() {
                 <Link
                   key={name}
                   href={`/products?category=${encodeURIComponent(name)}`}
-                  className="group relative overflow-hidden rounded-2xl aspect-[4/3] block"
+                  className="group relative overflow-hidden rounded-2xl aspect-4/3 block"
                 >
                   {/* Background: real image or gradient */}
                   {thumb ? (
@@ -247,11 +247,11 @@ export default async function HomePage() {
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   ) : (
-                    <div className={`absolute inset-0 bg-gradient-to-br ${CAT_GRADIENTS[i % CAT_GRADIENTS.length]}`} />
+                    <div className={`absolute inset-0 bg-linear-to-br ${CAT_GRADIENTS[i % CAT_GRADIENTS.length]}`} />
                   )}
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
                   {/* Label */}
                   <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
