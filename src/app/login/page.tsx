@@ -90,7 +90,8 @@ function LoginForm() {
         .eq('id', user.id)
         .maybeSingle()
 
-      if (profile?.role === 'admin' || profile?.role === 'staff') {
+      // Only send admin/staff to dashboard when no specific page was requested
+      if ((profile?.role === 'admin' || profile?.role === 'staff') && redirectTo === '/') {
         router.push('/admin/dashboard')
       } else {
         router.push(redirectTo)

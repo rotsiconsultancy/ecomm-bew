@@ -181,7 +181,7 @@ export default function RegisterPage() {
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="name@company.com"
+                placeholder="name@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-11 border-gray-300 focus:border-[#ec5b13] focus:ring-[#ec5b13]"

@@ -4,12 +4,21 @@ import { createBuildClient } from '@/lib/supabase/server'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
 
 const staticRoutes: MetadataRoute.Sitemap = [
+  // Core
   { url: `${SITE_URL}/`,              changeFrequency: 'weekly',  priority: 1.0 },
   { url: `${SITE_URL}/products`,      changeFrequency: 'weekly',  priority: 0.9 },
+  { url: `${SITE_URL}/categories`,    changeFrequency: 'weekly',  priority: 0.8 },
   { url: `${SITE_URL}/blog`,          changeFrequency: 'daily',   priority: 0.8 },
   { url: `${SITE_URL}/resources`,     changeFrequency: 'daily',   priority: 0.8 },
-  { url: `${SITE_URL}/categories`,    changeFrequency: 'weekly',  priority: 0.8 },
   { url: `${SITE_URL}/request-quote`, changeFrequency: 'monthly', priority: 0.7 },
+  // Support
+  { url: `${SITE_URL}/faq`,               changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${SITE_URL}/shipping-policy`,   changeFrequency: 'monthly', priority: 0.5 },
+  { url: `${SITE_URL}/returns-policy`,    changeFrequency: 'monthly', priority: 0.5 },
+  { url: `${SITE_URL}/quality-assurance`, changeFrequency: 'monthly', priority: 0.5 },
+  // Legal
+  { url: `${SITE_URL}/privacy-policy`,    changeFrequency: 'yearly',  priority: 0.4 },
+  { url: `${SITE_URL}/terms`,             changeFrequency: 'yearly',  priority: 0.4 },
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -266,3 +266,24 @@ ALTER TABLE public.blog_posts
 ALTER TABLE public.products 
 ADD COLUMN pricing_type text NOT NULL DEFAULT 'fixed'
 CHECK (pricing_type IN ('fixed', 'quote'));
+
+CREATE TABLE public.carts (
+  id          uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id     uuid REFERENCES auth.users(id) ON DELETE SET NULL,
+  session_id  text,
+  items       jsonb NOT NULL DEFAULT '[]'::jsonb,
+  status      text NOT NULL DEFAULT 'active'
+              CHECK (status IN ('active', 'converted', 'abandoned')),
+  created_at  timestamptz NOT NULL DEFAULT now(),
+  updated_at  timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_carts_user_id    ON public.carts(user_id)    WHERE user_id IS NOT NULL;
+CREATE INDEX idx_carts_session_id ON public.carts(session_id) WHERE session_id IS NOT NULL;
+CREATE INDEX idx_carts_status     ON public.carts(status);
+CREATE INDEX idx_carts_updated_at ON public.carts(updated_at DESC);
+
+ALTER TABLE public.carts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "cart_insert" ON public.carts FOR INSERT WITH CHECK (true);
+CREATE POLICY "cart_select" ON public.carts FOR SELECT USING (true);
+CREATE POLICY "cart_update" ON public.carts FOR UPDATE USING (true);

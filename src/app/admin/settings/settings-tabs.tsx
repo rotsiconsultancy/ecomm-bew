@@ -51,16 +51,16 @@ function PasswordInput({ name, defaultValue = '', placeholder }: { name: string;
 function Toggle({ name, defaultChecked = false, label }: { name: string; defaultChecked?: boolean; label: string }) {
   const [on, setOn] = useState(defaultChecked)
   return (
-    <label className="flex items-center gap-3 cursor-pointer select-none">
+    <label className="flex items-center gap-3 cursor-pointer select-none min-w-0">
       <input type="hidden" name={name} value={on ? 'on' : 'off'} />
       <button
         type="button"
         onClick={() => setOn(!on)}
-        className={`w-11 h-6 rounded-full transition-colors relative ${on ? 'bg-[#003366]' : 'bg-gray-200'}`}
+        className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${on ? 'bg-[#003366]' : 'bg-gray-200'}`}
       >
-        <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${on ? 'translate-x-6' : 'translate-x-1'}`} />
+        <span className={`absolute top-1 left-0 w-4 h-4 bg-white rounded-full shadow transition-transform ${on ? 'translate-x-6' : 'translate-x-1'}`} />
       </button>
-      <span className="text-sm font-medium text-gray-700">{label}</span>
+      <span className="text-sm font-medium text-gray-700 leading-snug">{label}</span>
     </label>
   )
 }

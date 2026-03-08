@@ -236,7 +236,7 @@ export default async function ProductsPage({ searchParams }: Props) {
                                 className="flex-1 text-xs h-9"
                               />
                               <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`}>
-                                <Button size="sm" variant="outline" className="text-xs h-9 text-[#003366] border-[#003366]">
+                                <Button size="sm" variant="outline" title="Request a Quote" className="text-xs h-9 text-[#003366] border-[#003366]">
                                   <FileText className="w-3.5 h-3.5" />
                                 </Button>
                               </Link>

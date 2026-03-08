@@ -38,12 +38,6 @@ export function Header({ user = null, profile = null }: HeaderProps) {
               >
                 Log In
               </Link>
-              <Link
-                href="/register"
-                className="hidden sm:block text-sm font-semibold text-gray-600 hover:text-[#003366] transition-colors"
-              >
-                Register
-              </Link>
             </>
           )}
 

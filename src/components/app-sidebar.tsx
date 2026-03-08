@@ -26,16 +26,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 
 const items = [
-  { title: "Dashboard",  url: "/admin/dashboard",                      icon: LayoutDashboard },
+  { title: "Dashboard",  url: "/admin/dashboard",            icon: LayoutDashboard },
   { title: "Products",   url: "/admin/product-management",   icon: Package },
-  // { title: "Inventory",  url: "/admin/inventory",            icon: Warehouse },
   { title: "Orders",     url: "/admin/order-management",     icon: ShoppingCart },
   { title: "Quotes",     url: "/admin/quote-management",     icon: MessageSquare },
+  { title: "Carts",      url: "/admin/cart-management",      icon: Warehouse },
   { title: "Users",      url: "/admin/user-management",      icon: Users },
   { title: "Content",    url: "/admin/content-management",   icon: FileText },
 ]
@@ -73,14 +74,14 @@ export function AppSidebar({ userName, userEmail, userRole }: AppSidebarProps) {
   return (
     <Sidebar className="bg-sidebar border-r-0 shadow-xl">
       <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3">
-          <div className="bg-primary p-2 rounded-lg shadow-lg shadow-primary/20">
-            <Factory className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="shrink-0 w-9 h-9 bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center overflow-hidden">
+            <Image src="/logo.png" alt="Bewama logo" width={36} height={36} className="object-contain" />
           </div>
           {state !== "collapsed" && (
-            <div>
-              <h1 className="text-xl font-bold tracking-tight text-white">BEWAMA</h1>
-              <p className="text-[10px] text-slate-300 uppercase tracking-widest font-semibold">Admin Panel</p>
+            <div className="min-w-0">
+              <h1 className="text-xl font-bold tracking-tight text-white leading-none">BEWAMA</h1>
+              <p className="text-[10px] text-slate-300 uppercase tracking-widest font-semibold mt-0.5">Admin Panel</p>
             </div>
           )}
         </div>
