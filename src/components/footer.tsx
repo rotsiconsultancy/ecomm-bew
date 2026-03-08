@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPublicSiteSettings } from '@/lib/settings'
 
 export async function Footer() {
@@ -22,6 +23,10 @@ export async function Footer() {
             <span className="text-2xl font-extrabold tracking-tight">{site.name.toUpperCase()}</span>
             {site.tagline && (
               <p className="text-gray-400 text-sm max-w-xs leading-relaxed">{site.tagline}</p>
+            )}
+            {site.logo_url && (
+              // <Image src="/logo.png" alt="Logo Image" width={60} height={60}/>
+              <Image src={site.logo_url} alt="Bewama logo" width={180} height={100} className="object-contain" />
             )}
             {socials.length > 0 && (
               <div className="flex flex-wrap gap-3 pt-1">
