@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: 'Products | Bewama',
   description:
     'Browse our industrial product catalog — silicones, timber, adhesives, tools and more. Quality materials sourced for professionals across Europe.',
+  alternates: { canonical: '/products' },
 }
 
 type SearchParams = {

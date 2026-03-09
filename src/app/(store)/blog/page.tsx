@@ -9,6 +9,7 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: 'Technical Resources & Blog | Bewama Industrial',
   description: 'Deep dives into industrial solutions, hardware guides, and construction material insights from the Bewama team.',
+  alternates: { canonical: '/blog' },
 }
 
 export default async function BlogListingPage() {

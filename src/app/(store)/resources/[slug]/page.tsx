@@ -50,6 +50,7 @@ export async function generateMetadata(
     title: `${title} | Bewama Technical Resources`,
     description,
     keywords: post.seo_keywords ?? undefined,
+    alternates: { canonical: `/resources/${slug}` },
     openGraph: {
       title,
       description,

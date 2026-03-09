@@ -7,6 +7,7 @@ import { ArrowRight, Layers } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'Categories | Bewama',
   description: 'Browse our industrial product categories — silicones, timber, tools, chemicals and more.',
+  alternates: { canonical: '/categories' },
 }
 
 export const revalidate = 1800
