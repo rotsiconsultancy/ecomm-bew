@@ -11,6 +11,7 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/blog`,          changeFrequency: 'daily',   priority: 0.8 },
   { url: `${SITE_URL}/resources`,     changeFrequency: 'daily',   priority: 0.8 },
   { url: `${SITE_URL}/request-quote`, changeFrequency: 'monthly', priority: 0.7 },
+  { url: `${SITE_URL}/contact`,       changeFrequency: 'monthly', priority: 0.7 },
   // Support
   { url: `${SITE_URL}/faq`,               changeFrequency: 'monthly', priority: 0.6 },
   { url: `${SITE_URL}/shipping-policy`,   changeFrequency: 'monthly', priority: 0.5 },

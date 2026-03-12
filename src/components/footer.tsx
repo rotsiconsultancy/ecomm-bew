@@ -65,6 +65,7 @@ export async function Footer() {
               <li><Link className="hover:text-[#ec5b13] transition-colors" href="/returns-policy">Returns &amp; Refunds</Link></li>
               <li><Link className="hover:text-[#ec5b13] transition-colors" href="/quality-assurance">Quality Assurance</Link></li>
               <li><Link className="hover:text-[#ec5b13] transition-colors" href="/faq">FAQ</Link></li>
+              <li><Link className="hover:text-[#ec5b13] transition-colors" href="/contact">Contact Us</Link></li>
             </ul>
           </div>
 
