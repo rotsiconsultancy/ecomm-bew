@@ -12,7 +12,17 @@ import {
   Plus, Trash2, ChevronDown, ChevronUp, Image as ImageIcon, Loader2, Tag, FileText,
 } from 'lucide-react'
 
-const CATEGORIES = ['Silicones', 'Timber & Boards', 'Tools', 'Adhesives', 'Chemicals', 'Other']
+const CATEGORIES = [
+  'Silicones', 
+  'Timber & Boards',
+  'Tools', 
+  'Adhesives', 
+  'Chemicals',
+  'Sealant',
+  'Aerosol',
+  'PU Foam & Cleaner', 
+  'Other'
+]
 const CURRENCIES = ['KES', 'EUR', 'USD']
 
 type Product = {
