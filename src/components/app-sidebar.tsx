@@ -9,9 +9,9 @@ import {
   FileText,
   MessageSquare,
   Warehouse,
-  Factory,
   LogOut,
   ChevronRight,
+  AwardIcon,
 } from "lucide-react"
 import {
   Sidebar,
@@ -39,6 +39,7 @@ const items = [
   { title: "Carts",      url: "/admin/cart-management",      icon: Warehouse },
   { title: "Users",      url: "/admin/user-management",      icon: Users },
   { title: "Content",    url: "/admin/content-management",   icon: FileText },
+  { title: "Points",    url: "/admin/points",   icon: AwardIcon },
 ]
 
 function getInitials(name: string): string {

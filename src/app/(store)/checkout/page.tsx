@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
+import { getPendingRedemption } from '@/lib/points'
+import { POINTS_TO_KES } from '@/types/points'
 import { CheckoutForm } from './checkout-form'
 
 export default async function CheckoutPage() {
@@ -8,11 +10,13 @@ export default async function CheckoutPage() {
   if (!user) redirect('/login?redirectTo=/checkout')
 
   const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name, phone')
-    .eq('id', user.id)
-    .maybeSingle()
+  const [profileRes, pendingPoints] = await Promise.all([
+    supabase.from('profiles').select('full_name, phone').eq('id', user.id).maybeSingle(),
+    getPendingRedemption(user.id),
+  ])
+
+  const profile = profileRes.data
+  const pointsDiscount = pendingPoints * POINTS_TO_KES
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -22,6 +26,8 @@ export default async function CheckoutPage() {
         defaultEmail={user.email ?? ''}
         defaultName={profile?.full_name ?? ''}
         defaultPhone={profile?.phone ?? ''}
+        pointsDiscount={pointsDiscount}
+        pendingPoints={pendingPoints}
       />
     </div>
   )

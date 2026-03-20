@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/server'
 import { sendOrderNotifications } from '@/lib/notifications'
+import { finaliseRedemption } from '@/lib/points'
 
 export async function createOrder(
   userId: string,
@@ -30,7 +31,7 @@ export async function createOrder(
 
   revalidatePath('/admin/order-management')
 
-  // Fire-and-forget — never block order confirmation on email/SMS
+  // Fire-and-forget — never block order confirmation on email/SMS or points
   if (data?.id) {
     void sendOrderNotifications({
       id:              data.id,
@@ -42,6 +43,9 @@ export async function createOrder(
       currency:        items[0]?.currency ?? 'KES',
       delivery_method: shippingAddress.city ? `Delivery to ${shippingAddress.city}` : 'Delivery',
     })
+
+    // Finalise any pending points redemption — attach to this order
+    void finaliseRedemption(userId, data.id)
   }
 
   return { success: true, id: data?.id }
