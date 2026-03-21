@@ -64,6 +64,9 @@ export async function createPost(formData: FormData, tiptapContent: object) {
   const seoKeywords  = String(formData.get('seo_keywords') ?? '') || null
   const status       = String(formData.get('status') ?? 'draft') as ContentStatus
   const readTime     = estimateReadTime(tiptapContent as Record<string, unknown>)
+  
+  const overrideStr  = String(formData.get('published_at_override') ?? '')
+  const parsedOverride = overrideStr ? new Date(overrideStr).toISOString() : null
 
   const { data, error } = await supabase
     .from('blog_posts')
@@ -82,7 +85,7 @@ export async function createPost(formData: FormData, tiptapContent: object) {
       seo_keywords: seoKeywords,
       status,
       read_time_minutes: readTime,
-      published_at: status === 'published' ? new Date().toISOString() : null,
+      published_at: parsedOverride || (status === 'published' ? new Date().toISOString() : null),
     })
     .select('id, slug, content_type')
     .maybeSingle()
@@ -117,6 +120,9 @@ export async function updatePost(id: string, formData: FormData, tiptapContent: 
   const seoKeywords  = String(formData.get('seo_keywords') ?? '') || null
   const status       = String(formData.get('status') ?? 'draft') as ContentStatus
   const readTime     = estimateReadTime(tiptapContent as Record<string, unknown>)
+  
+  const overrideStr  = String(formData.get('published_at_override') ?? '')
+  const parsedOverride = overrideStr ? new Date(overrideStr).toISOString() : null
 
   // Fetch previous status to detect draft→published transition
   const { data: existing } = await supabase
@@ -144,9 +150,9 @@ export async function updatePost(id: string, formData: FormData, tiptapContent: 
       seo_keywords: seoKeywords,
       status,
       read_time_minutes: readTime,
-      published_at: justPublished
+      published_at: parsedOverride || (justPublished
         ? new Date().toISOString()
-        : existing?.published_at ?? null,
+        : existing?.published_at ?? null),
     })
     .eq('id', id)
 

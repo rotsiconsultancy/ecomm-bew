@@ -32,6 +32,7 @@ interface PostData {
   seo_description: string | null
   seo_keywords: string | null
   status: string
+  published_at?: string | null
 }
 
 interface ContentFormProps {
@@ -56,9 +57,10 @@ export default function ContentForm({ initialData }: ContentFormProps) {
     setLoading(true)
     const formData = new FormData(e.currentTarget)
     formData.set('slug', slug)
+    const plainTiptapContent = JSON.parse(JSON.stringify(tiptapContent))
     const result = initialData
-      ? await updatePost(initialData.id, formData, tiptapContent)
-      : await createPost(formData, tiptapContent)
+      ? await updatePost(initialData.id, formData, plainTiptapContent)
+      : await createPost(formData, plainTiptapContent)
     if (result.success) {
       router.push('/admin/content-management')
       router.refresh()
@@ -145,6 +147,17 @@ export default function ContentForm({ initialData }: ContentFormProps) {
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-700">Publish Date (Override)</label>
+              <input
+                name="published_at_override"
+                type="datetime-local"
+                defaultValue={initialData?.published_at ? new Date(initialData.published_at).toISOString().slice(0, 16) : ''}
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm text-slate-500"
+              />
+              <p className="text-[11px] text-slate-400 mt-1">Leave blank to auto-set on publish.</p>
             </div>
 
             <div className="space-y-2">
