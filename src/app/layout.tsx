@@ -7,8 +7,15 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://bewama.com'),
   title: "Bewama | Your Partner in Industrial Materials",
-  description: "Reliable supply chain solutions for Quality Chemicals & Timber. Delivering excellence across Europe's manufacturing sectors.",
-  alternates: { canonical: '/' },
+  description: "Reliable supply chain solutions for Quality Chemicals & Timber. Delivering excellence across Kenya's manufacturing sectors.",
+  openGraph: {
+    siteName: 'Bewama',
+    type: 'website',
+    images: [{ url: '/logo.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 export default function RootLayout({

@@ -50,7 +50,7 @@ export async function generateMetadata(
     title: `${title} | Bewama Industrial`,
     description,
     keywords: post.seo_keywords ?? undefined,
-    alternates: { canonical: `/blog/${slug}` },
+    alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/blog/${slug}` },
     openGraph: {
       title,
       description,

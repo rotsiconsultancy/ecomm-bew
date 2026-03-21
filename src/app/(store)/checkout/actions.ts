@@ -2,21 +2,26 @@
 
 import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/auth'
 import { sendOrderNotifications } from '@/lib/notifications'
 import { finaliseRedemption } from '@/lib/points'
+import { updateInfluencePreference } from '@/lib/checkout'
 
 export async function createOrder(
-  userId: string,
+  _userId: string, // kept for backwards compat — actual userId read from auth
   items: { product_id: string; name: string; price: number; currency: string; quantity: number; image: string | null }[],
   shippingAddress: { full_name: string; phone: string; email: string; delivery_address: string; city: string; notes: string },
   totalAmount: number
 ) {
+  const user = await getUser()
+  if (!user) return { success: false, error: 'Not authenticated' }
+
   const supabase = await createServiceClient()
 
   const { data, error } = await supabase
     .from('orders')
     .insert({
-      user_id: userId,
+      user_id: user.id,
       status: 'pending',
       total_amount: totalAmount,
       currency: items[0]?.currency ?? 'KES',
@@ -45,8 +50,17 @@ export async function createOrder(
     })
 
     // Finalise any pending points redemption — attach to this order
-    void finaliseRedemption(userId, data.id)
+    void finaliseRedemption(user.id, data.id)
   }
 
   return { success: true, id: data?.id }
+}
+
+// ─── Toggle user influence preference ────────────────────────────────────────
+
+export async function toggleInfluenceAction(enabled: boolean) {
+  const user = await getUser()
+  if (!user) return { success: false, error: 'Not authenticated' }
+  await updateInfluencePreference(user.id, enabled)
+  return { success: true }
 }

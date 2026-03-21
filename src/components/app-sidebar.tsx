@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronRight,
   AwardIcon,
+  ShoppingBag,
 } from "lucide-react"
 import {
   Sidebar,
@@ -40,6 +41,7 @@ const items = [
   { title: "Users",      url: "/admin/user-management",      icon: Users },
   { title: "Content",    url: "/admin/content-management",   icon: FileText },
   { title: "Points",    url: "/admin/points",   icon: AwardIcon },
+  { title: "Checkout",  url: "/admin/checkout", icon: ShoppingBag },
 ]
 
 function getInitials(name: string): string {

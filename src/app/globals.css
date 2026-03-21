@@ -8,90 +8,122 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
+  /* Brand Colors */
   --color-brand-navy: var(--brand-navy);
   --color-brand-orange: var(--brand-orange);
   --color-brand-orange-hover: var(--brand-orange-hover);
-  
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  
+
+  /* Core System */
   --color-primary: var(--primary-color);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary-color);
   --color-secondary-foreground: var(--secondary-foreground);
-  
+
+  /* UI */
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
 }
 
+/* =========================
+   LIGHT MODE (DEFAULT)
+========================= */
 :root {
+  /* Brand Core */
   --brand-navy: #003366;
   --brand-orange: #ec5b13;
   --brand-orange-hover: #d14d0d;
-  
-  --primary-color: #ec5b13;
+
+  /* Hierarchy Fix */
+  --primary-color: #003366;       /* NAVY = AUTHORITY */
   --primary-foreground: #ffffff;
-  --secondary-color: #003366;
+
+  --secondary-color: #ec5b13;     /* ORANGE = ACTION */
   --secondary-foreground: #ffffff;
-  
+
+  /* Base */
   --background: #f8f6f6;
   --foreground: #1a1a1a;
-  
+
+  /* UI Elements */
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #ec5b13;
-  
+
+  /* Radius */
   --radius: 12px;
-  
+
+  /* Sidebar (feels like a control panel now) */
   --sidebar: #003366;
   --sidebar-foreground: #ffffff;
+
   --sidebar-primary: #ec5b13;
   --sidebar-primary-foreground: #ffffff;
+
   --sidebar-accent: #ffffff1a;
   --sidebar-accent-foreground: #ffffff;
+
   --sidebar-border: #ffffff1a;
   --sidebar-ring: #ec5b13;
 }
 
+/* =========================
+   DARK MODE (INDUSTRIAL)
+========================= */
 .dark {
-  --background: #221610;
+  --background: #1c1410;   /* slightly refined */
   --foreground: #f8f6f6;
-  
-  --primary-color: #ec5b13;
+
+  /* Keep hierarchy consistent */
+  --primary-color: #003366;
   --primary-foreground: #ffffff;
-  --secondary-color: #003366;
+
+  --secondary-color: #ec5b13;
   --secondary-foreground: #ffffff;
-  
-  --border: #333333;
-  --input: #333333;
+
+  /* UI */
+  --border: #2e2e2e;
+  --input: #2e2e2e;
   --ring: #ec5b13;
-  
-  --sidebar: #1a110c;
+
+  /* Sidebar */
+  --sidebar: #140e0a;
   --sidebar-foreground: #f8f6f6;
+
   --sidebar-primary: #ec5b13;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ffffff1a;
+
+  --sidebar-accent: #ffffff14;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #ffffff1a;
+
+  --sidebar-border: #ffffff14;
   --sidebar-ring: #ec5b13;
 }
 
+/* =========================
+   BASE LAYER
+========================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
