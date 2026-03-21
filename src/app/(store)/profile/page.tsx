@@ -90,7 +90,7 @@ export default async function ProfilePage() {
               <span>Bewama Points</span>
             </Link>
             <Link
-              href="#"
+              href="/account/settings"
               className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
             >
               <Settings className="h-5 w-5" />

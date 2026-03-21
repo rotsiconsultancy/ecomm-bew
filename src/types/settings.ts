@@ -17,9 +17,8 @@ export interface SiteSettings {
   default_currency: 'KES' | 'EUR' | 'USD'
 }
 
-export interface PaymentSettings {
+export interface PaymentCredentials {
   rotsi: {
-    enabled: boolean
     consumer_key: string
     consumer_secret: string
     shortcode: string
@@ -27,23 +26,23 @@ export interface PaymentSettings {
     environment: 'sandbox' | 'production'
   }
   paypal: {
-    enabled: boolean
     client_id: string
     client_secret: string
     environment: 'sandbox' | 'production'
   }
   cards: {
-    enabled: boolean
     provider: string
     api_key: string
     environment: 'sandbox' | 'production'
   }
   cod: {
-    enabled: boolean
     nairobi_only: true
     confirmation_required: true
   }
 }
+
+/** @deprecated Use PaymentCredentials — enabled flags now live in payment_methods table */
+export type PaymentSettings = PaymentCredentials
 
 export interface LogisticsSettings {
   pickup_mtaani: {
@@ -91,7 +90,7 @@ export interface NotificationSettings {
 
 export interface AllSettings {
   site: SiteSettings
-  payments: PaymentSettings
+  credentials: PaymentCredentials
   logistics: LogisticsSettings
   notifications: NotificationSettings
 }
@@ -111,12 +110,15 @@ export const DEFAULT_SITE: SiteSettings = {
   default_currency: 'KES',
 }
 
-export const DEFAULT_PAYMENTS: PaymentSettings = {
-  rotsi:  { enabled: false, consumer_key: '', consumer_secret: '', shortcode: '', passkey: '', environment: 'sandbox' },
-  paypal: { enabled: false, client_id: '', client_secret: '', environment: 'sandbox' },
-  cards:  { enabled: false, provider: '', api_key: '', environment: 'sandbox' },
-  cod:    { enabled: true, nairobi_only: true, confirmation_required: true },
+export const DEFAULT_CREDENTIALS: PaymentCredentials = {
+  rotsi:  { consumer_key: '', consumer_secret: '', shortcode: '', passkey: '', environment: 'sandbox' },
+  paypal: { client_id: '', client_secret: '', environment: 'sandbox' },
+  cards:  { provider: '', api_key: '', environment: 'sandbox' },
+  cod:    { nairobi_only: true, confirmation_required: true },
 }
+
+/** @deprecated Use DEFAULT_CREDENTIALS */
+export const DEFAULT_PAYMENTS = DEFAULT_CREDENTIALS
 
 export const DEFAULT_LOGISTICS: LogisticsSettings = {
   pickup_mtaani: { enabled: false, api_key: '', api_url: 'https://api.pickupmtaani.com/api/v1', stub_mode: true },

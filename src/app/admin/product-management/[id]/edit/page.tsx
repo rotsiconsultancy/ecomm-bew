@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 import { getAdminContext } from '@/lib/auth'
 import { createServiceClient } from '@/lib/supabase/server'
 import ProductForm from '../../product-form'
+import { CompanionEditor } from './companion-editor'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -14,13 +15,36 @@ export default async function EditProductPage({ params }: Props) {
   const { id } = await params
 
   const supabase = await createServiceClient()
-  const { data: product } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .maybeSingle()
 
+  const [productRes, companionsRes] = await Promise.all([
+    supabase.from('products').select('*').eq('id', id).maybeSingle(),
+    supabase
+      .from('product_companions')
+      .select('id, companion_product_id, sort_order')
+      .eq('product_id', id)
+      .order('sort_order'),
+  ])
+
+  const product = productRes.data
   if (!product) notFound()
+
+  // Fetch companion product names
+  const companionIds = (companionsRes.data ?? []).map((c) => c.companion_product_id)
+  let companionNames: Record<string, string> = {}
+  if (companionIds.length > 0) {
+    const { data: nameRows } = await supabase
+      .from('products')
+      .select('id, name')
+      .in('id', companionIds)
+    companionNames = Object.fromEntries((nameRows ?? []).map((p) => [p.id, p.name]))
+  }
+
+  const companions = (companionsRes.data ?? []).map((c) => ({
+    id: c.id as string,
+    companion_product_id: c.companion_product_id as string,
+    companion_name: companionNames[c.companion_product_id] ?? 'Unknown',
+    sort_order: c.sort_order as number,
+  }))
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -37,6 +61,8 @@ export default async function EditProductPage({ params }: Props) {
       </div>
 
       <ProductForm mode="edit" product={product} />
+
+      <CompanionEditor productId={id} companions={companions} />
     </div>
   )
 }

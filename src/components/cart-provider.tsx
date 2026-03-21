@@ -18,13 +18,17 @@ function getOrCreateSessionId(): string {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [] })
-  const [ready, setReady] = useState(false)       // true after DB hydration completes
-  const cartDbId  = useRef<string | null>(null)   // ID of the row in `carts`
-  const lastSaved = useRef<string>('[]')          // serialized items last written to DB
+  const [ready, setReady] = useState(false)
+  const cartDbId  = useRef<string | null>(null)
+  const lastSaved = useRef<string>('[]')
   const syncTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const hydrated  = useRef(false) // guard against StrictMode double-run
 
-  // ── Hydrate from DB on mount ─────────────────────────────────────────────
+  // ── Hydrate from DB on mount (single source of truth) ───────────────────
   useEffect(() => {
+    if (hydrated.current) return
+    hydrated.current = true
+
     const supabase = createClient()
 
     async function init() {
@@ -45,8 +49,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (data) {
         cartDbId.current  = data.id
         const items = (data.items ?? []) as CartItem[]
-        lastSaved.current = JSON.stringify(items)  // so first sync is skipped
-        items.forEach((item) => dispatch({ type: 'ADD_ITEM', item }))
+        lastSaved.current = JSON.stringify(items)
+        // Replace state entirely — never add/merge
+        dispatch({ type: 'SET_ITEMS', items })
       }
 
       setReady(true)
@@ -58,7 +63,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // ── Sync to DB (debounced 1.2s, skip if data unchanged) ─────────────────
   const syncToDb = useCallback(async (items: CartItem[]) => {
     const serialized = JSON.stringify(items)
-    if (serialized === lastSaved.current) return   // nothing changed
+    if (serialized === lastSaved.current) return
     lastSaved.current = serialized
 
     const supabase = createClient()

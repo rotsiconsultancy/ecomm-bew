@@ -17,6 +17,7 @@ export interface CartState {
 }
 
 export type CartAction =
+  | { type: 'SET_ITEMS'; items: CartItem[] }
   | { type: 'ADD_ITEM'; item: CartItem }
   | { type: 'REMOVE_ITEM'; product_id: string }
   | { type: 'UPDATE_QUANTITY'; product_id: string; quantity: number }
@@ -24,6 +25,8 @@ export type CartAction =
 
 export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
+    case 'SET_ITEMS':
+      return { items: action.items }
     case 'ADD_ITEM': {
       const existing = state.items.find((i) => i.product_id === action.item.product_id)
       if (existing) {
