@@ -86,9 +86,29 @@ export default async function HomePage() {
   const { products, categories, totalCount } = await fetchHomeData()
 
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
+  
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Bewama',
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+254700000000', // General fallback
+      contactType: 'customer service',
+      email: 'info@bewama.com',
+    },
+  }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative bg-[#003366] text-white overflow-hidden">
 
