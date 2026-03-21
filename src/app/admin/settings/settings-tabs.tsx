@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import type { AllSettings } from '@/types/settings'
 import {
   saveSiteSettings,
-  savePaymentSettings,
+  saveCredentialsSettings,
   saveLogisticsSettings,
   saveNotificationSettings,
 } from './actions'
@@ -233,24 +233,30 @@ export function SiteTab({ s }: { s: AllSettings['site'] }) {
   )
 }
 
-// ─── Tab 2 — Payments ─────────────────────────────────────────────────────────
+// ─── Tab 2 — Credentials ─────────────────────────────────────────────────────
+// Enabled/disabled toggles live in /admin/checkout → Payment Methods tab.
+// This tab is credentials-only.
 
-export function PaymentsTab({ s }: { s: AllSettings['payments'] }) {
+export function CredentialsTab({ s }: { s: AllSettings['credentials'] }) {
   const [isPending, startTransition] = useTransition()
   const [result, setResult] = useState<{ success: boolean; error?: string } | null>(null)
 
   function submit(formData: FormData) {
     startTransition(async () => {
-      const r = await savePaymentSettings(formData)
+      const r = await saveCredentialsSettings(formData)
       setResult(r)
     })
   }
 
   return (
     <form action={submit} className="space-y-4">
+      <InfoBanner>
+        These are API credentials only. To enable or disable payment methods for customers,
+        go to <strong>Checkout → Payment Methods</strong>.
+      </InfoBanner>
+
       {/* Rotsi / M-Pesa */}
       <SectionCard title="Rotsi (M-Pesa)">
-        <Toggle name="rotsi_enabled" defaultChecked={s.rotsi.enabled} label="Enable M-Pesa payments" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Consumer Key">
             <PasswordInput name="rotsi_consumer_key" defaultValue={s.rotsi.consumer_key} />
@@ -273,7 +279,6 @@ export function PaymentsTab({ s }: { s: AllSettings['payments'] }) {
 
       {/* PayPal */}
       <SectionCard title="PayPal" defaultOpen={false}>
-        <Toggle name="paypal_enabled" defaultChecked={s.paypal.enabled} label="Enable PayPal" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Client ID">
             <PasswordInput name="paypal_client_id" defaultValue={s.paypal.client_id} />
@@ -290,7 +295,6 @@ export function PaymentsTab({ s }: { s: AllSettings['payments'] }) {
 
       {/* Card Payments */}
       <SectionCard title="Card Payments" defaultOpen={false}>
-        <Toggle name="cards_enabled" defaultChecked={s.cards.enabled} label="Enable card payments" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Provider Name">
             <Input name="cards_provider" defaultValue={s.cards.provider} placeholder="e.g. Stripe, Flutterwave" className="bg-gray-50 border-gray-200 rounded-lg" />
@@ -307,8 +311,7 @@ export function PaymentsTab({ s }: { s: AllSettings['payments'] }) {
 
       {/* COD */}
       <SectionCard title="Cash on Delivery" defaultOpen={false}>
-        <Toggle name="cod_enabled" defaultChecked={s.cod.enabled} label="Enable Cash on Delivery" />
-        <InfoBanner>Nairobi only. Staff will call to confirm before dispatch. No API credentials required.</InfoBanner>
+        <InfoBanner>Nairobi only. Staff will call to confirm before dispatch. No API credentials needed.</InfoBanner>
       </SectionCard>
 
       <SaveBar isPending={isPending} result={result} />
@@ -449,14 +452,14 @@ export function NotificationsTab({ s }: { s: AllSettings['notifications'] }) {
 
 // ─── Tab switcher ─────────────────────────────────────────────────────────────
 
-export type TabKey = 'site' | 'payments' | 'logistics' | 'notifications'
+export type TabKey = 'site' | 'credentials' | 'logistics' | 'notifications'
 
 export function SettingsTabs({ settings }: { settings: AllSettings }) {
   const [tab, setTab] = useState<TabKey>('site')
 
   const tabs: { key: TabKey; label: string }[] = [
     { key: 'site',          label: 'Site Details' },
-    { key: 'payments',      label: 'Payments' },
+    { key: 'credentials',   label: 'Credentials' },
     { key: 'logistics',     label: 'Logistics' },
     { key: 'notifications', label: 'Notifications' },
   ]
@@ -482,7 +485,7 @@ export function SettingsTabs({ settings }: { settings: AllSettings }) {
       </div>
 
       {tab === 'site'          && <SiteTab          s={settings.site}          />}
-      {tab === 'payments'      && <PaymentsTab       s={settings.payments}      />}
+      {tab === 'credentials'   && <CredentialsTab    s={settings.credentials}   />}
       {tab === 'logistics'     && <LogisticsTab      s={settings.logistics}     />}
       {tab === 'notifications' && <NotificationsTab  s={settings.notifications} />}
     </div>

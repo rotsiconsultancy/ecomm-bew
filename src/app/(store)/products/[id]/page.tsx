@@ -54,7 +54,7 @@ export async function generateMetadata(
     title: `${title} | Bewama`,
     description,
     keywords: product.seo_keywords ?? undefined,
-    alternates: { canonical: `/products/${slug}` },
+    alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/products/${slug}` },
     openGraph: { title, description, images: image ? [image] : [], type: 'website' },
     twitter: { card: 'summary_large_image', title, description, images: image ? [image] : [] },
   }
@@ -100,11 +100,47 @@ export default async function ProductDetailPage({ params }: Props) {
   const symbol   = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
   const images: string[] = product.images ?? []
 
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: `${SITE_URL}/products`,
+      },
+      ...(product.category ? [{
+        '@type': 'ListItem',
+        position: 3,
+        name: product.category,
+        item: `${SITE_URL}/products?category=${encodeURIComponent(product.category)}`,
+      }] : []),
+      {
+        '@type': 'ListItem',
+        position: product.category ? 4 : 3,
+        name: product.name,
+      },
+    ],
+  }
+
   return (
     <div className="bg-white min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

@@ -16,11 +16,13 @@ interface Props {
   defaultEmail: string
   defaultName: string
   defaultPhone: string
+  pointsDiscount?: number
+  pendingPoints?: number
 }
 
 const DELIVERY_FEE = 500
 
-export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone }: Props) {
+export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, pointsDiscount = 0, pendingPoints = 0 }: Props) {
   const router = useRouter()
   const { cartItems, cartTotal, clearCart } = useCart()
 
@@ -35,7 +37,8 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone }
   const [error, setError]                     = useState<string | null>(null)
 
   const subtotal = cartTotal
-  const total    = subtotal + DELIVERY_FEE
+  const discount = Math.min(pointsDiscount, subtotal + DELIVERY_FEE)
+  const total    = subtotal + DELIVERY_FEE - discount
 
   // Redirect to products if cart is empty
   useEffect(() => {
@@ -121,6 +124,15 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone }
               <span>Delivery</span>
               <span className="font-semibold text-[#003366]">KES {DELIVERY_FEE.toLocaleString()}</span>
             </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span className="flex items-center gap-1">
+                  Points discount
+                  <span className="text-xs text-gray-400">({pendingPoints.toLocaleString()} pts)</span>
+                </span>
+                <span className="font-semibold">-KES {discount.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+            )}
             <div className="flex justify-between text-base font-extrabold text-[#003366] pt-2 border-t">
               <span>Total</span>
               <span>KES {total.toLocaleString()}</span>

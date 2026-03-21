@@ -26,7 +26,7 @@ export function CartDrawer() {
         </button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-full sm:w-[420px] flex flex-col p-0">
+      <SheetContent side="right" className="w-full sm:w-105 flex flex-col p-0">
         <SheetHeader className="px-6 py-4 border-b">
           <SheetTitle className="text-[#003366] font-bold flex items-center gap-2">
             <ShoppingCart className="w-5 h-5" />
@@ -91,7 +91,7 @@ export function CartDrawer() {
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="px-3 py-1 text-sm font-semibold border-x border-gray-200 min-w-[2rem] text-center">
+                        <span className="px-3 py-1 text-sm font-semibold border-x border-gray-200 min-w-8 text-center">
                           {item.quantity}
                         </span>
                         <button

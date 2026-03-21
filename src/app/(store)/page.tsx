@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: 'Bewama — Industrial Materials & Brokerage',
   description:
     'Quality chemicals, timber, silicones, and industrial materials. Fast delivery across East Africa. Request a custom quote today.',
+  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/` },
 }
 
 export const revalidate = 1800
@@ -85,9 +86,29 @@ export default async function HomePage() {
   const { products, categories, totalCount } = await fetchHomeData()
 
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
+  
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Bewama',
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+254700000000', // General fallback
+      contactType: 'customer service',
+      email: 'info@bewama.com',
+    },
+  }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative bg-[#003366] text-white overflow-hidden">
 

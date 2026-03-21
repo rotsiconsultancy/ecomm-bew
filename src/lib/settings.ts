@@ -3,11 +3,11 @@ import { createBuildClient } from '@/lib/supabase/server'
 import {
   AllSettings,
   SiteSettings,
-  PaymentSettings,
+  PaymentCredentials,
   LogisticsSettings,
   NotificationSettings,
   DEFAULT_SITE,
-  DEFAULT_PAYMENTS,
+  DEFAULT_CREDENTIALS,
   DEFAULT_LOGISTICS,
   DEFAULT_NOTIFICATIONS,
 } from '@/types/settings'
@@ -38,25 +38,26 @@ export async function getAllSettings(): Promise<AllSettings> {
   const { data } = await supabase
     .from('settings')
     .select('key, value')
-    .in('key', ['site', 'payments', 'logistics', 'notifications'])
+    .in('key', ['site', 'credentials', 'payments', 'logistics', 'notifications'])
 
   const map = Object.fromEntries((data ?? []).map((r) => [r.key, r.value]))
 
   return {
     site:          { ...DEFAULT_SITE,          ...(map['site']          as Partial<SiteSettings>         ?? {}) },
-    payments:      mergePayments(map['payments']),
+    // Read from 'credentials' key, fallback to legacy 'payments' key
+    credentials:   mergeCredentials(map['credentials'] ?? map['payments']),
     logistics:     mergeLogistics(map['logistics']),
     notifications: mergeNotifications(map['notifications']),
   }
 }
 
-function mergePayments(stored: unknown): PaymentSettings {
-  const s = (stored ?? {}) as Partial<PaymentSettings>
+function mergeCredentials(stored: unknown): PaymentCredentials {
+  const s = (stored ?? {}) as Partial<PaymentCredentials>
   return {
-    rotsi:  { ...DEFAULT_PAYMENTS.rotsi,  ...(s.rotsi  ?? {}) },
-    paypal: { ...DEFAULT_PAYMENTS.paypal, ...(s.paypal ?? {}) },
-    cards:  { ...DEFAULT_PAYMENTS.cards,  ...(s.cards  ?? {}) },
-    cod:    { ...DEFAULT_PAYMENTS.cod,    ...(s.cod    ?? {}) },
+    rotsi:  { ...DEFAULT_CREDENTIALS.rotsi,  ...(s.rotsi  ?? {}) },
+    paypal: { ...DEFAULT_CREDENTIALS.paypal, ...(s.paypal ?? {}) },
+    cards:  { ...DEFAULT_CREDENTIALS.cards,  ...(s.cards  ?? {}) },
+    cod:    { ...DEFAULT_CREDENTIALS.cod,    ...(s.cod    ?? {}) },
   }
 }
 

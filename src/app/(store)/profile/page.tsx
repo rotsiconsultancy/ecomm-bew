@@ -5,9 +5,11 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {
   LayoutDashboard, ShoppingCart, Settings,
-  Package, MessageSquare, ChevronRight, Clock,
+  Package, MessageSquare, ChevronRight, Clock, Star,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+import { getUserPointsBalance } from '@/lib/points'
+import { POINTS_TO_KES } from '@/types/points'
 import { LogoutButton } from '@/components/logout-button'
 
 function getInitials(name: string): string {
@@ -33,6 +35,7 @@ export default async function ProfilePage() {
     .eq('id', user.id)
     .maybeSingle()
 
+  const pointsBalance = await getUserPointsBalance(user.id)
   const displayName = profile?.full_name ?? user.email?.split('@')[0] ?? 'User'
   const initials = getInitials(displayName)
   const roleLabel = ROLE_LABELS[profile?.role ?? 'customer'] ?? 'Customer'
@@ -80,7 +83,14 @@ export default async function ProfilePage() {
               <span>Quote Requests</span>
             </Link>
             <Link
-              href="#"
+              href="/account/points"
+              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+            >
+              <Star className="h-5 w-5" />
+              <span>Bewama Points</span>
+            </Link>
+            <Link
+              href="/account/settings"
               className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
             >
               <Settings className="h-5 w-5" />
@@ -109,7 +119,7 @@ export default async function ProfilePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Orders</p>
               <p className="text-3xl font-extrabold text-[#003366]">—</p>
@@ -136,6 +146,18 @@ export default async function ProfilePage() {
                 {roleLabel}
               </p>
             </Card>
+            <Link href="/account/points">
+              <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2 hover:shadow-md transition-shadow cursor-pointer">
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Bewama Points</p>
+                <p className="text-3xl font-extrabold text-[#ec5b13]">
+                  {pointsBalance.toLocaleString()}
+                </p>
+                <p className="text-xs text-gray-400 font-bold flex items-center gap-1">
+                  <Star className="h-3 w-3 text-[#ec5b13]" />
+                  ≈ KES {(pointsBalance * POINTS_TO_KES).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
+                </p>
+              </Card>
+            </Link>
           </div>
 
           {/* Account details */}

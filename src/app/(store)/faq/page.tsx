@@ -115,8 +115,26 @@ export default async function FAQPage() {
   const site = await getPublicSiteSettings()
   const email = site.contact_email || 'info@bewama.com'
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.flatMap(category => category.items).map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Support</p>
         <h1 className="text-4xl font-extrabold text-[#003366]">Frequently Asked Questions</h1>

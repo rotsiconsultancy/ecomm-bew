@@ -5,7 +5,7 @@ import { requireAdmin } from '@/lib/auth'
 import { upsertSetting } from '@/lib/settings'
 import type {
   SiteSettings,
-  PaymentSettings,
+  PaymentCredentials,
   LogisticsSettings,
   NotificationSettings,
 } from '@/types/settings'
@@ -41,14 +41,15 @@ export async function saveSiteSettings(formData: FormData): Promise<{ success: b
   }
 }
 
-// ─── Payment Settings ─────────────────────────────────────────────────────────
+// ─── Payment Credentials ─────────────────────────────────────────────────────
+// Enabled/disabled toggles now live in payment_methods table (admin/checkout).
+// This only stores API credentials and environment settings.
 
-export async function savePaymentSettings(formData: FormData): Promise<{ success: boolean; error?: string }> {
+export async function saveCredentialsSettings(formData: FormData): Promise<{ success: boolean; error?: string }> {
   await requireAdmin()
   try {
-    const value: PaymentSettings = {
+    const value: PaymentCredentials = {
       rotsi: {
-        enabled:         formData.get('rotsi_enabled') === 'on',
         consumer_key:    String(formData.get('rotsi_consumer_key') ?? ''),
         consumer_secret: String(formData.get('rotsi_consumer_secret') ?? ''),
         shortcode:       String(formData.get('rotsi_shortcode') ?? ''),
@@ -56,25 +57,23 @@ export async function savePaymentSettings(formData: FormData): Promise<{ success
         environment:     (formData.get('rotsi_environment') as 'sandbox' | 'production') ?? 'sandbox',
       },
       paypal: {
-        enabled:       formData.get('paypal_enabled') === 'on',
         client_id:     String(formData.get('paypal_client_id') ?? ''),
         client_secret: String(formData.get('paypal_client_secret') ?? ''),
         environment:   (formData.get('paypal_environment') as 'sandbox' | 'production') ?? 'sandbox',
       },
       cards: {
-        enabled:     formData.get('cards_enabled') === 'on',
         provider:    String(formData.get('cards_provider') ?? ''),
         api_key:     String(formData.get('cards_api_key') ?? ''),
         environment: (formData.get('cards_environment') as 'sandbox' | 'production') ?? 'sandbox',
       },
       cod: {
-        enabled:               formData.get('cod_enabled') === 'on',
         nairobi_only:          true,
         confirmation_required: true,
       },
     }
-    await upsertSetting('payments', value)
+    await upsertSetting('credentials', value)
     revalidatePath('/admin/settings')
+    revalidatePath('/admin/checkout')
     return { success: true }
   } catch (e) {
     return { success: false, error: String(e) }

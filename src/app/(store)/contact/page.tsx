@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Contact Us | Bewama',
   description:
     'Get in touch with the Bewama team — email, phone, or visit our office. We respond to all enquiries within 24 hours.',
-  alternates: { canonical: '/contact' },
+  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/contact` },
 }
 
 export default async function ContactPage() {

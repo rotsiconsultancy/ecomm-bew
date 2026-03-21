@@ -15,7 +15,7 @@ export default async function AdminSettingsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-extrabold text-[#003366]">Settings</h1>
-        <p className="text-gray-500 mt-1">Configure your store, payments, logistics, and notifications.</p>
+        <p className="text-gray-500 mt-1">Configure your store, credentials, logistics, and notifications.</p>
       </div>
 
       <Card className="rounded-2xl border-none shadow-sm p-6">
