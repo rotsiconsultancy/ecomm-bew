@@ -87,7 +87,7 @@ export function StageCart() {
       </div>
 
       {/* Totals */}
-      <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-3 text-sm">
+      <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100 space-y-3 text-sm">
         <div className="flex justify-between text-gray-500">
           <span>Subtotal</span>
           <span className="font-bold text-[#003366]">KES {subtotal.toLocaleString()}</span>
@@ -112,7 +112,7 @@ export function StageCart() {
 
       {/* Points earned card */}
       {pointsEarned > 0 && (
-        <div className="bg-linear-to-r from-[#003366] to-[#004a8f] rounded-2xl p-5 text-white flex items-center gap-4">
+        <div className="bg-linear-to-r from-[#003366] to-[#004a8f] rounded-2xl p-4 sm:p-5 text-white flex items-center gap-4">
           <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
             <Star className="w-6 h-6 text-[#ec5b13]" />
           </div>

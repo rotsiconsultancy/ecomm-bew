@@ -91,7 +91,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
         {/* LEFT — Order Summary */}
-        <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
+        <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-4">
           <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Order Summary</h2>
 
           <div className="space-y-4">
@@ -142,7 +142,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
 
         {/* RIGHT — Delivery Details */}
         <div className="space-y-6">
-          <Card className="p-6 rounded-2xl border-none shadow-sm space-y-5">
+          <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-5">
             <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Delivery Details</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -212,7 +212,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
           </Card>
 
           {/* Payment */}
-          <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
+          <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-4">
             <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Payment</h2>
 
             {error && (
