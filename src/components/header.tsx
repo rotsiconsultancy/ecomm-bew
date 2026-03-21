@@ -18,7 +18,7 @@ export function Header({ user = null, profile = null }: HeaderProps) {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="shrink-0 flex items-center">
-          <Link href="/" className="text-3xl font-extrabold text-[#003366] tracking-tight">
+          <Link href="/" className="text-2xl sm:text-3xl font-extrabold text-[#003366] tracking-tight">
             BEWAMA
           </Link>
         </div>
@@ -45,9 +45,12 @@ export function Header({ user = null, profile = null }: HeaderProps) {
 
           <Button
             asChild
-            className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm active:scale-95"
+            className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white px-3 sm:px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm active:scale-95"
           >
-            <Link href="/request-quote">Request Quote</Link>
+            <Link href="/request-quote">
+              <span className="hidden sm:inline">Request Quote</span>
+              <span className="sm:hidden">Quote</span>
+            </Link>
           </Button>
         </div>
       </nav>

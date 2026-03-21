@@ -30,13 +30,13 @@ export function CheckoutFlow() {
     <div className="min-h-[80vh] flex flex-col">
       {/* Progress dots */}
       {stage <= 5 && (
-        <div className="flex items-center justify-center gap-3 py-6">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 py-6">
           {STAGE_LABELS.map((label, i) => {
             const num = i + 1
             const isCurrent = num === stage
             const isCompleted = num < stage
             return (
-              <div key={label} className="flex items-center gap-3">
+              <div key={label} className="flex items-center gap-2 sm:gap-3">
                 <div className="flex flex-col items-center gap-1.5">
                   <div
                     className={`h-3 w-3 rounded-full transition-all duration-300 ${
@@ -49,6 +49,8 @@ export function CheckoutFlow() {
                   />
                   <span
                     className={`text-[10px] font-bold uppercase tracking-wider ${
+                      isCurrent ? 'block' : 'hidden sm:block'
+                    } ${
                       isCurrent
                         ? 'text-[#ec5b13]'
                         : isCompleted
@@ -61,7 +63,7 @@ export function CheckoutFlow() {
                 </div>
                 {i < STAGE_LABELS.length - 1 && (
                   <div
-                    className={`w-8 sm:w-14 h-0.5 -mt-4 transition-colors duration-300 ${
+                    className={`w-4 sm:w-14 h-0.5 -mt-4 transition-colors duration-300 ${
                       num < stage ? 'bg-[#003366]' : 'bg-gray-200'
                     }`}
                   />

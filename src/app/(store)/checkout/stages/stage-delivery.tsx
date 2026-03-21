@@ -103,7 +103,7 @@ export function StageDelivery() {
           <h2 className="text-2xl font-extrabold text-[#003366]">Deliver here?</h2>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-2">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 space-y-2">
           <p className="font-bold text-[#003366]">{lastAddr.full_name}</p>
           <p className="text-sm text-gray-500">{lastAddr.phone}</p>
           <p className="text-sm text-gray-500">
