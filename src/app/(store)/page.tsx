@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: 'Bewama — Industrial Materials & Brokerage',
   description:
     'Quality chemicals, timber, silicones, and industrial materials. Fast delivery across East Africa. Request a custom quote today.',
+  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/` },
 }
 
 export const revalidate = 1800
