@@ -18,6 +18,7 @@ const CATEGORIES = [
   'Tools', 
   'Adhesives', 
   'Chemicals',
+  'Abrasives',
   'Sealant',
   'Aerosol',
   'PU Foam & Cleaner', 

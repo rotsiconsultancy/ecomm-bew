@@ -34,6 +34,11 @@ const nextConfig = {
         hostname: 'www.somafix.com.tr',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.gypsumceilingkenya.co.ke',
+        pathname: '/**',
+      },
     ],
   },
 };
