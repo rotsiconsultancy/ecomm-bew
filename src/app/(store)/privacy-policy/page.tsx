@@ -2,9 +2,24 @@ import { Metadata } from 'next'
 import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Privacy Policy | Bewama',
-  description: 'How Bewama Investments collects, uses, and protects your personal data.',
+  description: 'How Bewama Investments collects, uses, and protects your personal data under the Kenya Data Protection Act 2019.',
+  alternates: { canonical: `${SITE_URL}/privacy-policy` },
+  openGraph: {
+    title: 'Privacy Policy | Bewama',
+    description: 'How Bewama Investments collects, uses, and protects your personal data.',
+    type: 'website',
+    url: `${SITE_URL}/privacy-policy`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Privacy Policy | Bewama',
+    description: 'How Bewama Investments collects, uses, and protects your personal data.',
+  },
 }
 
 export default async function PrivacyPolicyPage() {

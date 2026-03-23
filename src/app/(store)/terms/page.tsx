@@ -2,9 +2,24 @@ import { Metadata } from 'next'
 import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Terms & Conditions | Bewama',
-  description: 'The terms and conditions governing your use of the Bewama platform and purchases.',
+  description: 'The terms and conditions governing your use of the Bewama platform and purchases made through bewama.com.',
+  alternates: { canonical: `${SITE_URL}/terms` },
+  openGraph: {
+    title: 'Terms & Conditions | Bewama',
+    description: 'The terms and conditions governing your use of the Bewama platform and purchases.',
+    type: 'website',
+    url: `${SITE_URL}/terms`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Terms & Conditions | Bewama',
+    description: 'The terms and conditions governing your use of the Bewama platform and purchases.',
+  },
 }
 
 export default async function TermsPage() {

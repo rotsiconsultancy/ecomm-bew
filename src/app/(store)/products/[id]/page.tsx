@@ -16,6 +16,8 @@ import Underline from '@tiptap/extension-underline'
 import TiptapImage from '@tiptap/extension-image'
 import TiptapLink from '@tiptap/extension-link'
 
+const SITE_URL = 'https://bewama.com'
+
 export const revalidate = 1800
 
 type Props = {
@@ -54,7 +56,7 @@ export async function generateMetadata(
     title: `${title} | Bewama`,
     description,
     keywords: product.seo_keywords ?? undefined,
-    alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/products/${slug}` },
+    alternates: { canonical: `${SITE_URL}/products/${slug}` },
     openGraph: { title, description, images: image ? [image] : [], type: 'website' },
     twitter: { card: 'summary_large_image', title, description, images: image ? [image] : [] },
   }
@@ -99,8 +101,6 @@ export default async function ProductDetailPage({ params }: Props) {
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
   const symbol   = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
   const images: string[] = product.images ?? []
-
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',

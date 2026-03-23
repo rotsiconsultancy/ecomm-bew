@@ -10,11 +10,26 @@ import {
   Truck, Clock, Globe2, ChevronRight,
 } from 'lucide-react'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Bewama — Industrial Materials & Brokerage',
   description:
     'Quality chemicals, timber, silicones, and industrial materials. Fast delivery across East Africa. Request a custom quote today.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/` },
+  alternates: { canonical: `${SITE_URL}/` },
+  openGraph: {
+    title: 'Bewama — Industrial Materials & Brokerage',
+    description: 'Quality chemicals, timber, silicones, and industrial materials. Fast delivery across East Africa.',
+    type: 'website',
+    url: `${SITE_URL}/`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bewama — Industrial Materials & Brokerage',
+    description: 'Quality chemicals, timber, silicones, and industrial materials. Fast delivery across East Africa.',
+    images: [`${SITE_URL}/logo.png`],
+  },
 }
 
 export const revalidate = 1800
@@ -86,8 +101,6 @@ export default async function HomePage() {
   const { products, categories, totalCount } = await fetchHomeData()
 
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
-  
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
 
   const jsonLd = {
     '@context': 'https://schema.org',

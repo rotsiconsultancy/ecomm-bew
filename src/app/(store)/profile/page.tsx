@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
+
+export const metadata: Metadata = {
+  title: 'My Profile | Bewama',
+  robots: { index: false, follow: false },
+}
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {

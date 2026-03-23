@@ -4,10 +4,24 @@ import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 import { ArrowRight, Layers } from 'lucide-react'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
-  title: 'Categories | Bewama',
-  description: 'Browse our industrial product categories — silicones, timber, tools, chemicals and more.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/categories` },
+  title: 'Product Categories | Bewama Industrial',
+  description: 'Browse our industrial product categories — silicones, timber, tools, chemicals and more. Find the right materials for your project.',
+  alternates: { canonical: `${SITE_URL}/categories` },
+  openGraph: {
+    title: 'Product Categories | Bewama Industrial',
+    description: 'Browse our industrial product categories — silicones, timber, tools, chemicals and more.',
+    type: 'website',
+    url: `${SITE_URL}/categories`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Product Categories | Bewama Industrial',
+    description: 'Browse our industrial product categories — silicones, timber, tools, chemicals and more.',
+  },
 }
 
 export const revalidate = 1800

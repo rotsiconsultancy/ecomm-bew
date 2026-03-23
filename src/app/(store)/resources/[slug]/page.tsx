@@ -10,7 +10,7 @@ import Underline from '@tiptap/extension-underline'
 import TiptapImage from '@tiptap/extension-image'
 import TiptapLink from '@tiptap/extension-link'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
+const SITE_URL = 'https://bewama.com'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -50,7 +50,7 @@ export async function generateMetadata(
     title: `${title} | Bewama Technical Resources`,
     description,
     keywords: post.seo_keywords ?? undefined,
-    alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/resources/${slug}` },
+    alternates: { canonical: `${SITE_URL}/resources/${slug}` },
     openGraph: {
       title,
       description,

@@ -3,9 +3,24 @@ import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 import { RotateCcw, CheckCircle2, XCircle, Phone } from 'lucide-react'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
-  title: 'Returns & Refunds | Bewama',
-  description: 'Return eligibility, process, and refund timelines for Bewama orders.',
+  title: 'Returns & Refunds Policy | Bewama',
+  description: 'Return eligibility, process, and refund timelines for Bewama orders. Most items returnable within 14 days.',
+  alternates: { canonical: `${SITE_URL}/returns-policy` },
+  openGraph: {
+    title: 'Returns & Refunds Policy | Bewama',
+    description: 'Return eligibility, process, and refund timelines for Bewama orders.',
+    type: 'website',
+    url: `${SITE_URL}/returns-policy`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Returns & Refunds Policy | Bewama',
+    description: 'Return eligibility, process, and refund timelines for Bewama orders.',
+  },
 }
 
 export default async function ReturnsPolicyPage() {

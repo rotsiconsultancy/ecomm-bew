@@ -3,11 +3,25 @@ import Link from 'next/link'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import { getPublicSiteSettings } from '@/lib/settings'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Contact Us | Bewama',
   description:
     'Get in touch with the Bewama team — email, phone, or visit our office. We respond to all enquiries within 24 hours.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/contact` },
+  alternates: { canonical: `${SITE_URL}/contact` },
+  openGraph: {
+    title: 'Contact Us | Bewama',
+    description: 'Get in touch with the Bewama team — email, phone, or visit our office. We respond to all enquiries within 24 hours.',
+    type: 'website',
+    url: `${SITE_URL}/contact`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Us | Bewama',
+    description: 'Get in touch with the Bewama team — email, phone, or visit our office. We respond to all enquiries within 24 hours.',
+  },
 }
 
 export default async function ContactPage() {

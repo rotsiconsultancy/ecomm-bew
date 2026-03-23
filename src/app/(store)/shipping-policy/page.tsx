@@ -3,9 +3,24 @@ import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 import { Truck, MapPin, Clock, Package, Phone } from 'lucide-react'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
-  title: 'Shipping Policy | Bewama',
-  description: 'Delivery areas, timelines, costs, and shipping options for Bewama orders.',
+  title: 'Shipping & Delivery Policy | Bewama',
+  description: 'Delivery areas, timelines, costs, and shipping options for Bewama orders across Nairobi and Kenya.',
+  alternates: { canonical: `${SITE_URL}/shipping-policy` },
+  openGraph: {
+    title: 'Shipping & Delivery Policy | Bewama',
+    description: 'Delivery areas, timelines, costs, and shipping options for Bewama orders.',
+    type: 'website',
+    url: `${SITE_URL}/shipping-policy`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Shipping & Delivery Policy | Bewama',
+    description: 'Delivery areas, timelines, costs, and shipping options for Bewama orders.',
+  },
 }
 
 export default async function ShippingPolicyPage() {

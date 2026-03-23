@@ -11,6 +11,7 @@ import { PointsHub } from './points-hub'
 export const metadata = {
   title: 'Bewama Points | My Rewards',
   description: 'Earn and redeem Bewama Points for discounts on construction materials.',
+  robots: { index: false, follow: false },
 }
 
 export default async function PointsPage() {

@@ -10,12 +10,7 @@ import { Pagination } from '@/components/pagination-ui'
 
 export const revalidate = 1800
 
-export const metadata: Metadata = {
-  title: 'Products | Bewama',
-  description:
-    'Browse our industrial product catalog — silicones, timber, adhesives, tools and more. Quality materials sourced for professionals across Europe.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/products` },
-}
+const SITE_URL = 'https://bewama.com'
 
 type SearchParams = {
   category?: string
@@ -25,6 +20,41 @@ type SearchParams = {
 
 type Props = {
   searchParams: Promise<SearchParams>
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams
+  const { category, brand, page } = params
+
+  // Build canonical: strip page=1, keep other params
+  const canonicalParams = new URLSearchParams()
+  if (category) canonicalParams.set('category', category)
+  if (brand) canonicalParams.set('brand', brand)
+  if (page && parseInt(page, 10) > 1) canonicalParams.set('page', page)
+  const qs = canonicalParams.toString()
+  const canonical = `${SITE_URL}/products${qs ? `?${qs}` : ''}`
+
+  const titleSuffix = category ? ` — ${category}` : brand ? ` — ${brand}` : ''
+  const title = `Products${titleSuffix} | Bewama`
+  const description = 'Browse our industrial product catalog — silicones, timber, adhesives, tools and more. Quality materials sourced for professionals across East Africa.'
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: canonical,
+      images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  }
 }
 
 const ITEMS_PER_PAGE = 12

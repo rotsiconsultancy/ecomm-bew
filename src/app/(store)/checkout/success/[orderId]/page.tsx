@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import { getUserPointsBalance } from '@/lib/points'
+
+export const metadata: Metadata = {
+  title: 'Order Confirmed | Bewama',
+  robots: { index: false, follow: false },
+}
 import { getPostPurchasePrompts } from '@/lib/checkout'
 import { SuccessView } from './success-view'
 

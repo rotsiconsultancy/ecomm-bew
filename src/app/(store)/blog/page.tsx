@@ -6,10 +6,24 @@ import { Calendar, User, ArrowRight, BookOpen, Settings } from 'lucide-react'
 
 export const revalidate = 3600
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Technical Resources & Blog | Bewama Industrial',
   description: 'Deep dives into industrial solutions, hardware guides, and construction material insights from the Bewama team.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/blog` },
+  alternates: { canonical: `${SITE_URL}/blog` },
+  openGraph: {
+    title: 'Technical Resources & Blog | Bewama Industrial',
+    description: 'Deep dives into industrial solutions, hardware guides, and construction material insights from the Bewama team.',
+    type: 'website',
+    url: `${SITE_URL}/blog`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Technical Resources & Blog | Bewama Industrial',
+    description: 'Deep dives into industrial solutions, hardware guides, and construction material insights from the Bewama team.',
+  },
 }
 
 export default async function BlogListingPage() {

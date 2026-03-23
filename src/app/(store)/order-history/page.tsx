@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -5,6 +6,11 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { LayoutDashboard, ShoppingCart, User, Settings, MessageSquare, LogOut, ChevronRight, Truck, Clock, CheckCircle2, Download, Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+
+export const metadata: Metadata = {
+  title: 'Order History | Bewama',
+  robots: { index: false, follow: false },
+}
 
 export default function OrderHistoryPage() {
   const orders = [

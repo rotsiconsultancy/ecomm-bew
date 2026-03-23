@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
+
+export const metadata: Metadata = {
+  title: 'Checkout | Bewama',
+  robots: { index: false, follow: false },
+}
 import {
   getCheckoutConfig,
   getActivePaymentMethods,

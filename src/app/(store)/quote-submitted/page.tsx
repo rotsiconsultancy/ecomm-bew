@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CheckCircle2, FileText, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+
+export const metadata: Metadata = {
+  title: 'Quote Submitted | Bewama',
+  robots: { index: false, follow: false },
+}
 
 type Props = {
   searchParams: Promise<{ id?: string }>

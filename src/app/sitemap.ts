@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'
+// Always use canonical non-www URL in sitemap to avoid 3XX redirect issues
+const SITE_URL = 'https://bewama.com'
 
 const staticRoutes: MetadataRoute.Sitemap = [
   // Core

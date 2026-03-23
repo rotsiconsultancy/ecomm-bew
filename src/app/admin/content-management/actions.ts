@@ -22,9 +22,9 @@ function estimateReadTime(tiptapJson: Record<string, unknown>): number {
 
 async function pingIndexNow(path: string) {
   const key = process.env.INDEXNOW_KEY
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
-  // Only ping in production with a real HTTPS domain
-  if (!key || !siteUrl.startsWith('https://')) return
+  const siteUrl = process.env.NODE_ENV === 'production' ? 'https://bewama.com' : ''
+  // Only ping in production
+  if (!key || !siteUrl) return
   try {
     const host = new URL(siteUrl).hostname
     await fetch('https://www.bing.com/indexnow', {

@@ -3,9 +3,24 @@ import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 import { ShieldCheck, FlaskConical, Truck, FileText, Award } from 'lucide-react'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
-  title: 'Quality Assurance | Bewama',
-  description: 'How Bewama Investments ensures product quality, supplier verification, and safe handling.',
+  title: 'Quality Assurance | Bewama Industrial',
+  description: 'How Bewama Investments ensures product quality through supplier verification, inspection, and safe handling of industrial materials.',
+  alternates: { canonical: `${SITE_URL}/quality-assurance` },
+  openGraph: {
+    title: 'Quality Assurance | Bewama Industrial',
+    description: 'How Bewama Investments ensures product quality, supplier verification, and safe handling.',
+    type: 'website',
+    url: `${SITE_URL}/quality-assurance`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Quality Assurance | Bewama Industrial',
+    description: 'How Bewama Investments ensures product quality, supplier verification, and safe handling.',
+  },
 }
 
 const pillars = [

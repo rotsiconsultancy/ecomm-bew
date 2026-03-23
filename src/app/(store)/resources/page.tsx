@@ -6,10 +6,24 @@ import { Calendar, User, ArrowRight, Settings, FileText, Clock } from 'lucide-re
 
 export const revalidate = 3600
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
   title: 'Technical Resources | Bewama Industrial',
   description: 'Industry insights, technical guides, spec sheets, and professional advice from Bewama\'s industrial specialists.',
-  alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bewama.com'}/resources` },
+  alternates: { canonical: `${SITE_URL}/resources` },
+  openGraph: {
+    title: 'Technical Resources | Bewama Industrial',
+    description: 'Industry insights, technical guides, spec sheets, and professional advice from Bewama\'s industrial specialists.',
+    type: 'website',
+    url: `${SITE_URL}/resources`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Technical Resources | Bewama Industrial',
+    description: 'Industry insights, technical guides, spec sheets, and professional advice from Bewama\'s industrial specialists.',
+  },
 }
 
 export default async function ResourcesPage() {

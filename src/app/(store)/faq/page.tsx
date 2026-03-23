@@ -2,9 +2,24 @@ import { Metadata } from 'next'
 import { getPublicSiteSettings } from '@/lib/settings'
 import Link from 'next/link'
 
+const SITE_URL = 'https://bewama.com'
+
 export const metadata: Metadata = {
-  title: 'FAQ | Bewama',
-  description: 'Frequently asked questions about ordering, delivery, payments, and more.',
+  title: 'Frequently Asked Questions | Bewama',
+  description: 'Frequently asked questions about ordering, delivery, payments, returns, and more at Bewama Industrial.',
+  alternates: { canonical: `${SITE_URL}/faq` },
+  openGraph: {
+    title: 'Frequently Asked Questions | Bewama',
+    description: 'Frequently asked questions about ordering, delivery, payments, returns, and more at Bewama Industrial.',
+    type: 'website',
+    url: `${SITE_URL}/faq`,
+    images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Frequently Asked Questions | Bewama',
+    description: 'Frequently asked questions about ordering, delivery, payments, returns, and more at Bewama Industrial.',
+  },
 }
 
 const faqs = [

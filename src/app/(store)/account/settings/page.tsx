@@ -1,8 +1,14 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { getCheckoutConfig } from '@/lib/checkout'
 import { SettingsView } from './settings-view'
+
+export const metadata: Metadata = {
+  title: 'Account Settings | Bewama',
+  robots: { index: false, follow: false },
+}
 
 export default async function AccountSettingsPage() {
   const user = await getUser()
