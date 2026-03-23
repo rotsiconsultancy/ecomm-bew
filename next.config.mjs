@@ -39,6 +39,26 @@ const nextConfig = {
         hostname: 'www.gypsumceilingkenya.co.ke',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'bewama.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'bewama.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.bewama.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: '*.bewama.com',
+        pathname: '/**',
+      },
     ],
   },
 };

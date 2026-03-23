@@ -85,11 +85,18 @@ function mergeNotifications(stored: unknown): NotificationSettings {
 // ─── Public (anon) — safe for footer/header ───────────────────────────────────
 
 export async function getPublicSiteSettings(): Promise<SiteSettings> {
-  const supabase = createBuildClient()
+  const supabase = await createServiceClient()
   const { data } = await supabase
     .from('settings')
     .select('value')
     .eq('key', 'site')
     .maybeSingle()
-  return { ...DEFAULT_SITE, ...((data?.value as Partial<SiteSettings>) ?? {}) }
+
+  const map = (data?.value ?? {}) as Partial<SiteSettings>
+  return {
+    ...DEFAULT_SITE,
+    ...map,
+    social_links: { ...DEFAULT_SITE.social_links, ...(map.social_links ?? {}) }
+  }
 }
+
