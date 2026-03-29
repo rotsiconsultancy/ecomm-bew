@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bewama | Social Branding v3</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root { --navy: #003366; --orange: #FF9900; --slate: #f1f5f9; }
+        body { font-family: 'Inter', sans-serif; background: var(--slate); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 900px; }
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { padding: 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
+        .btn-apply { background: var(--orange); grid-column: span 2; }
+        .btn-download { background: var(--navy); width: 100%; margin-top: 20px; display: none; }
+        canvas { max-width: 100%; border-radius: 8px; margin-top: 20px; border: 1px solid #ddd; }
+        #qrcode-hidden { display: none; } /* Hidden container for QR generation */
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="color: var(--navy); margin-top:0;">Bewama Post Generator</h2>
+    <div class="controls">
+        <input type="file" id="fileInput" accept="image/*" style="grid-column: span 2;">
+        <input type="text" id="productName" placeholder="Product Name (e.g. Soma Bond SC305)">
+        <input type="text" id="productPrice" placeholder="Price (e.g. 1000)">
+        <input type="text" id="productUrl" placeholder="Product URL (bewama.com/product/xxx)" style="grid-column: span 2;">
+        <button id="applyBtn" class="btn btn-apply">Generate Branded Post</button>
+    </div>
+    
+    <canvas id="canvas"></canvas>
+    <div id="qrcode-hidden"></div>
+    <button id="downloadBtn" class="btn btn-download">Download Post-Ready Image</button>
+</div>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const applyBtn = document.getElementById('applyBtn');
+
+    let activeImage = null;
+
+    fileInput.onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => { activeImage = img; draw(); };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+    async function draw() {
+        if (!activeImage) return;
+
+        // 1. Setup dimensions (30% Gutter)
+        const gutterWidth = Math.max(activeImage.width * 0.35, 350);
+        canvas.width = activeImage.width + gutterWidth;
+        canvas.height = activeImage.height;
+
+        // 2. Draw Navy Side Panel
+        ctx.fillStyle = "#003366";
+        ctx.fillRect(0, 0, gutterWidth, canvas.height);
+
+        // 3. Draw Product Image (Beside panel)
+        ctx.drawImage(activeImage, gutterWidth, 0);
+
+        // 4. Add Logo Icon (The "Yellow Bit" Logo)
+        // We simulate your hex-logo with a drawing since I don't have the file
+        const logoSize = gutterWidth * 0.15;
+        const padding = gutterWidth * 0.1;
+        drawHexLogo(ctx, padding, canvas.height * 0.05, logoSize);
+
+        // 5. Branding Text
+        ctx.fillStyle = "white";
+        ctx.font = `bold ${gutterWidth * 0.1}px sans-serif`;
+        ctx.fillText("BEWAMA", padding, canvas.height * 0.15);
+        ctx.font = `${gutterWidth * 0.05}px sans-serif`;
+        ctx.fillText("Industrial Materials", padding, canvas.height * 0.18);
+
+        // 6. Product Details (Orange)
+        const name = document.getElementById('productName').value || "Soma Bond Adhesive";
+        const price = document.getElementById('productPrice').value || "Contact for Quote";
+        
+        ctx.fillStyle = "#FF9900";
+        ctx.font = `bold ${gutterWidth * 0.07}px sans-serif`;
+        wrapText(ctx, name.toUpperCase(), padding, canvas.height * 0.3, gutterWidth - (padding*2), gutterWidth * 0.08);
+
+        ctx.fillStyle = "white";
+        ctx.font = `bold ${gutterWidth * 0.12}px sans-serif`;
+        ctx.fillText(price, padding, canvas.height * 0.45);
+
+        // 7. QR CODE (Bottom Right)
+        const url = document.getElementById('productUrl').value || "https://bewama.com";
+        const qrSize = Math.max(activeImage.width * 0.15, 150);
+        const qrImage = await generateQR(url, qrSize);
+        
+        // Draw white background for QR
+        ctx.fillStyle = "white";
+        ctx.fillRect(canvas.width - qrSize - 40, canvas.height - qrSize - 40, qrSize + 20, qrSize + 20);
+        ctx.drawImage(qrImage, canvas.width - qrSize - 30, canvas.height - qrSize - 30, qrSize, qrSize);
+
+        // 8. Contact Footer
+        ctx.fillStyle = "white";
+        ctx.font = `bold ${gutterWidth * 0.06}px sans-serif`;
+        ctx.fillText("📞 0745 474 586", padding, canvas.height - 60);
+
+        downloadBtn.style.display = "block";
+    }
+
+    // Helper: Generate QR as Image
+    function generateQR(text, size) {
+        return new Promise((resolve) => {
+            const container = document.getElementById('qrcode-hidden');
+            container.innerHTML = "";
+            new QRCode(container, { text: text, width: size, height: size });
+            setTimeout(() => {
+                const img = container.querySelector('img');
+                resolve(img);
+            }, 100);
+        });
+    }
+
+    // Helper: Draw abstract Hex Logo
+    function drawHexLogo(ctx, x, y, size) {
+        ctx.beginPath();
+        ctx.lineWidth = size * 0.15;
+        ctx.strokeStyle = "#FF9900";
+        for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i;
+            const px = x + (size/2) + (size/2) * Math.cos(angle);
+            const py = y + (size/2) + (size/2) * Math.sin(angle);
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    // Helper: Multiline Text
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        for(let n = 0; n < words.length; n++) {
+            let testLine = line + words[n] + ' ';
+            if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+                ctx.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
+            } else { line = testLine; }
+        }
+        ctx.fillText(line, x, y);
+    }
+
+    applyBtn.onclick = draw;
+    downloadBtn.onclick = () => {
+        const link = document.createElement('a');
+        link.download = `bewama-post.jpg`;
+        link.href = canvas.toDataURL('image/jpeg', 0.9);
+        link.click();
+    };
+</script>
+</body>
+</html>

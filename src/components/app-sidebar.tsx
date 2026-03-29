@@ -40,6 +40,7 @@ const items = [
   { title: "Carts",      url: "/admin/cart-management",      icon: Warehouse },
   { title: "Users",      url: "/admin/user-management",      icon: Users },
   { title: "Content",    url: "/admin/content-management",   icon: FileText },
+  { title: "Social Media", url: "/admin/social-media",    icon: MessageSquare },
   { title: "Points",    url: "/admin/points",   icon: AwardIcon },
   { title: "Checkout",  url: "/admin/checkout", icon: ShoppingBag },
 ]

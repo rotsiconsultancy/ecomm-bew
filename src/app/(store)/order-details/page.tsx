@@ -168,7 +168,7 @@ export default function OrderDetailsPage() {
                                 <tr key={idx} className="hover:bg-gray-50/50">
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 bg-gray-50 rounded-[8px] border flex items-center justify-center flex-shrink-0">
+                                            <div className="h-12 w-12 bg-gray-50 rounded-[8px] border flex items-center justify-center shrink-0">
                                                 <img alt={item.name} className="h-4/5 w-4/5 object-contain" src={item.image} />
                                             </div>
                                             <div>
