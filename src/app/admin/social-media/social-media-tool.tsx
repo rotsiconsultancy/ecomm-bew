@@ -107,7 +107,10 @@ export default function SocialMediaTool() {
     // 1. Load Main Image
     const img = new Image()
     img.crossOrigin = 'anonymous'
-    img.src = productImage
+    
+    // Use proxy for external images to bypass CORS
+    const isExternal = productImage.startsWith('http') && !productImage.includes(typeof window !== 'undefined' ? window.location.host : '')
+    img.src = isExternal ? `/api/proxy-image?url=${encodeURIComponent(productImage)}` : productImage
     
     await new Promise((resolve) => {
         img.onload = resolve
