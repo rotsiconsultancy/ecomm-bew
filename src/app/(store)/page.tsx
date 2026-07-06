@@ -438,7 +438,7 @@ export default async function HomePage() {
                     </Link>
                     <div className="flex flex-1 flex-col p-4">
                       {product.category && (
-                        <p className="mb-2 text-[11px] font-black uppercase tracking-[0.1em] text-[#e84f0a]">
+                        <p className="mb-2 text-[11px] font-black uppercase tracking-widest text-[#e84f0a]">
                           {product.category as string}
                         </p>
                       )}
