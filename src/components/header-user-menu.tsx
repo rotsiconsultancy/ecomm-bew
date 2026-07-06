@@ -59,7 +59,7 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
         className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-gray-100 transition-colors"
         aria-expanded={open}
       >
-        <div className="w-9 h-9 rounded-full bg-[#003366] flex items-center justify-center text-white text-sm font-bold shrink-0">
+        <div className="w-9 h-9 rounded-full bg-[#061f3f] flex items-center justify-center text-white text-sm font-bold shrink-0">
           {initials}
         </div>
         <span className="hidden sm:block text-sm font-semibold text-gray-700 max-w-30 truncate">
@@ -74,7 +74,7 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
         <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1.5 overflow-hidden">
           {/* User info header */}
           <div className="px-4 py-2.5 border-b border-gray-100">
-            <p className="text-sm font-semibold text-[#003366] truncate">{displayName}</p>
+            <p className="text-sm font-semibold text-[#061f3f] truncate">{displayName}</p>
             <p className="text-xs text-gray-400 truncate">{user.email}</p>
           </div>
 

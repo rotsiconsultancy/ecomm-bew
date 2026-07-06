@@ -28,16 +28,16 @@ function getInitials(name: string | null, email: string): string {
 }
 
 const ROLE_COLORS: Record<string, string> = {
-  admin:     'bg-[#003366] text-white',
+  admin:     'bg-[#061f3f] text-white',
   staff:     'bg-blue-600 text-white',
-  wholesale: 'bg-[#ec5b13] text-white',
+  wholesale: 'bg-[#ff5f14] text-white',
   customer:  'bg-slate-400 text-white',
 }
 
 const ROLE_BADGE: Record<string, string> = {
-  admin:     'bg-[#003366]/10 text-[#003366] border-[#003366]/20',
+  admin:     'bg-[#061f3f]/10 text-[#061f3f] border-[#061f3f]/20',
   staff:     'bg-blue-50 text-blue-700 border-blue-200',
-  wholesale: 'bg-orange-50 text-[#ec5b13] border-orange-200',
+  wholesale: 'bg-orange-50 text-[#ff5f14] border-orange-200',
   customer:  'bg-slate-50 text-slate-600 border-slate-200',
 }
 
@@ -240,7 +240,7 @@ export function UserTable({ users, currentUserId, currentUserRole }: UserTablePr
                         <div className="flex items-center justify-end gap-1">
                           <Link
                             href={`/admin/user-management/${user.id}`}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#003366] hover:bg-slate-100 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#061f3f] hover:bg-slate-100 transition-colors"
                             title="View profile"
                           >
                             <ExternalLink className="w-4 h-4" />

@@ -46,7 +46,7 @@ export function QuoteActions({ quoteId, currentStatus, adminNotes }: Props) {
 
   return (
     <Card className="p-6 rounded-2xl border-none shadow-sm space-y-5">
-      <h2 className="font-bold text-[#003366] border-b pb-2">Admin Actions</h2>
+      <h2 className="font-bold text-[#061f3f] border-b pb-2">Admin Actions</h2>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">{error}</div>
@@ -83,7 +83,7 @@ export function QuoteActions({ quoteId, currentStatus, adminNotes }: Props) {
         <Button
           onClick={handleSave}
           disabled={isPending}
-          className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+          className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
         >
           {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
           Save Changes
@@ -92,7 +92,7 @@ export function QuoteActions({ quoteId, currentStatus, adminNotes }: Props) {
           variant="outline"
           onClick={handleConvert}
           disabled={isPending || currentStatus === 'converted'}
-          className="border-[#ec5b13] text-[#ec5b13] hover:bg-[#ec5b13] hover:text-white font-bold transition-all"
+          className="border-[#ff5f14] text-[#ff5f14] hover:bg-[#ff5f14] hover:text-white font-bold transition-all"
         >
           Convert to Order
         </Button>

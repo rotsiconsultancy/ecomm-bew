@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import { Calendar, User, ArrowRight, Settings, FileText, Clock } from 'lucide-react'
+import { getSafeImageSrc } from '@/lib/images'
 
 export const revalidate = 3600
 
@@ -50,13 +51,16 @@ export default async function ResourcesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
         {/* Resource Feed */}
         <div className="lg:col-span-3 space-y-10">
-          {(resources ?? []).map((resource) => (
-            <Link key={resource.id} href={`/resources/${resource.slug}`} className="group block">
+          {(resources ?? []).map((resource) => {
+            const coverImage = getSafeImageSrc(resource.cover_image)
+
+            return (
+              <Link key={resource.id} href={`/resources/${resource.slug}`} className="group block">
               <div className="rounded-2xl border border-slate-200 overflow-hidden flex flex-col md:flex-row gap-0 group-hover:shadow-xl transition-all bg-white">
                 <div className="md:w-72 h-56 shrink-0 overflow-hidden bg-slate-100 relative">
-                  {resource.cover_image ? (
+                  {coverImage ? (
                     <Image
-                      src={resource.cover_image}
+                      src={coverImage}
                       alt={resource.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -109,8 +113,9 @@ export default async function ResourcesPage() {
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
 
           {(resources ?? []).length === 0 && (
             <div className="text-center py-20">

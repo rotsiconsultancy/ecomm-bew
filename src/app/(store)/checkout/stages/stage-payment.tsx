@@ -41,7 +41,7 @@ export function StagePayment() {
   return (
     <div className="max-w-lg mx-auto space-y-6">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-extrabold text-[#003366]">How would you like to pay?</h2>
+        <h2 className="text-2xl font-extrabold text-[#061f3f]">How would you like to pay?</h2>
         <p className="text-sm text-gray-400">
           Choose your preferred payment method
         </p>
@@ -57,19 +57,19 @@ export function StagePayment() {
               onClick={() => setPayment(method.method_key as PaymentMethodKey)}
               className={`w-full text-left rounded-2xl p-5 flex items-center gap-4 border-2 transition-all ${
                 isSelected
-                  ? 'border-[#ec5b13] bg-[#ec5b13]/5 shadow-md'
+                  ? 'border-[#ff5f14] bg-[#ff5f14]/5 shadow-md'
                   : 'border-gray-100 bg-white hover:border-gray-300 shadow-sm'
               }`}
             >
               <div
                 className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 ${
-                  isSelected ? 'bg-[#ec5b13] text-white' : 'bg-gray-100 text-gray-400'
+                  isSelected ? 'bg-[#ff5f14] text-white' : 'bg-gray-100 text-gray-400'
                 }`}
               >
                 {METHOD_ICONS[method.method_key as PaymentMethodKey] ?? <CreditCard className="w-6 h-6" />}
               </div>
               <div className="flex-1">
-                <p className={`font-bold ${isSelected ? 'text-[#003366]' : 'text-gray-700'}`}>
+                <p className={`font-bold ${isSelected ? 'text-[#061f3f]' : 'text-gray-700'}`}>
                   {method.label}
                 </p>
                 <p className="text-xs text-gray-400">
@@ -78,10 +78,10 @@ export function StagePayment() {
               </div>
               <div
                 className={`h-5 w-5 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors ${
-                  isSelected ? 'border-[#ec5b13]' : 'border-gray-200'
+                  isSelected ? 'border-[#ff5f14]' : 'border-gray-200'
                 }`}
               >
-                {isSelected && <div className="h-2.5 w-2.5 rounded-full bg-[#ec5b13]" />}
+                {isSelected && <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f14]" />}
               </div>
             </button>
           )
@@ -110,7 +110,7 @@ export function StagePayment() {
       <Button
         onClick={goNext}
         disabled={!state.selectedPayment}
-        className="w-full h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-lg font-extrabold rounded-2xl shadow-lg disabled:opacity-40"
+        className="w-full h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-lg font-extrabold rounded-2xl shadow-lg disabled:opacity-40"
       >
         Continue
       </Button>

@@ -1,57 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Bewama</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Public Sans', sans-serif; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign In | Bewama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/bewama-ui.css" />
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
-    <div class="max-w-md w-full bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-[#003366] mb-2">BEWAMA</h1>
-            <p class="text-gray-500">Sign in to your account</p>
-        </div>
-
-        <form class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Email Address</label>
-                <input type="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#ec5b13] focus:border-[#ec5b13]">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#ec5b13] focus:border-[#ec5b13]">
-            </div>
-            <button type="submit" class="w-full bg-[#ec5b13] text-white py-2 px-4 rounded-md font-bold hover:bg-[#d44d0f] transition duration-200">
-                Sign In
-            </button>
-        </form>
-
-        <div class="mt-6">
-            <div class="relative">
-                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-300"></div></div>
-                <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-gray-500">Or continue with</span></div>
-            </div>
-            <div class="mt-6">
-                <button class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="h-5 w-5 mr-2" alt="Google">
-                    Sign in with Google
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
-            <a href="../admin-Facing/dashboard.html" class="text-sm font-medium text-[#003366] hover:text-[#ec5b13] transition duration-200 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                </svg>
-                Go to Admin Dashboard
-            </a>
-        </div>
-    </div>
+<body>
+  <main class="page" style="display:grid;place-items:center;padding:32px;background:linear-gradient(135deg,var(--navy-900),var(--navy));">
+    <section class="card panel" style="width:min(480px,100%);padding:32px;">
+      <a href="index.html"><img src="../../public/logo.png" alt="Bewama" style="width:220px;margin:0 auto 24px;" /></a>
+      <p class="kicker" style="text-align:center;">Buyer account</p>
+      <h1 class="section-title" style="text-align:center;font-size:34px;">Sign in to reorder faster.</h1>
+      <p class="section-copy" style="text-align:center;margin-left:auto;margin-right:auto;">Access order history, saved quote requests, delivery details, and repeat procurement lists.</p>
+      <form class="grid" style="margin-top:24px;" action="profile.html">
+        <div class="field"><label>Email address</label><input class="input" type="email" required placeholder="you@company.com" /></div>
+        <div class="field"><label>Password</label><input class="input" type="password" required placeholder="Enter password" /></div>
+        <button class="btn btn--orange btn--wide" type="submit">Sign In</button>
+        <a class="btn btn--ghost btn--wide" href="productListing.html">Continue as Guest</a>
+      </form>
+      <p style="margin:20px 0 0;text-align:center;color:var(--muted);font-size:13px;font-weight:700;">Admin preview remains available from the admin-facing dashboard.</p>
+    </section>
+  </main>
 </body>
 </html>

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import { Calendar, User, ArrowRight, BookOpen, Settings } from 'lucide-react'
+import { getSafeImageSrc } from '@/lib/images'
 
 export const revalidate = 3600
 
@@ -48,16 +49,19 @@ export default async function BlogListingPage() {
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(contents ?? []).map((post) => (
-            <Link
-              key={post.id}
-              href={post.content_type === 'blog' ? `/blog/${post.slug}` : `/resources/${post.slug}`}
-              className="group bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col"
-            >
+          {(contents ?? []).map((post) => {
+            const coverImage = getSafeImageSrc(post.cover_image)
+
+            return (
+              <Link
+                key={post.id}
+                href={post.content_type === 'blog' ? `/blog/${post.slug}` : `/resources/${post.slug}`}
+                className="group bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col"
+              >
               <div className="relative h-64 w-full overflow-hidden bg-slate-100">
-                {post.cover_image ? (
+                {coverImage ? (
                   <Image
-                    src={post.cover_image}
+                    src={coverImage}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -104,8 +108,9 @@ export default async function BlogListingPage() {
                   Read Article <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
         </div>
 
         {(contents ?? []).length === 0 && (

@@ -55,12 +55,12 @@ export default async function ProfilePage() {
         <aside className="w-full lg:w-80 space-y-6">
           {/* Avatar card */}
           <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-center">
-            <div className="h-24 w-24 bg-[#003366]/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#003366]">
-              <span className="text-3xl font-bold text-[#003366]">{initials}</span>
+            <div className="h-24 w-24 bg-[#061f3f]/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#061f3f]">
+              <span className="text-3xl font-bold text-[#061f3f]">{initials}</span>
             </div>
-            <h3 className="text-xl font-bold text-[#003366]">{displayName}</h3>
+            <h3 className="text-xl font-bold text-[#061f3f]">{displayName}</h3>
             <p className="text-sm text-gray-400 mt-1">{user.email}</p>
-            <Badge className="mt-3 bg-[#ec5b13] hover:bg-[#d14d0d] text-white border-none">
+            <Badge className="mt-3 bg-[#ff5f14] hover:bg-[#e84f0a] text-white border-none">
               {roleLabel}
             </Badge>
           </div>
@@ -69,35 +69,35 @@ export default async function ProfilePage() {
           <nav className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <Link
               href="/profile"
-              className="flex items-center gap-4 px-6 py-4 bg-[#003366] text-white font-bold"
+              className="flex items-center gap-4 px-6 py-4 bg-[#061f3f] text-white font-bold"
             >
               <LayoutDashboard className="h-5 w-5" />
               <span>Account Overview</span>
             </Link>
             <Link
               href="/order-history"
-              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#061f3f] transition-colors border-b"
             >
               <ShoppingCart className="h-5 w-5" />
               <span>Order History</span>
             </Link>
             <Link
               href="/request-quote"
-              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#061f3f] transition-colors border-b"
             >
               <MessageSquare className="h-5 w-5" />
               <span>Quote Requests</span>
             </Link>
             <Link
               href="/account/points"
-              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#061f3f] transition-colors border-b"
             >
               <Star className="h-5 w-5" />
               <span>Bewama Points</span>
             </Link>
             <Link
               href="/account/settings"
-              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+              className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#061f3f] transition-colors border-b"
             >
               <Settings className="h-5 w-5" />
               <span>Account Settings</span>
@@ -105,7 +105,7 @@ export default async function ProfilePage() {
             {isAdmin && (
               <Link
                 href="/admin/dashboard"
-                className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#003366] transition-colors border-b"
+                className="flex items-center gap-4 px-6 py-4 text-gray-600 hover:bg-gray-50 hover:text-[#061f3f] transition-colors border-b"
               >
                 <LayoutDashboard className="h-5 w-5" />
                 <span>Admin Dashboard</span>
@@ -118,8 +118,8 @@ export default async function ProfilePage() {
         {/* Main content */}
         <div className="lg:flex-1 space-y-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-extrabold text-[#003366]">Account Overview</h1>
-            <Button className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white rounded-lg font-bold">
+            <h1 className="text-4xl font-extrabold text-[#061f3f]">Account Overview</h1>
+            <Button className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white rounded-lg font-bold">
               Edit Profile
             </Button>
           </div>
@@ -128,7 +128,7 @@ export default async function ProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Orders</p>
-              <p className="text-3xl font-extrabold text-[#003366]">—</p>
+              <p className="text-3xl font-extrabold text-[#061f3f]">—</p>
               <p className="text-xs text-gray-400 font-bold flex items-center gap-1">
                 <ChevronRight className="h-3 w-3" />
                 No orders yet
@@ -136,15 +136,15 @@ export default async function ProfilePage() {
             </Card>
             <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Active Quotes</p>
-              <p className="text-3xl font-extrabold text-[#003366]">—</p>
-              <p className="text-xs text-[#ec5b13] font-bold flex items-center gap-1">
+              <p className="text-3xl font-extrabold text-[#061f3f]">—</p>
+              <p className="text-xs text-[#ff5f14] font-bold flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 Awaiting review
               </p>
             </Card>
             <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2">
               <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Account Tier</p>
-              <p className="text-3xl font-extrabold text-[#003366] capitalize">
+              <p className="text-3xl font-extrabold text-[#061f3f] capitalize">
                 {profile?.role ?? 'customer'}
               </p>
               <p className="text-xs text-gray-400 font-bold flex items-center gap-1">
@@ -155,11 +155,11 @@ export default async function ProfilePage() {
             <Link href="/account/points">
               <Card className="rounded-xl border-gray-100 shadow-sm p-6 space-y-2 hover:shadow-md transition-shadow cursor-pointer">
                 <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Bewama Points</p>
-                <p className="text-3xl font-extrabold text-[#ec5b13]">
+                <p className="text-3xl font-extrabold text-[#ff5f14]">
                   {pointsBalance.toLocaleString()}
                 </p>
                 <p className="text-xs text-gray-400 font-bold flex items-center gap-1">
-                  <Star className="h-3 w-3 text-[#ec5b13]" />
+                  <Star className="h-3 w-3 text-[#ff5f14]" />
                   ≈ KES {(pointsBalance * POINTS_TO_KES).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                 </p>
               </Card>
@@ -168,7 +168,7 @@ export default async function ProfilePage() {
 
           {/* Account details */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-6">
-            <h2 className="text-2xl font-bold text-[#003366]">Account Details</h2>
+            <h2 className="text-2xl font-bold text-[#061f3f]">Account Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Full Name</p>
@@ -198,8 +198,8 @@ export default async function ProfilePage() {
           {/* Recent activity */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-[#003366]">Recent Activity</h2>
-              <Link href="/order-history" className="text-sm font-bold text-[#ec5b13] hover:underline">
+              <h2 className="text-2xl font-bold text-[#061f3f]">Recent Activity</h2>
+              <Link href="/order-history" className="text-sm font-bold text-[#ff5f14] hover:underline">
                 View All →
               </Link>
             </div>

@@ -80,7 +80,7 @@ export function StageConfirm() {
   return (
     <div className="max-w-lg mx-auto space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-[#003366]">Review your order</h2>
+        <h2 className="text-2xl font-extrabold text-[#061f3f]">Review your order</h2>
       </div>
 
       {/* Items (collapsible) */}
@@ -89,7 +89,7 @@ export function StageConfirm() {
           onClick={() => setItemsExpanded(!itemsExpanded)}
           className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
         >
-          <span className="font-bold text-[#003366] text-sm">
+          <span className="font-bold text-[#061f3f] text-sm">
             {cartItems.length} item{cartItems.length !== 1 ? 's' : ''} — KES {subtotal.toLocaleString()}
           </span>
           {itemsExpanded ? (
@@ -105,7 +105,7 @@ export function StageConfirm() {
                 <span className="text-gray-600">
                   {item.name} × {item.quantity}
                 </span>
-                <span className="font-bold text-[#003366]">
+                <span className="font-bold text-[#061f3f]">
                   KES {(item.price * item.quantity).toLocaleString()}
                 </span>
               </div>
@@ -117,7 +117,7 @@ export function StageConfirm() {
       {/* Delivery address */}
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-1">
         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Delivery to</p>
-        <p className="font-bold text-[#003366]">{state.delivery.full_name}</p>
+        <p className="font-bold text-[#061f3f]">{state.delivery.full_name}</p>
         <p className="text-sm text-gray-500">{state.delivery.phone}</p>
         <p className="text-sm text-gray-500">
           {[state.delivery.street, state.delivery.town, state.delivery.county]
@@ -129,7 +129,7 @@ export function StageConfirm() {
       {/* Payment method */}
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-1">
         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Payment</p>
-        <p className="font-bold text-[#003366]">
+        <p className="font-bold text-[#061f3f]">
           {selectedMethod?.label ?? state.selectedPayment}
         </p>
       </div>
@@ -138,11 +138,11 @@ export function StageConfirm() {
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-2 text-sm">
         <div className="flex justify-between text-gray-500">
           <span>Subtotal</span>
-          <span className="font-bold text-[#003366]">KES {subtotal.toLocaleString()}</span>
+          <span className="font-bold text-[#061f3f]">KES {subtotal.toLocaleString()}</span>
         </div>
         <div className="flex justify-between text-gray-500">
           <span>Delivery</span>
-          <span className="font-bold text-[#003366]">KES {deliveryFee.toLocaleString()}</span>
+          <span className="font-bold text-[#061f3f]">KES {deliveryFee.toLocaleString()}</span>
         </div>
         {pointsDiscount > 0 && (
           <div className="flex justify-between text-green-600">
@@ -150,12 +150,12 @@ export function StageConfirm() {
             <span className="font-bold">-KES {pointsDiscount.toFixed(2)}</span>
           </div>
         )}
-        <div className="flex justify-between text-lg font-extrabold text-[#003366] pt-2 border-t">
+        <div className="flex justify-between text-lg font-extrabold text-[#061f3f] pt-2 border-t">
           <span>Total</span>
           <span>KES {total.toLocaleString()}</span>
         </div>
         {pointsEarned > 0 && (
-          <p className="text-xs text-[#ec5b13] font-bold pt-1">
+          <p className="text-xs text-[#ff5f14] font-bold pt-1">
             +{pointsEarned.toLocaleString()} points earned with this order
           </p>
         )}
@@ -172,7 +172,7 @@ export function StageConfirm() {
       <Button
         onClick={handlePlaceOrder}
         disabled={loading}
-        className="w-full h-16 bg-[#003366] hover:bg-[#002244] text-white text-lg font-extrabold rounded-2xl shadow-xl active:scale-[0.98] transition-transform disabled:opacity-60"
+        className="w-full h-16 bg-[#061f3f] hover:bg-[#03152d] text-white text-lg font-extrabold rounded-2xl shadow-xl active:scale-[0.98] transition-transform disabled:opacity-60"
       >
         {loading ? (
           <Loader2 className="w-6 h-6 animate-spin" />
@@ -188,7 +188,7 @@ export function StageConfirm() {
           Secure checkout
         </span>
         <span className="flex items-center gap-1.5">
-          <Truck className="w-3.5 h-3.5 text-[#003366]" />
+          <Truck className="w-3.5 h-3.5 text-[#061f3f]" />
           Fast delivery
         </span>
       </div>

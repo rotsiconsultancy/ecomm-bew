@@ -31,13 +31,13 @@ export default async function ReturnsPolicyPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Support</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Returns &amp; Refunds</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Returns &amp; Refunds</h1>
         <p className="text-gray-500 mt-3">Bewama Investments &nbsp;·&nbsp; Last updated January {new Date().getFullYear()}</p>
       </div>
 
       {/* Summary banner */}
-      <div className="bg-[#003366] text-white rounded-2xl p-6 mb-10 flex gap-4">
-        <RotateCcw className="w-8 h-8 text-[#ec5b13] shrink-0 mt-0.5" />
+      <div className="bg-[#061f3f] text-white rounded-2xl p-6 mb-10 flex gap-4">
+        <RotateCcw className="w-8 h-8 text-[#ff5f14] shrink-0 mt-0.5" />
         <div>
           <p className="font-bold text-lg">14-Day Return Window</p>
           <p className="text-gray-300 text-sm mt-1">
@@ -50,7 +50,7 @@ export default async function ReturnsPolicyPage() {
       <div className="space-y-8 text-gray-700 leading-relaxed">
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">1. Return Eligibility</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">1. Return Eligibility</h2>
           <p>To qualify for a return, the following conditions must be met:</p>
           <div className="mt-4 space-y-2">
             {[
@@ -68,7 +68,7 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">2. Non-Returnable Items</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">2. Non-Returnable Items</h2>
           <p>The following categories are <strong>not eligible</strong> for return:</p>
           <div className="mt-4 space-y-2">
             {[
@@ -87,11 +87,11 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">3. How to Initiate a Return</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">3. How to Initiate a Return</h2>
           <ol className="list-decimal pl-6 space-y-3 text-sm mt-2">
             <li>
               <strong>Contact us</strong> within 14 days of delivery at{' '}
-              <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a> or{' '}
+              <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a> or{' '}
               {site.contact_phone && <span>{site.contact_phone}</span>}. Include your order number, the item(s) you wish to return,
               and the reason for the return.
             </li>
@@ -113,7 +113,7 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">4. Refunds</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">4. Refunds</h2>
           <p>Upon approval of your return:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2 text-sm">
             <li>Refunds are issued via the <strong>original payment method</strong> (M-Pesa, bank transfer, card, etc.).</li>
@@ -124,7 +124,7 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">5. Damaged or Defective Goods</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">5. Damaged or Defective Goods</h2>
           <p>
             If your order arrives damaged, defective, or incorrect, please notify us within <strong>48 hours</strong> of delivery.
             Include photographs of the damage and the packaging. In these cases, Bewama will cover return shipping costs and
@@ -133,10 +133,10 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">6. Order Cancellations</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">6. Order Cancellations</h2>
           <p>
             Orders may be cancelled free of charge before they are dispatched. Once dispatched, the standard return process applies.
-            To cancel, contact us immediately at <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a> or{' '}
+            To cancel, contact us immediately at <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a> or{' '}
             {site.contact_phone || 'our contact number'}.
           </p>
           <p className="mt-3">
@@ -146,13 +146,13 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">7. Contact Us</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">7. Contact Us</h2>
           <div className="mt-3 bg-gray-50 rounded-xl p-5 text-sm flex items-start gap-3">
-            <Phone className="w-4 h-4 text-[#ec5b13] shrink-0 mt-0.5" />
+            <Phone className="w-4 h-4 text-[#ff5f14] shrink-0 mt-0.5" />
             <div className="space-y-1">
               <p><strong>Bewama Investments</strong></p>
               {site.address && <p>{site.address}</p>}
-              <p>Email: <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a></p>
+              <p>Email: <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a></p>
               {site.contact_phone && <p>Phone: {site.contact_phone}</p>}
             </div>
           </div>
@@ -161,9 +161,9 @@ export default async function ReturnsPolicyPage() {
       </div>
 
       <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/shipping-policy" className="hover:text-[#003366] transition-colors">Shipping Policy</Link>
-        <Link href="/faq" className="hover:text-[#003366] transition-colors">FAQ</Link>
-        <Link href="/terms" className="hover:text-[#003366] transition-colors">Terms &amp; Conditions</Link>
+        <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
+        <Link href="/faq" className="hover:text-[#061f3f] transition-colors">FAQ</Link>
+        <Link href="/terms" className="hover:text-[#061f3f] transition-colors">Terms &amp; Conditions</Link>
       </div>
     </div>
   )

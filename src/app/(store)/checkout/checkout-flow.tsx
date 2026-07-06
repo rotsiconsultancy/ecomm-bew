@@ -41,9 +41,9 @@ export function CheckoutFlow() {
                   <div
                     className={`h-3 w-3 rounded-full transition-all duration-300 ${
                       isCurrent
-                        ? 'bg-[#ec5b13] scale-125 ring-4 ring-[#ec5b13]/20'
+                        ? 'bg-[#ff5f14] scale-125 ring-4 ring-[#ff5f14]/20'
                         : isCompleted
-                          ? 'bg-[#003366]'
+                          ? 'bg-[#061f3f]'
                           : 'bg-gray-200'
                     }`}
                   />
@@ -52,9 +52,9 @@ export function CheckoutFlow() {
                       isCurrent ? 'block' : 'hidden sm:block'
                     } ${
                       isCurrent
-                        ? 'text-[#ec5b13]'
+                        ? 'text-[#ff5f14]'
                         : isCompleted
-                          ? 'text-[#003366]'
+                          ? 'text-[#061f3f]'
                           : 'text-gray-300'
                     }`}
                   >
@@ -64,7 +64,7 @@ export function CheckoutFlow() {
                 {i < STAGE_LABELS.length - 1 && (
                   <div
                     className={`w-4 sm:w-14 h-0.5 -mt-4 transition-colors duration-300 ${
-                      num < stage ? 'bg-[#003366]' : 'bg-gray-200'
+                      num < stage ? 'bg-[#061f3f]' : 'bg-gray-200'
                     }`}
                   />
                 )}
@@ -78,7 +78,7 @@ export function CheckoutFlow() {
       {stage > 1 && stage <= 5 && (
         <button
           onClick={goBack}
-          className="self-start text-sm font-bold text-gray-400 hover:text-[#003366] transition-colors mb-4 flex items-center gap-1"
+          className="self-start text-sm font-bold text-gray-400 hover:text-[#061f3f] transition-colors mb-4 flex items-center gap-1"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />

@@ -36,7 +36,7 @@ export default async function OrderManagementPage() {
   const delivered = all.filter((o) => o.status === 'delivered').length
 
   const stats = [
-    { label: 'Total Orders', value: all.length, icon: ShoppingCart,  color: 'text-[#003366]',  bg: 'bg-blue-50' },
+    { label: 'Total Orders', value: all.length, icon: ShoppingCart,  color: 'text-[#061f3f]',  bg: 'bg-blue-50' },
     { label: 'Pending',      value: pending,     icon: Clock,         color: 'text-yellow-600', bg: 'bg-yellow-50' },
     { label: 'Shipped',      value: shipped,     icon: Truck,         color: 'text-blue-600',   bg: 'bg-blue-50' },
     { label: 'Delivered',    value: delivered,   icon: CheckCircle2,  color: 'text-green-600',  bg: 'bg-green-50' },
@@ -45,7 +45,7 @@ export default async function OrderManagementPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-extrabold text-[#003366]">Order Management</h1>
+        <h1 className="text-3xl font-extrabold text-[#061f3f]">Order Management</h1>
         <p className="text-gray-500 mt-1">Monitor and update all customer orders.</p>
       </div>
 
@@ -56,7 +56,7 @@ export default async function OrderManagementPage() {
             <div className={`h-10 w-10 ${bg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon className={`w-5 h-5 ${color}`} />
             </div>
-            <p className="text-2xl font-extrabold text-[#003366]">{value}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{value}</p>
             <p className="text-sm text-gray-500 mt-0.5">{label}</p>
           </Card>
         ))}
@@ -93,11 +93,11 @@ export default async function OrderManagementPage() {
                   return (
                     <tr key={o.id} className="hover:bg-gray-50/60">
                       <td className="px-6 py-4">
-                        <p className="font-semibold text-[#003366]">{addr?.full_name ?? '—'}</p>
+                        <p className="font-semibold text-[#061f3f]">{addr?.full_name ?? '—'}</p>
                         {addr?.city && <p className="text-xs text-gray-400">{addr.city}</p>}
                       </td>
                       <td className="px-6 py-4 text-center font-semibold text-gray-700">{itemCount}</td>
-                      <td className="px-6 py-4 text-right font-bold text-[#003366]">
+                      <td className="px-6 py-4 text-right font-bold text-[#061f3f]">
                         {symbol}{Number(o.total_amount).toLocaleString()}
                       </td>
                       <td className="px-6 py-4">
@@ -112,7 +112,7 @@ export default async function OrderManagementPage() {
                       <td className="px-6 py-4 text-right">
                         <Link
                           href={`/admin/order-management/${o.id}`}
-                          className="text-[#ec5b13] hover:underline font-semibold text-xs"
+                          className="text-[#ff5f14] hover:underline font-semibold text-xs"
                         >
                           View →
                         </Link>

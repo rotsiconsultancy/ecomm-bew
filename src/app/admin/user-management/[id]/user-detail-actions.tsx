@@ -100,7 +100,7 @@ export function UserDetailActions({ user, isAdmin, isSelf }: Props) {
         <button
           onClick={handleSave}
           disabled={isPending}
-          className="w-full h-9 flex items-center justify-center gap-2 bg-[#003366] hover:bg-[#002244] text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
+          className="w-full h-9 flex items-center justify-center gap-2 bg-[#061f3f] hover:bg-[#03152d] text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50"
         >
           {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save Changes

@@ -114,12 +114,12 @@ export function ImageUpload({
           onClick={() => !uploading && inputRef.current?.click()}
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${aspectClass} flex flex-col items-center justify-center ${
             dragOver
-              ? 'border-[#ec5b13] bg-orange-50'
-              : 'border-slate-200 hover:border-[#003366] hover:bg-slate-50'
+              ? 'border-[#ff5f14] bg-orange-50'
+              : 'border-slate-200 hover:border-[#061f3f] hover:bg-slate-50'
           } ${uploading ? 'pointer-events-none' : ''}`}
         >
           {uploading ? (
-            <Loader2 className="w-8 h-8 text-[#ec5b13] animate-spin mb-2" />
+            <Loader2 className="w-8 h-8 text-[#ff5f14] animate-spin mb-2" />
           ) : (
             <ImageIcon className="w-8 h-8 text-slate-300 mb-2" />
           )}

@@ -40,11 +40,11 @@ export default async function ProductManagementPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-extrabold text-[#003366] tracking-tight">Product Management</h1>
+          <h1 className="text-4xl font-extrabold text-[#061f3f] tracking-tight">Product Management</h1>
           <p className="text-gray-500 mt-2">Manage your inventory, pricing, and product details.</p>
         </div>
         <Link href="/admin/product-management/new">
-          <Button className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold h-12 px-8">
+          <Button className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold h-12 px-8">
             <Plus className="mr-2 h-5 w-5" />
             Add New Product
           </Button>
@@ -59,7 +59,7 @@ export default async function ProductManagementPage() {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Total Products</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{total}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{total}</p>
             <p className="text-xs text-gray-400">{active} active</p>
           </div>
         </Card>
@@ -70,18 +70,18 @@ export default async function ProductManagementPage() {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Out of Stock</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{outOfStock}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{outOfStock}</p>
             <p className="text-xs text-gray-400">Need restocking</p>
           </div>
         </Card>
 
         <Card className="rounded-xl border-none shadow-sm p-6 flex items-center gap-6">
-          <div className="h-12 w-12 bg-orange-100 text-[#ec5b13] rounded-full flex items-center justify-center shrink-0">
+          <div className="h-12 w-12 bg-orange-100 text-[#ff5f14] rounded-full flex items-center justify-center shrink-0">
             <TrendingDown className="h-6 w-6" />
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Inactive</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{total - active}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{total - active}</p>
             <p className="text-xs text-gray-400">Hidden from store</p>
           </div>
         </Card>
@@ -93,7 +93,7 @@ export default async function ProductManagementPage() {
           <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
           <p className="text-gray-500 font-medium">No products yet.</p>
           <Link href="/admin/product-management/new" className="mt-4 inline-block">
-            <Button className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white mt-4">
+            <Button className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white mt-4">
               <Plus className="w-4 h-4 mr-2" /> Add your first product
             </Button>
           </Link>
@@ -128,7 +128,7 @@ export default async function ProductManagementPage() {
                           )}
                         </div>
                         <div>
-                          <p className="font-bold text-[#003366] group-hover:text-[#ec5b13] transition-colors line-clamp-1">
+                          <p className="font-bold text-[#061f3f] group-hover:text-[#ff5f14] transition-colors line-clamp-1">
                             {product.name}
                           </p>
                           <p className="text-xs text-gray-400 font-mono">{product.slug}</p>
@@ -141,7 +141,7 @@ export default async function ProductManagementPage() {
                     </td>
                     <td className="px-6 py-5 text-center">
                       <div className="flex flex-col items-center gap-1">
-                        <span className="font-extrabold text-[#003366]">{product.stock}</span>
+                        <span className="font-extrabold text-[#061f3f]">{product.stock}</span>
                         <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${
@@ -166,14 +166,14 @@ export default async function ProductManagementPage() {
                         </Badge>
                       </div>
                     </td>
-                    <td className="px-6 py-5 text-right font-extrabold text-[#003366]">
+                    <td className="px-6 py-5 text-right font-extrabold text-[#061f3f]">
                       {formatPrice(product.price, product.currency)}
                     </td>
                     <td className="px-6 py-5 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <ToggleStatusButton id={product.id} isActive={product.is_active} />
                         <Link href={`/admin/product-management/${product.id}/edit`}>
-                          <button className="p-2 text-slate-400 hover:text-[#ec5b13] transition-colors">
+                          <button className="p-2 text-slate-400 hover:text-[#ff5f14] transition-colors">
                             <Edit2 className="w-4 h-4" />
                           </button>
                         </Link>

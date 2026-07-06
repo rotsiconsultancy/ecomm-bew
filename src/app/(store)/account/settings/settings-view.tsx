@@ -29,7 +29,7 @@ export function SettingsView({ influenceEnabled, toggleLabel }: Props) {
     <div className="space-y-8">
       {/* Shopping preferences */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-4">
-        <h2 className="text-xl font-bold text-[#003366]">Shopping Preferences</h2>
+        <h2 className="text-xl font-bold text-[#061f3f]">Shopping Preferences</h2>
 
         <div className="flex items-start gap-4">
           <button
@@ -37,7 +37,7 @@ export function SettingsView({ influenceEnabled, toggleLabel }: Props) {
             onClick={handleToggle}
             disabled={isPending}
             className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden mt-0.5 ${
-              enabled ? 'bg-[#ec5b13]' : 'bg-gray-200'
+              enabled ? 'bg-[#ff5f14]' : 'bg-gray-200'
             }`}
           >
             <span
@@ -47,7 +47,7 @@ export function SettingsView({ influenceEnabled, toggleLabel }: Props) {
             />
           </button>
           <div className="space-y-1">
-            <p className="font-bold text-sm text-[#003366]">{toggleLabel}</p>
+            <p className="font-bold text-sm text-[#061f3f]">{toggleLabel}</p>
             <p className="text-xs text-gray-400">
               You can change this at any time.
             </p>

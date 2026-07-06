@@ -1,248 +1,196 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Checkout | Bewama B2B</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#221610",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"],
-                        "sans": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout | Bewama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/bewama-ui.css" />
+  <style>
+    .checkout-shell { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 28px; align-items: start; }
+    .checkout-card { background: var(--white); border: 1px solid var(--steel); border-radius: var(--radius); box-shadow: 0 1px 0 rgba(3,21,45,.04); }
+    .checkout-pad { padding: 24px; }
+    .checkout-title { margin: 0; color: var(--navy); font-size: 26px; line-height: 1.1; font-weight: 900; }
+    .checkout-sub { margin: 8px 0 0; color: var(--slate); font-size: 15px; line-height: 1.6; font-weight: 600; }
+    .progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 20px; }
+    .progress-step { min-height: 74px; padding: 12px; border-radius: var(--radius); background: var(--cool); border: 1px solid var(--steel); }
+    .progress-step strong { display: block; color: var(--navy); font-size: 13px; font-weight: 900; }
+    .progress-step span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.35; font-weight: 700; }
+    .progress-step.is-active { background: var(--navy); border-color: var(--navy); }
+    .progress-step.is-active strong, .progress-step.is-active span { color: var(--white); }
+    .notice { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: start; padding: 14px; border-radius: var(--radius); background: rgba(199,122,19,.1); border: 1px solid rgba(199,122,19,.25); }
+    .notice-icon { width: 42px; height: 42px; border-radius: var(--radius); display: grid; place-items: center; color: var(--amber); background: rgba(199,122,19,.12); font-weight: 900; }
+    .option-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .option { display: grid; gap: 5px; min-height: 106px; padding: 15px; border: 1px solid var(--steel); border-radius: var(--radius); background: var(--white); cursor: pointer; }
+    .option input { margin: 0; accent-color: var(--orange); }
+    .option strong { color: var(--navy); font-size: 14px; font-weight: 900; }
+    .option span { color: var(--slate); font-size: 12px; line-height: 1.4; font-weight: 700; }
+    .option:has(input:checked) { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,95,20,.1); background: #fff8f4; }
+    .line-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--steel-2); }
+    .line-item:last-child { border-bottom: 0; }
+    .line-item img { width: 64px; height: 64px; object-fit: contain; padding: 8px; border-radius: var(--radius); background: var(--cool); border: 1px solid var(--steel-2); }
+    .line-item h3 { margin: 0; color: var(--navy); font-size: 14px; line-height: 1.25; font-weight: 900; }
+    .line-item p { margin: 3px 0 0; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .sticky-summary { position: sticky; top: 148px; display: grid; gap: 14px; }
+    .assistance { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; padding: 15px; border-radius: var(--radius); background: rgba(255,95,20,.08); border: 1px solid rgba(255,95,20,.16); }
+    .review-list { display: grid; gap: 10px; margin-top: 18px; }
+    .review-item { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding: 14px; border-radius: var(--radius); background: var(--cool); border: 1px solid var(--steel-2); }
+    .review-item span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--radius); background: rgba(59,122,87,.12); color: var(--green); font-weight: 900; }
+    .review-item strong { display: block; color: var(--navy); font-size: 14px; font-weight: 900; }
+    .review-item p { margin: 3px 0 0; color: var(--slate); font-size: 13px; line-height: 1.45; font-weight: 700; }
+    @media (max-width: 1060px) { .checkout-shell { grid-template-columns: 1fr; } .sticky-summary { position: static; } }
+    @media (max-width: 760px) { .progress, .option-grid { grid-template-columns: 1fr; } .checkout-pad { padding: 18px; } .line-item { grid-template-columns: 56px 1fr; } .line-item > strong { grid-column: 2; } }
+  </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 antialiased">
-<div class="min-h-screen flex flex-col">
-<!-- TopNavBar -->
-<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark/95 backdrop-blur">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex items-center justify-between h-16">
-<div class="flex items-center gap-2">
-<div class="text-primary">
-<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
-<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-<h1 class="font-display text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase">Bewama</h1>
-</div>
-<nav class="hidden md:flex items-center space-x-8">
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Shop</a>
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Orders</a>
-<a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Help</a>
-<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-<span class="material-symbols-outlined text-primary">person</span>
-</div>
-</nav>
-</div>
-</div>
-</header>
-<main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-<!-- Left Column: Checkout Details -->
-<div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-8">
-<div>
-<h2 class="text-2xl font-bold font-display mb-2">Checkout</h2>
-<p class="text-slate-500 dark:text-slate-400">Complete your B2B order details below for faster processing.</p>
-</div>
-<!-- Logistics Notice -->
-<div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex gap-3">
-<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">warning</span>
-<p class="text-amber-800 dark:text-amber-200 text-sm font-medium leading-relaxed">
-                        Logistics Notice: To avoid delivery mistakes, kindly use your accurate Google Maps pin for proper logistics.
-                    </p>
-</div>
-<!-- Location Method Toggle -->
-<div class="space-y-4">
-<div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl max-w-md">
-<button class="flex-1 py-2 px-4 text-sm font-bold rounded-lg bg-white dark:bg-slate-700 shadow-sm transition-all">Manual Fill</button>
-<button class="flex-1 py-2 px-4 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-all">Auto-fill with Maps</button>
-</div>
-<button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-blue-600/20">
-<span class="material-symbols-outlined">location_on</span>
-                        Open Maps &amp; Share Location
-                    </button>
-<div class="grid grid-cols-1 gap-4">
-<div class="space-y-1.5">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Paste Google Maps Link Here</label>
-<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="https://maps.app.goo.gl/..." type="text"/>
-</div>
-<div class="space-y-1.5">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Specific Landmark or Road Name</label>
-<textarea class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="E.g. Opposite National Bank, Enterprise Road" rows="2"></textarea>
-</div>
-</div>
-</div>
-<!-- Contact Section -->
-<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
-<h3 class="text-lg font-bold font-display mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">contact_page</span>
-                        Contact Details
-                    </h3>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="md:col-span-2 space-y-1.5">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Full Name / Business Name</label>
-<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" type="text"/>
-</div>
-<div class="space-y-1.5">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Phone Number</label>
-<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="+254..." type="tel"/>
-</div>
-<div class="space-y-1.5">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Email Address</label>
-<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary" type="email"/>
-</div>
-</div>
-</div>
-<!-- Shipping Method -->
-<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
-<h3 class="text-lg font-bold font-display mb-4">Shipping Method</h3>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
-<input checked="" class="sr-only peer" name="shipping" type="radio" value="self"/>
-<span class="flex flex-col">
-<span class="block text-sm font-bold text-slate-900 dark:text-white">Self-Pickup</span>
-<span class="mt-1 flex items-center text-xs text-slate-500">Free</span>
-</span>
-<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
-</label>
-<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
-<input class="sr-only peer" name="shipping" type="radio" value="mtaani"/>
-<span class="flex flex-col">
-<span class="block text-sm font-bold text-slate-900 dark:text-white">Pickup Mtaani</span>
-<span class="mt-1 flex items-center text-xs text-slate-500">KES 150</span>
-</span>
-<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
-</label>
-<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-slate-700 p-4 focus:outline-none hover:border-primary transition-colors">
-<input class="sr-only peer" name="shipping" type="radio" value="truck"/>
-<span class="flex flex-col">
-<span class="block text-sm font-bold text-slate-900 dark:text-white">Truck Delivery</span>
-<span class="mt-1 flex items-center text-xs text-slate-500">KES 1,200</span>
-</span>
-<div aria-hidden="true" class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-primary pointer-events-none"></div>
-</label>
-</div>
-</div>
-<!-- Payment Method -->
-<div class="pt-6 border-t border-slate-100 dark:border-slate-800">
-<h3 class="text-lg font-bold font-display mb-4">Payment Method</h3>
-<div class="space-y-3">
-<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-<input checked="" class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
-<div class="ml-3 flex flex-col flex-1">
-<div class="flex items-center justify-between">
-<span class="font-bold text-slate-900 dark:text-white">M-Pesa STK Push</span>
-<span class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Save 2%</span>
-</div>
-<span class="text-sm text-slate-500 mt-1">Instant confirmation and faster processing.</span>
-</div>
-</label>
-<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-<input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
-<div class="ml-3 flex flex-col">
-<span class="font-bold text-slate-900 dark:text-white">Cheque</span>
-<span class="text-xs italic text-slate-500 mt-1">Note: Dispatch pending bank confirmation.</span>
-</div>
-</label>
-<label class="flex items-start p-4 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-<input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="payment" type="radio"/>
-<div class="ml-3 flex flex-col">
-<span class="font-bold text-slate-900 dark:text-white">Payment on Delivery</span>
-<span class="text-xs italic text-slate-500 mt-1">Note: Available for Truck Delivery only.</span>
-</div>
-</label>
-</div>
-</div>
-</div>
-<!-- Right Column: Sidebar -->
-<aside class="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
-<div class="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
-<h3 class="text-lg font-bold font-display mb-6">Order Summary</h3>
-<!-- Cart Items -->
-<div class="space-y-4 mb-6">
-<div class="flex gap-4">
-<div class="h-16 w-16 flex-shrink-0 bg-white dark:bg-slate-700 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600">
-<img alt="Industrial Safety Boots" class="h-full w-full object-cover" data-alt="Brown industrial leather safety boots for construction" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAitgRHKK-4G6nPRK8HAck2gQPQg5P7RhL4bD73TDUwy3N3kHkQcSoK1ZtfwEAR941uag9wsfkOGqJry4Qv8fcWBuBTAeaXIzQjqqitBOeu8igIBrhcGE3rHk66PuFRkrpkUHBNBCGpeMAHh9Yv8HRhb46BhFHfofu75TSz4E2F0NTUotcyRgEG5c--B7PP4nvk0T7rp2mL9dsakNmK7X_PKx-rZlN86juVzMdtzyRYclRj2Yk_4Ss_uGng-basTKltWp0Xxr09Et8k"/>
-</div>
-<div class="flex-grow flex flex-col justify-center">
-<h4 class="text-sm font-bold leading-none">Steel Toe Safety Boots</h4>
-<p class="text-xs text-slate-500 mt-1">Qty: 2</p>
-<p class="text-sm font-bold text-primary mt-1">KES 4,500</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="h-16 w-16 flex-shrink-0 bg-white dark:bg-slate-700 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-600">
-<img alt="Industrial Drill" class="h-full w-full object-cover" data-alt="Professional grade electric power drill tool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7CMH7koAzLoS0oMUb09cJ4BNIPAXORxEKPBKIDlpL9lskdhSkHeEYAe-5mZkv1gtNc79gZxHVO8vGZda12Cy3KW7hOZ79OiFpXiMtCxEhLMcdbIdMEkASnEBTrPsbgWKeFHMHcEGH1qs1HUNmjmBtmhZlJwsVdpfs9gGFV48yx8WM1Dy_EKX2iPFuUgJCWH9wTV6Pm9rj-6A_x58T79SdM648XWIFSwKpW3gcrjc41jEA3IE5QzRgNmFr9xSlJYhjbodUakO555GQ"/>
-</div>
-<div class="flex-grow flex flex-col justify-center">
-<h4 class="text-sm font-bold leading-none">Heavy-Duty Rotary Drill</h4>
-<p class="text-xs text-slate-500 mt-1">Qty: 1</p>
-<p class="text-sm font-bold text-primary mt-1">KES 12,800</p>
-</div>
-</div>
-</div>
-<!-- Totals -->
-<div class="border-t border-slate-200 dark:border-slate-700 pt-4 space-y-2">
-<div class="flex justify-between text-sm">
-<span class="text-slate-600 dark:text-slate-400">Subtotal</span>
-<span class="font-semibold">KES 17,300</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-600 dark:text-slate-400">Shipping</span>
-<span class="font-semibold text-green-600">Free</span>
-</div>
-<div class="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-700 mt-2">
-<span class="text-base font-bold">Grand Total</span>
-<span class="text-xl font-black text-slate-900 dark:text-white">KES 17,300</span>
-</div>
-</div>
-<!-- CTA Button -->
-<button class="w-full mt-8 bg-primary hover:brightness-110 text-white font-black text-lg py-4 rounded-xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2">
-                        Proceed to Checkout
-                        <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-<p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-bold">Secure B2B Transaction</p>
-</div>
-<!-- Assistance Card -->
-<div class="bg-primary/5 border border-primary/10 rounded-xl p-4 flex items-center gap-4">
-<div class="bg-primary text-white p-2 rounded-lg">
-<span class="material-symbols-outlined">support_agent</span>
-</div>
-<div>
-<p class="text-xs font-bold text-primary uppercase">Need Help?</p>
-<p class="text-sm text-slate-700 dark:text-slate-300">Call 0700-123-456</p>
-</div>
-</div>
-</aside>
-</div>
-</main>
-<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-6 bg-white dark:bg-background-dark">
-<div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-<p class="text-xs text-slate-500">© 2024 Bewama Industrial Supplies. All Rights Reserved.</p>
-<div class="flex gap-6">
-<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Terms &amp; Conditions</a>
-<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Privacy Policy</a>
-<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Refund Policy</a>
-</div>
-</div>
-</footer>
-</div>
-</body></html>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="shell">
+        <div class="topbar__left"><span class="status-dot"></span><span>Checkout is optimized for stocked items. Use RFQ when the order needs bulk pricing or sourcing confirmation.</span></div>
+        <div class="topbar__right"><span>Secure order review</span><span>Delivery planning</span></div>
+      </div>
+    </div>
+
+    <header class="header">
+      <div class="shell">
+        <nav class="nav">
+          <a href="index.html"><img class="logo" src="../../public/logo.png" alt="Bewama" /></a>
+          <form class="search" action="productListing.html"><input type="search" name="q" placeholder="Add more products before checkout..." /></form>
+          <div class="nav__actions">
+            <a class="btn btn--ghost" href="productListing.html">Continue Shopping</a>
+            <a class="btn btn--orange" href="requestQuote.html">Move to Quote</a>
+            <button class="icon-button menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+          </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+          <div class="mobile-menu__links">
+            <a href="productListing.html">Products</a><a href="requestQuote.html">Quote</a>
+            <a href="orderHistory.html">Orders</a><a href="login.html">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="shell">
+          <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Checkout</span></nav>
+          <p class="kicker">Cart checkout</p>
+          <h1 class="page-title">Confirm delivery, payment, and <span>order details.</span></h1>
+          <p class="page-copy">Complete this order for stocked products. You can still move the cart into a quote if quantities, delivery timing, or pricing need review.</p>
+          <div class="progress" aria-label="Checkout progress">
+            <div class="progress-step is-active"><strong>1. Details</strong><span>Contact and delivery point</span></div>
+            <div class="progress-step"><strong>2. Delivery</strong><span>Dispatch method and site notes</span></div>
+            <div class="progress-step"><strong>3. Payment</strong><span>Payment preference</span></div>
+            <div class="progress-step"><strong>4. Review</strong><span>Place order or request quote</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cool">
+        <div class="shell checkout-shell">
+          <div class="grid">
+            <section class="checkout-card checkout-pad">
+              <h2 class="checkout-title">Delivery details</h2>
+              <p class="checkout-sub">Accurate location details help avoid dispatch delays and delivery mistakes.</p>
+              <div class="notice" style="margin-top:18px;">
+                <div class="notice-icon">!</div>
+                <p style="margin:0;color:#7a4a08;font-size:14px;line-height:1.6;font-weight:800;">For site deliveries, paste a Google Maps link and include a landmark, receiving contact, and preferred delivery window.</p>
+              </div>
+              <div class="grid grid-2" style="margin-top:18px;">
+                <div class="field"><label>Full name or business</label><input class="input" value="Nairobi Workshop Supplies" /></div>
+                <div class="field"><label>Receiving phone</label><input class="input" value="+254 7XX XXX XXX" /></div>
+                <div class="field"><label>Email address</label><input class="input" type="email" value="procurement@company.co.ke" /></div>
+                <div class="field"><label>Delivery method</label><select class="select"><option>Nairobi delivery</option><option>Pickup from Bewama</option><option>Regional dispatch</option></select></div>
+              </div>
+              <div class="field" style="margin-top:14px;">
+                <label>Google Maps link, landmark, or dispatch note</label>
+                <textarea class="textarea">Deliver to receiving desk. Call procurement lead before dispatch. Preferred window: weekday morning.</textarea>
+              </div>
+            </section>
+
+            <section class="checkout-card checkout-pad">
+              <h2 class="checkout-title">Delivery method</h2>
+              <p class="checkout-sub">Choose the option that best fits the order size and receiving location.</p>
+              <div class="option-grid" style="margin-top:18px;">
+                <label class="option"><input type="radio" checked name="delivery" /><strong>Nairobi delivery</strong><span>Best for city and nearby workshop dispatch.</span><span>KES 1,200</span></label>
+                <label class="option"><input type="radio" name="delivery" /><strong>Pickup</strong><span>Collect from Bewama after confirmation.</span><span>No delivery fee</span></label>
+                <label class="option"><input type="radio" name="delivery" /><strong>Regional dispatch</strong><span>Use for upcountry or project-site delivery.</span><span>Quoted after review</span></label>
+              </div>
+            </section>
+
+            <section class="checkout-card checkout-pad">
+              <h2 class="checkout-title">Payment preference</h2>
+              <p class="checkout-sub">Payment selection can be confirmed before dispatch if your company requires approval.</p>
+              <div class="option-grid" style="margin-top:18px;">
+                <label class="option"><input type="radio" checked name="payment" /><strong>M-Pesa / mobile money</strong><span>Fast confirmation and order processing.</span></label>
+                <label class="option"><input type="radio" name="payment" /><strong>Bank transfer</strong><span>Dispatch after payment confirmation.</span></label>
+                <label class="option"><input type="radio" name="payment" /><strong>Pay on delivery</strong><span>Subject to account and delivery approval.</span></label>
+              </div>
+            </section>
+
+            <section class="checkout-card checkout-pad">
+              <h2 class="checkout-title">Review before placing order</h2>
+              <p class="checkout-sub">Bewama will confirm stock, invoice details, and dispatch timing before releasing the order.</p>
+              <div class="review-list">
+                <div class="review-item">
+                  <span>OK</span>
+                  <div><strong>Stocked products in cart</strong><p>The listed items are ready for checkout. If quantity changes are required, move the cart to RFQ for price review.</p></div>
+                </div>
+                <div class="review-item">
+                  <span>OK</span>
+                  <div><strong>Delivery information captured</strong><p>The receiving contact, delivery method, and site instructions help the team plan dispatch without back-and-forth delays.</p></div>
+                </div>
+                <div class="review-item">
+                  <span>OK</span>
+                  <div><strong>Invoice handled after confirmation</strong><p>VAT, taxes, and official invoice details are finalized once the order is reviewed by the Bewama sales team.</p></div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="sticky-summary">
+            <section class="checkout-card checkout-pad">
+              <h2 class="checkout-title">Order summary</h2>
+              <div style="margin-top:12px;">
+                <div class="line-item">
+                  <img src="assets/soma-bond-sb340.png" alt="Soma Bond SB340" />
+                  <div><h3>Soma Bond SB340</h3><p>Qty 12 · Adhesives</p></div>
+                  <strong>KES 22,200</strong>
+                </div>
+                <div class="line-item">
+                  <img src="assets/pu-foam-cleaner.png" alt="PU Foam Cleaner" />
+                  <div><h3>PU Foam Cleaner</h3><p>Qty 6 · Cleaning</p></div>
+                  <strong>KES 5,760</strong>
+                </div>
+              </div>
+
+              <div class="summary" style="margin-top:18px;">
+                <div class="summary-row"><span>Subtotal</span><strong>KES 27,960</strong></div>
+                <div class="summary-row"><span>Delivery estimate</span><strong>KES 1,200</strong></div>
+                <div class="summary-row"><span>VAT / taxes</span><strong>Calculated on invoice</strong></div>
+                <div class="summary-row summary-total"><span>Total due</span><strong>KES 29,160</strong></div>
+              </div>
+
+              <a class="btn btn--orange btn--wide" style="margin-top:18px;" href="orderDetails.html">Place Order</a>
+              <a class="btn btn--ghost btn--wide" style="margin-top:10px;" href="requestQuote.html">Request Bulk Quote Instead</a>
+              <p style="margin:14px 0 0;color:var(--muted);font-size:12px;text-align:center;font-weight:800;text-transform:uppercase;letter-spacing:.08em;">Secure Bewama checkout preview</p>
+            </section>
+
+            <section class="assistance">
+              <div class="notice-icon" style="background:var(--orange);color:var(--white);">?</div>
+              <div>
+                <strong style="display:block;color:var(--navy);font-size:14px;">Need help?</strong>
+                <span style="display:block;color:var(--slate);font-size:13px;font-weight:700;">Move the cart into RFQ for bulk review or delivery clarification.</span>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="assets/bewama-ui.js"></script>
+</body>
+</html>

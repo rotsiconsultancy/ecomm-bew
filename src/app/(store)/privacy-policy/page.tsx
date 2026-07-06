@@ -31,14 +31,14 @@ export default async function PrivacyPolicyPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Legal</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Privacy Policy</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Privacy Policy</h1>
         <p className="text-gray-500 mt-3">Effective date: 1 January {year} &nbsp;·&nbsp; Bewama Investments</p>
       </div>
 
       <div className="prose prose-slate max-w-none space-y-8 text-gray-700 leading-relaxed">
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">1. Introduction</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">1. Introduction</h2>
           <p>
             Bewama Investments (<strong>"Bewama"</strong>, <strong>"we"</strong>, <strong>"us"</strong>) is committed to protecting
             your personal data. This Privacy Policy explains what information we collect, how we use it, and your rights under the
@@ -51,7 +51,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">2. Data We Collect</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">2. Data We Collect</h2>
           <p>We collect personal data that you provide to us directly and data generated through your use of the platform:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2">
             <li><strong>Account information:</strong> full name, email address, phone number, company name, and role.</li>
@@ -63,7 +63,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">3. How We Use Your Data</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">3. How We Use Your Data</h2>
           <p>We process your personal data for the following purposes:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2">
             <li>To create and manage your account.</li>
@@ -76,7 +76,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">4. How We Share Your Data</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">4. How We Share Your Data</h2>
           <p>We do not sell your personal data. We share it only with:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2">
             <li><strong>Supabase Inc.:</strong> our database and authentication infrastructure provider. Data is stored on secure servers.</li>
@@ -89,17 +89,17 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">5. Data Security</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">5. Data Security</h2>
           <p>
             We implement industry-standard security measures including encrypted connections (HTTPS/TLS), hashed passwords,
             row-level security on our database, and access controls. Despite these measures, no system is completely secure.
-            Please notify us immediately at <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a> if you
+            Please notify us immediately at <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a> if you
             suspect unauthorised access to your account.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">6. Data Retention</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">6. Data Retention</h2>
           <p>We retain your personal data for as long as your account is active or as needed to provide services. Specifically:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2">
             <li><strong>Account data:</strong> retained until you request deletion, plus a 30-day grace period.</li>
@@ -109,7 +109,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">7. Cookies</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">7. Cookies</h2>
           <p>
             We use essential cookies to keep you signed in and remember your cart. We do not use third-party advertising cookies.
             You can disable cookies in your browser settings, but some features may not work correctly.
@@ -117,7 +117,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">8. Your Rights under the Kenya DPA 2019</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">8. Your Rights under the Kenya DPA 2019</h2>
           <p>As a data subject, you have the right to:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2">
             <li><strong>Access</strong> the personal data we hold about you.</li>
@@ -125,16 +125,16 @@ export default async function PrivacyPolicyPage() {
             <li><strong>Erasure</strong> ("right to be forgotten") of your data, subject to legal retention obligations.</li>
             <li><strong>Object</strong> to processing for direct marketing purposes at any time.</li>
             <li><strong>Data portability</strong> — receive your data in a structured, machine-readable format.</li>
-            <li><strong>Lodge a complaint</strong> with the <a href="https://www.odpc.go.ke" target="_blank" rel="noopener noreferrer" className="text-[#ec5b13] underline">Office of the Data Protection Commissioner (ODPC)</a>.</li>
+            <li><strong>Lodge a complaint</strong> with the <a href="https://www.odpc.go.ke" target="_blank" rel="noopener noreferrer" className="text-[#ff5f14] underline">Office of the Data Protection Commissioner (ODPC)</a>.</li>
           </ul>
           <p className="mt-3">
-            To exercise any of these rights, contact us at <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a>.
+            To exercise any of these rights, contact us at <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a>.
             We will respond within <strong>21 days</strong> as required by the DPA 2019.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">9. Children's Privacy</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">9. Children's Privacy</h2>
           <p>
             Our platform is not intended for individuals under 18. We do not knowingly collect data from minors. If you believe
             a minor has submitted data to us, please contact us and we will delete it promptly.
@@ -142,7 +142,7 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">10. Changes to This Policy</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">10. Changes to This Policy</h2>
           <p>
             We may update this Policy from time to time. We will notify registered users by email of material changes.
             The "Effective date" at the top of this page indicates when the Policy was last revised.
@@ -150,12 +150,12 @@ export default async function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">11. Contact Us</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">11. Contact Us</h2>
           <p>For any privacy-related questions or requests:</p>
           <div className="mt-3 bg-gray-50 rounded-xl p-5 text-sm space-y-1">
             <p><strong>Bewama Investments</strong></p>
             {site.address && <p>{site.address}</p>}
-            <p>Email: <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a></p>
+            <p>Email: <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a></p>
             {site.contact_phone && <p>Phone: {site.contact_phone}</p>}
           </div>
         </section>
@@ -163,9 +163,9 @@ export default async function PrivacyPolicyPage() {
       </div>
 
       <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/terms" className="hover:text-[#003366] transition-colors">Terms &amp; Conditions</Link>
-        <Link href="/shipping-policy" className="hover:text-[#003366] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#003366] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/terms" className="hover:text-[#061f3f] transition-colors">Terms &amp; Conditions</Link>
+        <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
       </div>
     </div>
   )

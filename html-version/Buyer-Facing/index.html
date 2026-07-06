@@ -1,252 +1,68 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bewama | Your Partner in Industrial Materials</title>
-<!-- Google Fonts: Inter -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS v3 CDN -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Configuration -->
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'brand-navy': '#003366',
-            'brand-orange': '#FF6600',
-            'brand-orange-hover': '#e65c00',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          borderRadius: {
-            'custom': '8px',
-          }
-        }
-      }
-    }
-  </script>
-<!-- Custom Styles -->
-<style data-purpose="theme-customization">
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #1e293b;
-    }
-    .rounded-theme {
-      border-radius: 8px;
-    }
-  </style>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bewama | Quality Construction Materials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/bewama-ui.css" />
 </head>
-<body class="antialiased">
-<!-- BEGIN: MainHeader -->
-<header class="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
-<nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-<!-- Logo -->
-<div class="flex-shrink-0 flex items-center">
-<span class="text-3xl font-extrabold text-brand-navy tracking-tight" data-purpose="logo">BEWAMA</span>
-</div>
-<!-- Search Bar -->
-<div class="flex-1 max-w-2xl hidden md:block" data-purpose="search-container">
-<div class="relative">
-<input class="w-full pl-4 pr-10 py-2.5 border border-gray-300 rounded-theme focus:ring-2 focus:ring-brand-navy focus:border-brand-navy transition-all" placeholder="Search industrial products, SKU, or categories..." type="text"/>
-<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-<svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</div>
-</div>
-<!-- Actions -->
-<div class="flex items-center space-x-4">
-<a class="hidden lg:block text-brand-navy font-semibold hover:text-blue-800 transition-colors" href="login.html">Log In</a>
-<a class="bg-brand-orange hover:bg-brand-orange-hover text-white px-6 py-2.5 rounded-theme font-bold transition-all shadow-sm active:scale-95" data-purpose="request-quote-btn" href="requestQuote.html">
-          Request Quote
-        </a>
-</div>
-</nav>
-</header>
-<!-- END: MainHeader -->
-<main>
-<!-- BEGIN: HeroSection -->
-<section class="bg-brand-navy text-white overflow-hidden" data-purpose="hero-banner">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-<!-- Text Content -->
-<div class="space-y-8">
-<h1 class="text-4xl lg:text-6xl font-extrabold leading-tight">
-              Your Partner in <span class="text-brand-orange">Industrial Materials</span>
-</h1>
-<p class="text-xl text-gray-300 max-w-lg">
-              Reliable supply chain solutions for Quality Chemicals &amp; Timber. Delivering excellence across Europe's manufacturing sectors.
-            </p>
-<div class="flex flex-wrap gap-4">
-<a class="bg-brand-orange hover:bg-brand-orange-hover text-white px-8 py-4 rounded-theme font-bold text-lg transition-transform hover:-translate-y-1" href="productListing.html">
-                Explore Catalog
-              </a>
-<button class="border-2 border-white hover:bg-white hover:text-brand-navy text-white px-8 py-4 rounded-theme font-bold text-lg transition-all">
-                Learn More
-              </button>
-</div>
-</div>
-<!-- Hero Image -->
-<div class="relative" data-purpose="hero-image-wrapper">
-<div class="absolute -inset-4 bg-brand-orange/10 rounded-theme blur-3xl"></div>
-<img alt="A high-quality, professional photograph of industrial construction materials, including timber stacks and containers of industrial chemicals, in a clean, well-lit warehouse setting. Modern and industrial aesthetic." class="relative z-10 w-full h-[512px] object-cover rounded-theme shadow-2xl border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRP3Wq9G1cgCmFsfxnYrpIWanIV-1QpyQgxWp_V6L9vTPhSICNedPGgDr2ssfEepI5t1My3GGv0Afgi2Q1eyG_S-Cj85IKKy8gRzabizfM03akbfIPBoIpMpZwth0AiRBIqN_A5GSJfC8DasJlR29ouaAOEE7OVNf6aQL_GcHSZfHCjrws8BHaxaKvC3KB_4dVhbXbvWSZYP37AWrQpY_R-72yUgZwnFD1pzc5gzlKK2ZxMAaJ6nGZYzJgsvZDZB9cJ2jZKhnw6Kvp"/>
-</div>
-</div>
-</div>
-</section>
-<!-- END: HeroSection -->
-<!-- BEGIN: CategorySection -->
-<section class="py-16 bg-white" data-purpose="categories">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<h2 class="text-3xl font-bold text-brand-navy mb-10 border-l-4 border-brand-orange pl-4">Industrial Categories</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Category 1 -->
-<div class="group relative overflow-hidden rounded-theme bg-gray-100 aspect-[4/3] cursor-pointer" data-purpose="category-card">
-<img alt="Silicones" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHBV2Qk3-Wmw5dN4v0kEF1dZtKYhmt5EXmCaVyr32KTEYllmkCzgbL6ZaB9Mveadt8dTOQVl4TO2GPc5H3Yjn0DPtzQOyRuTAZGwHMdXtMgLSy2UnX0-lQVp7bHp6ZmQ2apl4B8ukBqakZMoeM0-uKSR97E_NdbK3xEBB09KCmPZWEtAWYBWiBpPPR6me2_j-e2OTOdr1TGF0cCsIMZbAnEClzOU2N9ZIJwjQAh7he-VIgRO2l1WW8MGch9n4WOvdtvld3ExppBZDf"/>
-<div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
-<div class="absolute bottom-6 left-6">
-<h3 class="text-2xl font-bold text-white">Silicones</h3>
-<p class="text-gray-200 mt-1">High-grade industrial sealants</p>
-</div>
-</div>
-<!-- Category 2 -->
-<div class="group relative overflow-hidden rounded-theme bg-gray-100 aspect-[4/3] cursor-pointer" data-purpose="category-card">
-<img alt="MDF Boards" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA6uq5xFhbEOLVT8T4dSpB-bghLH8agVIAfgHIGws966SkJ4mzKKJ5noGucqxsa2GfCpftGx72UiWJCf59af5faAHhwYVxK6d5fD-JBbzubaIcuGL22ijlebez6ZStNGmb4y0Kt287kSUfN3MiLsEj8oWF5cyefA4E-nEKxKINPsFEwaX7xrkw5JHKKjN_2XRAot-xf5QLXo90y4PBWzA79jFlihTTvVYDFKI3iEZ7KlW552WGIDFFzo0P7P6Q9nQ0Lq0IvkII1YWv"/>
-<div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
-<div class="absolute bottom-6 left-6">
-<h3 class="text-2xl font-bold text-white">MDF Boards</h3>
-<p class="text-gray-200 mt-1">Premium timber products</p>
-</div>
-</div>
-<!-- Category 3 -->
-<div class="group relative overflow-hidden rounded-theme bg-gray-100 aspect-[4/3] cursor-pointer" data-purpose="category-card">
-<img alt="Tools" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUrVSX7jAxVLE-Yyx0VRLNS6BjNlWIFgi33USn-082grCvrDOurAiz2Y7ygBaUWIJApKUjJ4dIxPCeOcfxqzqpm1gmGQaMdspVFZUwPSkKHTbRNb9N84VO2WXXXsW4A9BuwPwHnGCIrzMdqXZsMFMr6EOGUsm1f21h9OUneg0gY_CT_sQHuuQ6050dKV6uZ2Te0Fo8SQsq5tq3NAshEAXDGKAKGgQNmYhrqn2bpQx1KCaux8b-oGpdk7BqXDCIYii9xvQaI84GUfpP"/>
-<div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent"></div>
-<div class="absolute bottom-6 left-6">
-<h3 class="text-2xl font-bold text-white">Tools</h3>
-<p class="text-gray-200 mt-1">Professional equipment</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- END: CategorySection -->
-<!-- BEGIN: FeaturedProducts -->
-<section class="py-16 bg-gray-50" data-purpose="featured-products">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between items-end mb-10">
-<div>
-<h2 class="text-3xl font-bold text-brand-navy">Featured Products</h2>
-<p class="text-gray-500 mt-2">Best-selling industrial solutions ready for dispatch</p>
-</div>
-<a class="text-brand-navy font-semibold hover:underline decoration-brand-orange decoration-2" href="productListing.html">View All Products →</a>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Product Card 1 -->
-<div class="bg-white p-4 rounded-theme shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
-<div class="bg-gray-50 rounded-theme mb-4 aspect-square flex items-center justify-center overflow-hidden">
-<img alt="Industrial Adhesive" class="object-contain w-4/5 h-4/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCid193PAd9zWoNGZaJw-eQ4YAhSaAyxfJl_E7bWuOwpyLnv79PWlZRuRG20HzqspE1s3Vrv62fa1jH_Mu26W1kdtk1ejwR-cQw3tBcRc9aS3FiljjmyDOpIA449o7jOMcGzzwsn1QpPe4hRiU1LO27crgfBopSGKe_6cJdQ71pTe799bxtB9vJdzLsaz9Eoq3KT4w3v4JLLJqw3othFd_tnikNWK2ZEle1U__V1fz0omOgTWbwhZsbX6KIIiKhIs78UA4NDSZ7p7E0"/>
-</div>
-<h4 class="font-bold text-brand-navy text-lg line-clamp-1">Pro-Seal Adhesive 500ml</h4>
-<p class="text-sm text-gray-500 mb-4">Chemical &amp; Sealants</p>
-<div class="mt-auto flex items-center justify-between">
-<span class="text-2xl font-extrabold text-brand-navy">€29.99</span>
-<button class="bg-brand-navy hover:bg-blue-800 text-white p-2 rounded-theme transition-colors" title="Add to Cart">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-<!-- Product Card 2 -->
-<div class="bg-white p-4 rounded-theme shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
-<div class="bg-gray-50 rounded-theme mb-4 aspect-square flex items-center justify-center overflow-hidden">
-<img alt="MDF Sheet" class="object-contain w-4/5 h-4/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsE8gZ4V4PPHEYSE7qCjJNoeFLSBiRnt3YfNDzd-QAk3VMv1m75VGcWtigh4E5aytAWmayB98ZPoF068oLY3B78Cs48m-Pbbnbsuohuf5JxfsSrUDy70PU7_yMKZGbFgfFPT8E-oJX8M6SbrL9KFFRDfXPGxwKNQXeQC2DjtiVz7JFjwNDQzouYxmSx1ze3wqmntOcHGtFir767ahdA-TiRKuGW-T_PxL2S0BFkAgn3cK6CrOGEc4lQ7b87NtXXYRMdh-v-x42Q-NC"/>
-</div>
-<h4 class="font-bold text-brand-navy text-lg line-clamp-1">Premium MDF Board 18mm</h4>
-<p class="text-sm text-gray-500 mb-4">Timber &amp; Boards</p>
-<div class="mt-auto flex items-center justify-between">
-<span class="text-2xl font-extrabold text-brand-navy">€45.50</span>
-<button class="bg-brand-navy hover:bg-blue-800 text-white p-2 rounded-theme transition-colors" title="Add to Cart">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-<!-- Product Card 3 -->
-<div class="bg-white p-4 rounded-theme shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
-<div class="bg-gray-50 rounded-theme mb-4 aspect-square flex items-center justify-center overflow-hidden">
-<img alt="Drill Bit Set" class="object-contain w-4/5 h-4/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCBW0GJckaeJnpjc-ZC1LbFY1DGGWqDqDUjycKNHZGQBaMZk9PuaRcTCnVg3V3_74AID-YaACf4fEy0MHzVXWUK0OCxGvyTP7IGNA-_zA8En4Hqc4dXLgr1hIeHLTvk0-1MzKqxW2X_0l_xdhmBDBa3YIUJb7w9vI2qzuss64lVyEEb4KyMA7WJfy9NjPu5VLZRFrTAwJvPl6KC6rAAqxsfbAIgNMYj4SqTAo4Lc88J1MY2Tbbxm67NrfFhiZXbcHvitBf9y429q"/>
-</div>
-<h4 class="font-bold text-brand-navy text-lg line-clamp-1">Industrial Drill Bit Set (12pc)</h4>
-<p class="text-sm text-gray-500 mb-4">Professional Tools</p>
-<div class="mt-auto flex items-center justify-between">
-<span class="text-2xl font-extrabold text-brand-navy">€89.00</span>
-<button class="bg-brand-navy hover:bg-blue-800 text-white p-2 rounded-theme transition-colors" title="Add to Cart">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-<!-- Product Card 4 -->
-<div class="bg-white p-4 rounded-theme shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
-<div class="bg-gray-50 rounded-theme mb-4 aspect-square flex items-center justify-center overflow-hidden">
-<img alt="Structural Timber" class="object-contain w-4/5 h-4/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIR0i1TUi9x4VneDk2A5LWpVl5VarrpO8sAPEk_DX8Z7gyAaOgzym9eyvzgWHwaPsuii3e9KgisZeMos3ycsjdhigta5hNpE08lhoMEl_MJ9mOEkuowTa8FwSr2WFu4SjAjx0fKgJKCByP0nvScDIPH5sEeBYFrnOrKu0Br9r1PWcpC55MeAHWYEKrgK3uHtJwl5d52_gnw_8n2LzR43GN0GzSCU4UuU_mPNGGRPQB73KoSVwhj3MWdZzS3uE0fS1E4NXsRXveKPMa"/>
-</div>
-<h4 class="font-bold text-brand-navy text-lg line-clamp-1">C24 Treated Timber 4.8m</h4>
-<p class="text-sm text-gray-500 mb-4">Timber &amp; Construction</p>
-<div class="mt-auto flex items-center justify-between">
-<span class="text-2xl font-extrabold text-brand-navy">€12.95</span>
-<button class="bg-brand-navy hover:bg-blue-800 text-white p-2 rounded-theme transition-colors" title="Add to Cart">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- END: FeaturedProducts -->
-</main>
-<!-- BEGIN: Footer -->
-<footer class="bg-brand-navy text-white pt-16 pb-8">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-<div class="space-y-4">
-<span class="text-2xl font-extrabold tracking-tight">BEWAMA</span>
-<p class="text-gray-400 text-sm">Providing top-tier industrial materials and brokerage services for global businesses since 2005.</p>
-</div>
-<div>
-<h5 class="font-bold text-lg mb-4">Quick Links</h5>
-<ul class="space-y-2 text-gray-400">
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">About Us</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Product Catalog</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Wholesale Portal</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Contact Support</a></li>
-</ul>
-</div>
-<div>
-<h5 class="font-bold text-lg mb-4">Customer Support</h5>
-<ul class="space-y-2 text-gray-400">
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Shipping Policy</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Returns &amp; Refunds</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">Quality Assurance</a></li>
-<li><a class="hover:text-brand-orange transition-colors" href="productListing.html">FAQ</a></li>
-</ul>
-</div>
-<div>
-<h5 class="font-bold text-lg mb-4">Contact Info</h5>
-<div class="space-y-2 text-gray-400">
-<p>Email: sales@bewama.com</p>
-<p>Phone: +44 20 7946 0958</p>
-<p>Address: 128 Industrial Way, London, UK</p>
-</div>
-</div>
-</div>
-<div class="pt-8 border-t border-white/10 text-center text-sm text-gray-500">
-<p>© 2023 Bewama Industrial Brokerage. All rights reserved.</p>
-</div>
-</div>
-</footer>
-<!-- END: Footer -->
-</body></html>
+<body>
+  <div class="page">
+    <div class="topbar"><div class="shell"><div class="topbar__left"><span class="status-dot"></span><span>Search the catalog, buy stocked items, or request a procurement quote.</span></div><div class="topbar__right"><span>Nairobi operations</span><span>Quality construction materials</span></div></div></div>
+    <header class="header">
+      <div class="shell"><nav class="nav"><a href="index.html"><img class="logo" src="../../public/logo.png" alt="Bewama" /></a><form class="search" action="productListing.html"><input type="search" name="q" placeholder="Search adhesives, silicones, abrasives..." /></form><div class="nav__actions"><a class="icon-button" href="checkout.html">Cart</a><a class="btn btn--orange" href="requestQuote.html">Request Quote</a><button class="icon-button menu-toggle" type="button" aria-expanded="false">☰</button></div></nav><div class="mobile-menu" id="mobileMenu"><form class="search" action="productListing.html"><input type="search" name="q" placeholder="Search catalog..." /></form><div class="mobile-menu__links"><a href="productListing.html">Products</a><a href="requestQuote.html">Quote</a><a href="orderHistory.html">Orders</a><a href="profTechResources.html">Resources</a></div></div></div>
+      <div class="desktop-links"><div class="shell"><div class="category-links"><a href="productListing.html">All Products</a><a href="productListing.html">Silicones</a><a href="productListing.html">Sealants</a><a href="productListing.html">Adhesives</a><a href="productListing.html">Abrasives</a></div><div class="account-links"><a href="orderHistory.html">Order history</a><a href="requestQuote.html">Bulk order</a><a href="profTechResources.html">Technical resources</a></div></div></div>
+    </header>
+
+    <main>
+      <section class="hero hero--image">
+        <div class="shell">
+          <div>
+            <p class="eyebrow">Industrial ecommerce and RFQ</p>
+            <h1>Construction materials sourced <span>without friction.</span></h1>
+            <p class="hero__copy">Bewama helps trade buyers find stocked materials, add simple orders to cart, and request quotes for bulk or custom project supply across East Africa.</p>
+            <div class="hero__actions"><a class="btn btn--orange" href="requestQuote.html">Start a Quote</a><a class="btn btn--ghost" href="productListing.html">Browse Catalog</a></div>
+          </div>
+          <aside class="card panel" style="align-self:end;background:rgba(255,255,255,.94);">
+            <h2 style="margin:0 0 12px;color:var(--navy);font-size:24px;font-weight:900;">Choose the right buying path</h2>
+            <div class="grid">
+              <span class="chip chip--active">Search products</span>
+              <span class="chip">Add stocked items to cart</span>
+              <span class="chip">Request bulk pricing</span>
+              <span class="chip">Reorder from account history</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section--white">
+        <div class="shell">
+          <div class="section-head"><div><p class="kicker">Procurement shortcuts</p><h2 class="section-title">Start where your need is clearest.</h2><p class="section-copy">Modern ecommerce works best when every visitor can choose their fastest path: search, category browse, cart, quote, or reorder.</p></div><a class="text-link" href="productListing.html">View catalog →</a></div>
+          <div class="grid grid-4">
+            <a class="card panel" href="productListing.html"><h3 style="margin:0;color:var(--navy);font-size:22px;font-weight:900;">Browse catalog</h3><p style="color:var(--slate);font-weight:700;">Explore adhesives, sealants, cleaners, and abrasives.</p></a>
+            <a class="card panel" href="requestQuote.html"><h3 style="margin:0;color:var(--navy);font-size:22px;font-weight:900;">Request quote</h3><p style="color:var(--slate);font-weight:700;">Send product lines, quantity, delivery area, and timeline.</p></a>
+            <a class="card panel" href="checkout.html"><h3 style="margin:0;color:var(--navy);font-size:22px;font-weight:900;">Checkout</h3><p style="color:var(--slate);font-weight:700;">Complete straightforward stocked orders quickly.</p></a>
+            <a class="card panel" href="orderHistory.html"><h3 style="margin:0;color:var(--navy);font-size:22px;font-weight:900;">Reorder</h3><p style="color:var(--slate);font-weight:700;">Repeat previous purchases from account history.</p></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cool">
+        <div class="shell">
+          <div class="section-head"><div><p class="kicker">Featured products</p><h2 class="section-title">Proof-led product discovery.</h2></div><a class="text-link" href="productListing.html">Open listing →</a></div>
+          <div class="grid grid-4">
+            <article class="card product-card"><a class="product-media" href="individualListing.html"><img src="assets/soma-bond-sb340.png" alt="Soma Bond SB340" /></a><div class="product-body"><p class="product-category">Adhesives</p><h3>Soma Bond SB340</h3><div class="product-meta"><span>KES 1,850</span><span class="stock">In stock</span></div><div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" href="requestQuote.html">RFQ</a></div></div></article>
+            <article class="card product-card"><a class="product-media" href="individualListing.html"><img src="assets/soma-bond-sb3200.png" alt="Soma Bond SB3200" /></a><div class="product-body"><p class="product-category">Bonding</p><h3>Soma Bond SB3200</h3><div class="product-meta"><span>Bulk pricing</span><span class="stock">Verified</span></div><div class="product-actions"><a class="btn btn--orange" href="requestQuote.html">Request Quote</a><a class="icon-button" href="requestQuote.html">RFQ</a></div></div></article>
+            <article class="card product-card"><a class="product-media" href="individualListing.html"><img src="assets/pu-foam-cleaner.png" alt="PU Foam Cleaner" /></a><div class="product-body"><p class="product-category">Cleaning</p><h3>PU Foam Cleaner</h3><div class="product-meta"><span>KES 960</span><span class="stock">In stock</span></div><div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" href="requestQuote.html">RFQ</a></div></div></article>
+            <article class="card product-card"><a class="product-media" href="individualListing.html"><img src="assets/somagrit-sandpaper.jpg" alt="Somagrit Sandpaper" /></a><div class="product-body"><p class="product-category">Abrasives</p><h3>Somagrit Sandpaper Rolls</h3><div class="product-meta"><span>Multi-grit</span><span class="stock">Available</span></div><div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" href="requestQuote.html">RFQ</a></div></div></article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="assets/bewama-ui.js"></script>
+</body>
+</html>

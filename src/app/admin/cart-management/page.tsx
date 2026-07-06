@@ -84,7 +84,7 @@ export default async function CartManagementPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-extrabold text-[#003366]">Cart Management</h1>
+        <h1 className="text-3xl font-extrabold text-[#061f3f]">Cart Management</h1>
         <p className="text-gray-500 mt-1">Live cart sessions, abandoned carts, and recovery insights.</p>
       </div>
 
@@ -95,7 +95,7 @@ export default async function CartManagementPage() {
             <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center mb-4`}>
               <Icon className={`w-5 h-5 ${color}`} />
             </div>
-            <p className="text-3xl font-extrabold text-[#003366]">{value}</p>
+            <p className="text-3xl font-extrabold text-[#061f3f]">{value}</p>
             <p className="text-sm text-gray-500 mt-1 font-medium">{label}</p>
             <p className="text-xs text-gray-400 mt-1">{sub}</p>
           </Card>
@@ -105,7 +105,7 @@ export default async function CartManagementPage() {
       {/* Abandoned carts (priority) */}
       {abandoned.length > 0 && (
         <div>
-          <h2 className="text-lg font-bold text-[#003366] mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-[#061f3f] mb-4 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-orange-500" />
             Abandoned Carts
             <Badge className="bg-orange-100 text-orange-600 border-none">{abandoned.length}</Badge>
@@ -116,7 +116,7 @@ export default async function CartManagementPage() {
 
       {/* Active carts */}
       <div>
-        <h2 className="text-lg font-bold text-[#003366] mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[#061f3f] mb-4 flex items-center gap-2">
           <ShoppingCart className="w-5 h-5 text-blue-500" />
           Active Carts
           <Badge className="bg-blue-100 text-blue-600 border-none">{active.length}</Badge>
@@ -131,7 +131,7 @@ export default async function CartManagementPage() {
       {/* Converted carts */}
       {converted.length > 0 && (
         <div>
-          <h2 className="text-lg font-bold text-[#003366] mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-[#061f3f] mb-4 flex items-center gap-2">
             <CheckCircle2 className="w-5 h-5 text-green-500" />
             Converted to Orders
             <Badge className="bg-green-100 text-green-600 border-none">{converted.length}</Badge>
@@ -178,7 +178,7 @@ function CartTable({ rows }: { rows: CartRow[] }) {
                   <td className="px-5 py-4">
                     {name ? (
                       <div>
-                        <p className="font-semibold text-[#003366]">{name}</p>
+                        <p className="font-semibold text-[#061f3f]">{name}</p>
                         <p className="text-xs text-gray-400">{cart.profiles?.role}</p>
                       </div>
                     ) : cart.user_id ? (
@@ -210,7 +210,7 @@ function CartTable({ rows }: { rows: CartRow[] }) {
                   </td>
 
                   {/* Value */}
-                  <td className="px-5 py-4 font-bold text-[#003366]">
+                  <td className="px-5 py-4 font-bold text-[#061f3f]">
                     {total > 0 ? formatCurrency(total, currency) : <span className="text-gray-300">—</span>}
                   </td>
 

@@ -6,6 +6,7 @@ import { ShoppingCart, Minus, Plus, Trash2, Package } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/lib/cart-store'
+import { getSafeImageSrc } from '@/lib/images'
 
 export function CartDrawer() {
   const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity } = useCart()
@@ -14,12 +15,12 @@ export function CartDrawer() {
     <Sheet>
       <SheetTrigger asChild>
         <button
-          className="relative p-2 rounded-lg text-gray-600 hover:text-[#003366] hover:bg-gray-100 transition-colors"
+          className="relative p-2 rounded-lg text-gray-600 hover:text-[#061f3f] hover:bg-gray-100 transition-colors"
           aria-label="Open cart"
         >
           <ShoppingCart className="w-6 h-6" />
           {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#ec5b13] text-white text-[10px] font-bold flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#ff5f14] text-white text-[10px] font-bold flex items-center justify-center">
               {cartCount > 99 ? '99+' : cartCount}
             </span>
           )}
@@ -28,7 +29,7 @@ export function CartDrawer() {
 
       <SheetContent side="right" className="w-full sm:w-105 flex flex-col p-0">
         <SheetHeader className="px-6 py-4 border-b">
-          <SheetTitle className="text-[#003366] font-bold flex items-center gap-2">
+          <SheetTitle className="text-[#061f3f] font-bold flex items-center gap-2">
             <ShoppingCart className="w-5 h-5" />
             Cart ({cartCount} {cartCount === 1 ? 'item' : 'items'})
           </SheetTitle>
@@ -45,7 +46,7 @@ export function CartDrawer() {
             </div>
             <SheetTrigger asChild>
               <Link href="/products">
-                <Button className="bg-[#003366] hover:bg-[#002244] text-white">
+                <Button className="bg-[#061f3f] hover:bg-[#03152d] text-white">
                   Browse Products
                 </Button>
               </Link>
@@ -55,12 +56,15 @@ export function CartDrawer() {
           <>
             {/* Items */}
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-              {cartItems.map((item) => (
-                <div key={item.product_id} className="flex gap-3 py-3 border-b border-gray-100 last:border-0">
+              {cartItems.map((item) => {
+                const itemImage = getSafeImageSrc(item.image)
+
+                return (
+                  <div key={item.product_id} className="flex gap-3 py-3 border-b border-gray-100 last:border-0">
                   <div className="h-16 w-16 rounded-lg bg-gray-50 border border-gray-100 overflow-hidden flex items-center justify-center shrink-0">
-                    {item.image ? (
+                    {itemImage ? (
                       <Image
-                        src={item.image}
+                        src={itemImage}
                         alt={item.name}
                         width={64}
                         height={64}
@@ -74,11 +78,11 @@ export function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/products/${item.slug}`}
-                      className="font-semibold text-sm text-[#003366] hover:text-[#ec5b13] line-clamp-2 transition-colors"
+                      className="font-semibold text-sm text-[#061f3f] hover:text-[#ff5f14] line-clamp-2 transition-colors"
                     >
                       {item.name}
                     </Link>
-                    <p className="text-sm font-bold text-[#003366] mt-1">
+                    <p className="text-sm font-bold text-[#061f3f] mt-1">
                       KES {(item.price * item.quantity).toLocaleString()}
                     </p>
 
@@ -113,28 +117,29 @@ export function CartDrawer() {
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* Footer */}
             <div className="border-t px-6 py-4 space-y-4 bg-white">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500 font-medium">Subtotal</span>
-                <span className="text-lg font-extrabold text-[#003366]">
+                <span className="text-lg font-extrabold text-[#061f3f]">
                   KES {cartTotal.toLocaleString()}
                 </span>
               </div>
 
               <SheetTrigger asChild>
                 <Link href="/checkout" className="block">
-                  <Button className="w-full h-12 bg-[#003366] hover:bg-[#002244] text-white font-bold text-base">
+                  <Button className="w-full h-12 bg-[#061f3f] hover:bg-[#03152d] text-white font-bold text-base">
                     Proceed to Checkout
                   </Button>
                 </Link>
               </SheetTrigger>
 
               <SheetTrigger asChild>
-                <button className="w-full text-sm text-gray-500 hover:text-[#003366] transition-colors">
+                <button className="w-full text-sm text-gray-500 hover:text-[#061f3f] transition-colors">
                   Continue Shopping
                 </button>
               </SheetTrigger>

@@ -22,7 +22,7 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
       <button
         type="button"
         onClick={() => onChange(!on)}
-        className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${on ? 'bg-[#003366]' : 'bg-gray-200'}`}
+        className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${on ? 'bg-[#061f3f]' : 'bg-gray-200'}`}
       >
         <span className={`absolute top-1 left-0 w-4 h-4 bg-white rounded-full shadow transition-transform ${on ? 'translate-x-6' : 'translate-x-1'}`} />
       </button>
@@ -64,7 +64,7 @@ export function CheckoutAdminTabs({ config, methods, prompts, rules, categories,
             onClick={() => setTab(t.key)}
             className={`flex-1 px-4 py-2.5 rounded-md text-sm font-bold transition-all ${
               tab === t.key
-                ? 'bg-white text-[#003366] shadow-sm'
+                ? 'bg-white text-[#061f3f] shadow-sm'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -126,13 +126,13 @@ function InfluenceTab({ config }: { config: CheckoutConfig }) {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
-        <h3 className="font-bold text-lg text-[#003366]">Global Defaults</h3>
+        <h3 className="font-bold text-lg text-[#061f3f]">Global Defaults</h3>
         <Toggle on={retailDefault} onChange={setRetailDefault} label="Enable influence for Retail customers" />
         <Toggle on={wholesaleDefault} onChange={setWholesaleDefault} label="Enable influence for Wholesale customers" />
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
-        <h3 className="font-bold text-lg text-[#003366]">Intensity</h3>
+        <h3 className="font-bold text-lg text-[#061f3f]">Intensity</h3>
         <div className="flex gap-3">
           {(['low', 'medium', 'high'] as InfluenceIntensity[]).map((level) => (
             <button
@@ -140,7 +140,7 @@ function InfluenceTab({ config }: { config: CheckoutConfig }) {
               onClick={() => setIntensity(level)}
               className={`flex-1 p-3 rounded-xl border-2 text-sm font-bold capitalize transition-all ${
                 intensity === level
-                  ? 'border-[#ec5b13] bg-[#ec5b13]/5 text-[#003366]'
+                  ? 'border-[#ff5f14] bg-[#ff5f14]/5 text-[#061f3f]'
                   : 'border-gray-200 text-gray-500 hover:border-gray-300'
               }`}
             >
@@ -152,7 +152,7 @@ function InfluenceTab({ config }: { config: CheckoutConfig }) {
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
-        <h3 className="font-bold text-lg text-[#003366]">Element Toggles</h3>
+        <h3 className="font-bold text-lg text-[#061f3f]">Element Toggles</h3>
         <Toggle on={showCompanions} onChange={setShowCompanions} label="Companion product suggestions" />
         <Toggle on={showScarcity} onChange={setShowScarcity} label="Low stock scarcity badges" />
         <Toggle on={showSocialProof} onChange={setShowSocialProof} label="Social proof (orders this month)" />
@@ -162,7 +162,7 @@ function InfluenceTab({ config }: { config: CheckoutConfig }) {
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-3">
-        <h3 className="font-bold text-lg text-[#003366]">User Toggle Label</h3>
+        <h3 className="font-bold text-lg text-[#061f3f]">User Toggle Label</h3>
         <p className="text-xs text-gray-400">What users see in their account settings</p>
         <Input
           value={toggleLabel}
@@ -175,7 +175,7 @@ function InfluenceTab({ config }: { config: CheckoutConfig }) {
         <Button
           onClick={handleSave}
           disabled={isPending}
-          className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+          className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
         >
           {isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
           Save Influence Config
@@ -293,7 +293,7 @@ function PaymentsTab({ methods, credentialsStatus }: { methods: PaymentMethod[];
                       }}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${
                         selected
-                          ? 'bg-[#003366] text-white'
+                          ? 'bg-[#061f3f] text-white'
                           : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                       }`}
                     >
@@ -310,7 +310,7 @@ function PaymentsTab({ methods, credentialsStatus }: { methods: PaymentMethod[];
               size="sm"
               onClick={() => handleSave(method)}
               disabled={isPending}
-              className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+              className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
             >
               {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Save'}
             </Button>
@@ -398,7 +398,7 @@ function PostPurchaseTab({ prompts }: { prompts: PostPurchasePrompt[] }) {
                     onClick={() => update(prompt.id, 'trigger_timing', timing)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                       prompt.trigger_timing === timing
-                        ? 'bg-[#003366] text-white'
+                        ? 'bg-[#061f3f] text-white'
                         : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                     }`}
                   >
@@ -414,7 +414,7 @@ function PostPurchaseTab({ prompts }: { prompts: PostPurchasePrompt[] }) {
               size="sm"
               onClick={() => handleSave(prompt)}
               disabled={isPending}
-              className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+              className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
             >
               {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Save'}
             </Button>
@@ -574,7 +574,7 @@ function CompanionsTab({ rules, categories }: { rules: CompanionRule[]; categori
               size="sm"
               onClick={() => handleSave(rule)}
               disabled={isPending}
-              className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+              className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
             >
               {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Save'}
             </Button>
@@ -589,8 +589,8 @@ function CompanionsTab({ rules, categories }: { rules: CompanionRule[]; categori
 
       {/* Add new rule */}
       {showAdd ? (
-        <div className="bg-white rounded-xl border-2 border-dashed border-[#ec5b13]/30 p-5 space-y-4">
-          <h4 className="font-bold text-sm text-[#003366]">New Companion Rule</h4>
+        <div className="bg-white rounded-xl border-2 border-dashed border-[#ff5f14]/30 p-5 space-y-4">
+          <h4 className="font-bold text-sm text-[#061f3f]">New Companion Rule</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-bold text-gray-400 uppercase">Source Category</label>
@@ -652,7 +652,7 @@ function CompanionsTab({ rules, categories }: { rules: CompanionRule[]; categori
               size="sm"
               onClick={handleAdd}
               disabled={isPending || !newRule.source_category || !newRule.target_category}
-              className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold"
+              className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold"
             >
               {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Add Rule'}
             </Button>
@@ -665,7 +665,7 @@ function CompanionsTab({ rules, categories }: { rules: CompanionRule[]; categori
       ) : (
         <button
           onClick={() => setShowAdd(true)}
-          className="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-sm font-bold text-gray-400 hover:border-[#ec5b13] hover:text-[#ec5b13] transition-colors flex items-center justify-center gap-2"
+          className="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-sm font-bold text-gray-400 hover:border-[#ff5f14] hover:text-[#ff5f14] transition-colors flex items-center justify-center gap-2"
         >
           <Plus className="w-4 h-4" />
           Add Companion Rule

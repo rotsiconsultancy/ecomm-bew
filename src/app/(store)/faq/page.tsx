@@ -152,25 +152,25 @@ export default async function FAQPage() {
       
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Support</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Frequently Asked Questions</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Frequently Asked Questions</h1>
         <p className="text-gray-500 mt-3">
           Can&apos;t find an answer?{' '}
-          <a href={`mailto:${email}`} className="text-[#ec5b13] underline font-medium">Email us</a>
-          {site.contact_phone && <> or call <a href={`tel:${site.contact_phone.replace(/\s/g, '')}`} className="text-[#ec5b13] underline font-medium">{site.contact_phone}</a></>} — we respond within 24 hours.
+          <a href={`mailto:${email}`} className="text-[#ff5f14] underline font-medium">Email us</a>
+          {site.contact_phone && <> or call <a href={`tel:${site.contact_phone.replace(/\s/g, '')}`} className="text-[#ff5f14] underline font-medium">{site.contact_phone}</a></>} — we respond within 24 hours.
         </p>
       </div>
 
       <div className="space-y-10">
         {faqs.map(({ category, items }) => (
           <section key={category}>
-            <h2 className="text-lg font-bold text-[#003366] mb-4 pb-2 border-b border-gray-100">
+            <h2 className="text-lg font-bold text-[#061f3f] mb-4 pb-2 border-b border-gray-100">
               {category}
             </h2>
             <div className="space-y-0 divide-y divide-gray-50">
               {items.map(({ q, a }) => (
                 <details key={q} className="group py-4">
                   <summary className="flex items-center justify-between cursor-pointer list-none gap-4">
-                    <span className="font-semibold text-gray-800 text-sm group-open:text-[#003366] transition-colors">{q}</span>
+                    <span className="font-semibold text-gray-800 text-sm group-open:text-[#061f3f] transition-colors">{q}</span>
                     <span className="text-gray-400 group-open:rotate-45 transition-transform shrink-0 text-xl leading-none">+</span>
                   </summary>
                   <p className="mt-3 text-sm text-gray-600 leading-relaxed">{a}</p>
@@ -182,13 +182,13 @@ export default async function FAQPage() {
       </div>
 
       {/* Still have questions */}
-      <div className="mt-14 bg-[#003366] text-white rounded-2xl p-8 text-center">
+      <div className="mt-14 bg-[#061f3f] text-white rounded-2xl p-8 text-center">
         <h3 className="text-xl font-bold mb-2">Still have questions?</h3>
         <p className="text-gray-300 text-sm mb-6">Our team is available during business hours to help with any enquiry.</p>
         <div className="flex flex-wrap justify-center gap-3">
           <a
             href={`mailto:${email}`}
-            className="inline-flex items-center gap-2 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            className="inline-flex items-center gap-2 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
           >
             Email Us
           </a>
@@ -202,9 +202,9 @@ export default async function FAQPage() {
       </div>
 
       <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/shipping-policy" className="hover:text-[#003366] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#003366] transition-colors">Returns &amp; Refunds</Link>
-        <Link href="/quality-assurance" className="hover:text-[#003366] transition-colors">Quality Assurance</Link>
+        <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/quality-assurance" className="hover:text-[#061f3f] transition-colors">Quality Assurance</Link>
       </div>
     </div>
   )

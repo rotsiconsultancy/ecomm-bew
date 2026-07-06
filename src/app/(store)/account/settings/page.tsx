@@ -25,7 +25,7 @@ export default async function AccountSettingsPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-extrabold text-[#003366] mb-8">Account Settings</h1>
+      <h1 className="text-3xl font-extrabold text-[#061f3f] mb-8">Account Settings</h1>
       <SettingsView
         influenceEnabled={profile?.influence_mode_enabled as boolean | null}
         toggleLabel={config.influence_toggle_label}

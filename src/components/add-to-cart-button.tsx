@@ -41,7 +41,7 @@ export function AddToCartButton({ product, size = 'sm', className }: AddToCartBu
       size={size}
       onClick={handleClick}
       title={added ? 'Added to cart!' : `Add ${product.name} to cart`}
-      className={`bg-[#003366] hover:bg-[#002244] text-white transition-all ${className ?? ''}`}
+      className={`bg-[#061f3f] hover:bg-[#03152d] text-white transition-all ${className ?? ''}`}
     >
       {added ? (
         <>

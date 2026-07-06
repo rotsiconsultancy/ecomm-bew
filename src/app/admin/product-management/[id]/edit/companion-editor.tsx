@@ -89,7 +89,7 @@ export function CompanionEditor({ productId, companions: initial }: Props) {
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-bold text-lg text-[#003366]">Companion Products</h3>
+          <h3 className="font-bold text-lg text-[#061f3f]">Companion Products</h3>
           <p className="text-xs text-gray-400">Up to 4 products shown during checkout (overrides category rules)</p>
         </div>
         {msg && <span className="text-xs font-bold text-green-600">{msg}</span>}
@@ -103,7 +103,7 @@ export function CompanionEditor({ productId, companions: initial }: Props) {
             className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg"
           >
             <GripVertical className="w-4 h-4 text-gray-300" />
-            <span className="flex-1 text-sm font-semibold text-[#003366]">
+            <span className="flex-1 text-sm font-semibold text-[#061f3f]">
               {c.companion_name}
             </span>
             <button
@@ -140,7 +140,7 @@ export function CompanionEditor({ productId, companions: initial }: Props) {
                   key={r.id}
                   onClick={() => handleAdd(r)}
                   disabled={isPending}
-                  className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm text-[#003366] font-medium border-b border-gray-50 last:border-0"
+                  className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm text-[#061f3f] font-medium border-b border-gray-50 last:border-0"
                 >
                   {r.name}
                 </button>

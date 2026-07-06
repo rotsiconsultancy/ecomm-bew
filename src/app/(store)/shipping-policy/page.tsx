@@ -38,7 +38,7 @@ export default async function ShippingPolicyPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Support</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Shipping Policy</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Shipping Policy</h1>
         <p className="text-gray-500 mt-3">Bewama Investments &nbsp;·&nbsp; Last updated January {new Date().getFullYear()}</p>
       </div>
 
@@ -46,11 +46,11 @@ export default async function ShippingPolicyPage() {
       <div className="grid grid-cols-2 gap-4 mb-12">
         {highlights.map(({ icon: Icon, title, desc }) => (
           <div key={title} className="bg-gray-50 border border-gray-100 rounded-xl p-4 flex gap-3">
-            <div className="w-9 h-9 bg-[#003366]/10 rounded-lg flex items-center justify-center shrink-0">
-              <Icon className="w-4 h-4 text-[#003366]" />
+            <div className="w-9 h-9 bg-[#061f3f]/10 rounded-lg flex items-center justify-center shrink-0">
+              <Icon className="w-4 h-4 text-[#061f3f]" />
             </div>
             <div>
-              <p className="text-sm font-bold text-[#003366]" dangerouslySetInnerHTML={{ __html: title }} />
+              <p className="text-sm font-bold text-[#061f3f]" dangerouslySetInnerHTML={{ __html: title }} />
               <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
             </div>
           </div>
@@ -60,20 +60,20 @@ export default async function ShippingPolicyPage() {
       <div className="space-y-8 text-gray-700 leading-relaxed">
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">1. Delivery Areas</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">1. Delivery Areas</h2>
           <p>
             We deliver to addresses within <strong>Nairobi and the surrounding metropolitan area</strong> as a standard service.
             Deliveries to other counties and regions in Kenya are available on request and are subject to confirmation of logistics and cost.
           </p>
           <p className="mt-3">
             For <strong>international or export orders</strong> (including European markets), please submit a{' '}
-            <Link href="/request-quote" className="text-[#ec5b13] underline">Quote Request</Link>. Our team will confirm
+            <Link href="/request-quote" className="text-[#ff5f14] underline">Quote Request</Link>. Our team will confirm
             shipping terms, incoterms, and freight costs on a case-by-case basis.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">2. Delivery Options</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">2. Delivery Options</h2>
 
           <div className="space-y-5 mt-2">
             <div>
@@ -106,7 +106,7 @@ export default async function ShippingPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">3. Delivery Timelines</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">3. Delivery Timelines</h2>
           <div className="overflow-x-auto mt-2">
             <table className="w-full text-sm border border-gray-100 rounded-xl overflow-hidden">
               <thead className="bg-gray-50">
@@ -144,7 +144,7 @@ export default async function ShippingPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">4. Delivery Costs</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">4. Delivery Costs</h2>
           <p>
             Delivery fees are calculated at checkout based on your location and order size. For bulk or truck deliveries, fees
             are communicated separately as part of the quote process.
@@ -155,16 +155,16 @@ export default async function ShippingPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">5. Order Tracking</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">5. Order Tracking</h2>
           <p>
             Once your order is dispatched, you will receive a confirmation by email and/or SMS with tracking information where
             available. You can also view your order status in your{' '}
-            <Link href="/order-history" className="text-[#ec5b13] underline">Order History</Link>.
+            <Link href="/order-history" className="text-[#ff5f14] underline">Order History</Link>.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">6. Damaged or Lost Parcels</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">6. Damaged or Lost Parcels</h2>
           <p>
             If your order arrives damaged or does not arrive within the estimated window, please contact us within <strong>48 hours</strong> of
             the expected delivery date. We will investigate and, where appropriate, re-dispatch or refund your order.
@@ -172,12 +172,12 @@ export default async function ShippingPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">7. Contact</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">7. Contact</h2>
           <div className="mt-3 bg-gray-50 rounded-xl p-5 text-sm space-y-1 flex items-start gap-3">
-            <Phone className="w-4 h-4 text-[#ec5b13] shrink-0 mt-0.5" />
+            <Phone className="w-4 h-4 text-[#ff5f14] shrink-0 mt-0.5" />
             <div className="space-y-1">
               <p>For shipping enquiries, contact us at:</p>
-              <p>Email: <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a></p>
+              <p>Email: <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a></p>
               {site.contact_phone && <p>Phone: {site.contact_phone}</p>}
             </div>
           </div>
@@ -186,9 +186,9 @@ export default async function ShippingPolicyPage() {
       </div>
 
       <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/returns-policy" className="hover:text-[#003366] transition-colors">Returns &amp; Refunds</Link>
-        <Link href="/faq" className="hover:text-[#003366] transition-colors">FAQ</Link>
-        <Link href="/terms" className="hover:text-[#003366] transition-colors">Terms &amp; Conditions</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/faq" className="hover:text-[#061f3f] transition-colors">FAQ</Link>
+        <Link href="/terms" className="hover:text-[#061f3f] transition-colors">Terms &amp; Conditions</Link>
       </div>
     </div>
   )

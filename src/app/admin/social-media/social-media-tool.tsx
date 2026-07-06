@@ -97,7 +97,7 @@ export default function SocialMediaTool() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     
     if (!productImage) {
-      ctx.fillStyle = '#003366'
+      ctx.fillStyle = '#061f3f'
       ctx.font = '32px Inter, sans-serif'
       ctx.textAlign = 'center'
       ctx.fillText('Select a product to preview poster', canvas.width / 2, canvas.height / 2)
@@ -122,7 +122,7 @@ export default function SocialMediaTool() {
     const padding = 50
 
     // 3. Draw Navy Side Panel
-    ctx.fillStyle = '#003366'
+    ctx.fillStyle = '#061f3f'
     ctx.fillRect(0, 0, gutterWidth, canvas.height)
 
     // 4. Draw Product Image (Right side)
@@ -189,7 +189,7 @@ export default function SocialMediaTool() {
         const qrDataUrl = await QRCode.toDataURL(qrUrl, { 
             width: qrSize, 
             margin: 2,
-            color: { dark: '#003366', light: '#ffffff' }
+            color: { dark: '#061f3f', light: '#ffffff' }
         })
         const qrImg = new Image()
         qrImg.src = qrDataUrl
@@ -256,7 +256,7 @@ export default function SocialMediaTool() {
                 onClick={() => setMode('price')}
                 className={cn(
                     "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                    mode === 'price' ? "bg-white text-[#003366] shadow-sm" : "text-slate-500 hover:bg-white/50"
+                    mode === 'price' ? "bg-white text-[#061f3f] shadow-sm" : "text-slate-500 hover:bg-white/50"
                 )}
              >
                 <BadgeDollarSign className="w-4 h-4" /> Price
@@ -265,7 +265,7 @@ export default function SocialMediaTool() {
                 onClick={() => setMode('problem')}
                 className={cn(
                     "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                    mode === 'problem' ? "bg-white text-[#003366] shadow-sm" : "text-slate-500 hover:bg-white/50"
+                    mode === 'problem' ? "bg-white text-[#061f3f] shadow-sm" : "text-slate-500 hover:bg-white/50"
                 )}
              >
                 <AlertCircle className="w-4 h-4" /> Problem
@@ -274,7 +274,7 @@ export default function SocialMediaTool() {
                 onClick={() => setMode('authority')}
                 className={cn(
                     "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                    mode === 'authority' ? "bg-white text-[#003366] shadow-sm" : "text-slate-500 hover:bg-white/50"
+                    mode === 'authority' ? "bg-white text-[#061f3f] shadow-sm" : "text-slate-500 hover:bg-white/50"
                 )}
              >
                 <Award className="w-4 h-4" /> Authority
@@ -306,7 +306,7 @@ export default function SocialMediaTool() {
                                 {p.images?.[0] ? <img src={p.images[0]} alt="" className="w-full h-full object-cover" /> : <Package className="w-4 h-4 text-slate-400" />}
                             </div>
                             <div className="text-left overflow-hidden">
-                                <p className="text-sm font-bold text-[#003366] truncate">{p.name}</p>
+                                <p className="text-sm font-bold text-[#061f3f] truncate">{p.name}</p>
                                 <p className="text-xs text-slate-400">{p.price.toLocaleString()} {p.currency}</p>
                             </div>
                         </button>
@@ -376,7 +376,7 @@ export default function SocialMediaTool() {
 
           <div className="flex flex-col gap-2 pt-4 border-t">
               <Button 
-                className="w-full bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold h-12 gap-2 shadow-lg shadow-orange-200"
+                className="w-full bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold h-12 gap-2 shadow-lg shadow-orange-200"
                 onClick={handleDownload}
                 disabled={!productImage}
               >

@@ -27,7 +27,7 @@ export default async function QuoteManagementPage() {
   const converted = all.filter((q) => q.status === 'converted').length
 
   const stats = [
-    { label: 'Total Quotes',   value: all.length, icon: MessageSquare, color: 'text-[#003366]', bg: 'bg-blue-50' },
+    { label: 'Total Quotes',   value: all.length, icon: MessageSquare, color: 'text-[#061f3f]', bg: 'bg-blue-50' },
     { label: 'Pending',        value: pending,     icon: Clock,         color: 'text-yellow-600', bg: 'bg-yellow-50' },
     { label: 'Reviewing',      value: reviewing,   icon: Search,        color: 'text-blue-600',   bg: 'bg-blue-50' },
     { label: 'Converted',      value: converted,   icon: TrendingUp,    color: 'text-green-600',  bg: 'bg-green-50' },
@@ -36,7 +36,7 @@ export default async function QuoteManagementPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-extrabold text-[#003366]">Quote Management</h1>
+        <h1 className="text-3xl font-extrabold text-[#061f3f]">Quote Management</h1>
         <p className="text-gray-500 mt-1">Review and manage all incoming quote requests.</p>
       </div>
 
@@ -47,7 +47,7 @@ export default async function QuoteManagementPage() {
             <div className={`h-10 w-10 ${bg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon className={`w-5 h-5 ${color}`} />
             </div>
-            <p className="text-2xl font-extrabold text-[#003366]">{value}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{value}</p>
             <p className="text-sm text-gray-500 mt-0.5">{label}</p>
           </Card>
         ))}
@@ -81,7 +81,7 @@ export default async function QuoteManagementPage() {
                   return (
                     <tr key={q.id} className="hover:bg-gray-50/60">
                       <td className="px-6 py-4">
-                        <p className="font-semibold text-[#003366]">{q.full_name}</p>
+                        <p className="font-semibold text-[#061f3f]">{q.full_name}</p>
                         {q.company && <p className="text-xs text-gray-400">{q.company}</p>}
                       </td>
                       <td className="px-6 py-4 text-gray-600">{q.email}</td>
@@ -97,7 +97,7 @@ export default async function QuoteManagementPage() {
                       <td className="px-6 py-4 text-right">
                         <Link
                           href={`/admin/quote-management/${q.id}`}
-                          className="text-[#ec5b13] hover:underline font-semibold text-xs"
+                          className="text-[#ff5f14] hover:underline font-semibold text-xs"
                         >
                           View →
                         </Link>

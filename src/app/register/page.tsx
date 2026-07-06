@@ -87,11 +87,11 @@ export default function RegisterPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-[#003366]">Check your email</h2>
+          <h2 className="text-2xl font-bold text-[#061f3f]">Check your email</h2>
           <p className="text-gray-600 text-sm">
             We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.
           </p>
-          <Link href="/login" className="text-sm font-medium text-[#ec5b13] hover:text-[#d14d0d]">
+          <Link href="/login" className="text-sm font-medium text-[#ff5f14] hover:text-[#e84f0a]">
             Back to sign in
           </Link>
         </div>
@@ -102,7 +102,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left panel — navy brand */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#003366] flex-col justify-between p-12">
+      <div className="hidden lg:flex lg:w-1/2 bg-[#061f3f] flex-col justify-between p-12">
         <div>
           <span className="text-white text-2xl font-bold tracking-tight">Bewama</span>
         </div>
@@ -121,7 +121,7 @@ export default function RegisterPage() {
       <div className="flex-1 flex items-center justify-center bg-[#f8f6f6] px-6 py-12">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#003366]">Create an account</h1>
+            <h1 className="text-3xl font-bold text-[#061f3f]">Create an account</h1>
             <p className="mt-2 text-sm text-gray-600">Register to start ordering with Bewama</p>
           </div>
 
@@ -170,7 +170,7 @@ export default function RegisterPage() {
                 placeholder="Jane Smith"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="h-11 border-gray-300 focus:border-[#ec5b13] focus:ring-[#ec5b13]"
+                className="h-11 border-gray-300 focus:border-[#ff5f14] focus:ring-[#ff5f14]"
               />
             </div>
 
@@ -186,7 +186,7 @@ export default function RegisterPage() {
                 placeholder="name@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 border-gray-300 focus:border-[#ec5b13] focus:ring-[#ec5b13]"
+                className="h-11 border-gray-300 focus:border-[#ff5f14] focus:ring-[#ff5f14]"
               />
             </div>
 
@@ -204,7 +204,7 @@ export default function RegisterPage() {
                   placeholder="At least 8 characters"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 border-gray-300 focus:border-[#ec5b13] focus:ring-[#ec5b13] pr-10"
+                  className="h-11 border-gray-300 focus:border-[#ff5f14] focus:ring-[#ff5f14] pr-10"
                 />
                 <button
                   type="button"
@@ -220,7 +220,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-12 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-semibold transition-colors"
+              className="w-full h-12 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-semibold transition-colors"
             >
               {loading ? 'Creating account…' : 'Create account'}
             </Button>
@@ -228,7 +228,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <Link href="/login" className="font-medium text-[#ec5b13] hover:text-[#d14d0d] transition-colors">
+            <Link href="/login" className="font-medium text-[#ff5f14] hover:text-[#e84f0a] transition-colors">
               Sign in
             </Link>
           </p>

@@ -23,19 +23,19 @@ export default async function QuoteSubmittedPage({ searchParams }: Props) {
       </div>
 
       <div className="space-y-4">
-        <h1 className="text-4xl font-extrabold text-[#003366] tracking-tight">Quote Request Received!</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f] tracking-tight">Quote Request Received!</h1>
         <p className="text-xl text-gray-500 max-w-2xl mx-auto">
           Thank you for choosing Bewama. Our team is reviewing your requirements and will get back to you within 24 hours.
         </p>
       </div>
 
-      <div className="mt-12 bg-white p-8 rounded-2xl border-2 border-[#003366] shadow-xl max-w-lg mx-auto relative overflow-hidden">
+      <div className="mt-12 bg-white p-8 rounded-2xl border-2 border-[#061f3f] shadow-xl max-w-lg mx-auto relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
-          <FileText className="h-24 w-24 text-[#003366]" />
+          <FileText className="h-24 w-24 text-[#061f3f]" />
         </div>
         <div className="space-y-3">
           <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Reference Number</p>
-          <span className="block text-3xl font-extrabold text-[#003366] font-mono">{shortRef}</span>
+          <span className="block text-3xl font-extrabold text-[#061f3f] font-mono">{shortRef}</span>
           <p className="text-xs text-gray-400">Please quote this reference for any future inquiries.</p>
         </div>
       </div>
@@ -47,18 +47,18 @@ export default async function QuoteSubmittedPage({ searchParams }: Props) {
           { n: '3', title: 'Direct Contact', desc: 'An account manager will email you the finalized proposal within 24 hours.' },
         ].map(({ n, title, desc }) => (
           <div key={n} className="space-y-3">
-            <div className="h-10 w-10 bg-[#003366] rounded-full flex items-center justify-center text-white font-bold">{n}</div>
-            <h4 className="font-bold text-[#003366]">{title}</h4>
+            <div className="h-10 w-10 bg-[#061f3f] rounded-full flex items-center justify-center text-white font-bold">{n}</div>
+            <h4 className="font-bold text-[#061f3f]">{title}</h4>
             <p className="text-sm text-gray-500">{desc}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6">
-        <Button asChild className="px-10 h-14 bg-[#003366] hover:bg-[#002244] text-white font-extrabold text-lg shadow-lg">
+        <Button asChild className="px-10 h-14 bg-[#061f3f] hover:bg-[#03152d] text-white font-extrabold text-lg shadow-lg">
           <Link href="/products">Browse Products</Link>
         </Button>
-        <Button variant="outline" asChild className="px-10 h-14 border-2 border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white font-extrabold text-lg transition-all">
+        <Button variant="outline" asChild className="px-10 h-14 border-2 border-[#061f3f] text-[#061f3f] hover:bg-[#061f3f] hover:text-white font-extrabold text-lg transition-all">
           <Link href="/">Back to Home</Link>
         </Button>
       </div>
