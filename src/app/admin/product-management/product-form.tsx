@@ -132,30 +132,30 @@ export default function ProductForm({ mode, product }: Props) {
 
       {/* ── Pricing Type Toggle ── */}
       <div className="bg-white rounded-xl border-2 border-slate-200 p-6">
-        <h2 className="font-bold text-[#003366] text-lg mb-4">Pricing Type</h2>
+        <h2 className="font-bold text-[#061f3f] text-lg mb-4">Pricing Type</h2>
         <div className="flex gap-4">
           <button
             type="button"
             onClick={() => setPricingType('fixed')}
             className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
               pricingType === 'fixed'
-                ? 'border-[#003366] bg-[#003366]/5'
+                ? 'border-[#061f3f] bg-[#061f3f]/5'
                 : 'border-slate-200 hover:border-slate-300'
             }`}
           >
             <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${
-              pricingType === 'fixed' ? 'bg-[#003366] text-white' : 'bg-slate-100 text-slate-400'
+              pricingType === 'fixed' ? 'bg-[#061f3f] text-white' : 'bg-slate-100 text-slate-400'
             }`}>
               <Tag className="w-5 h-5" />
             </div>
             <div className="text-left">
-              <p className={`font-bold text-sm ${pricingType === 'fixed' ? 'text-[#003366]' : 'text-slate-600'}`}>
+              <p className={`font-bold text-sm ${pricingType === 'fixed' ? 'text-[#061f3f]' : 'text-slate-600'}`}>
                 Fixed Price
               </p>
               <p className="text-xs text-slate-400 mt-0.5">Price shown publicly; buyers can add to cart</p>
             </div>
             <div className={`ml-auto h-4 w-4 rounded-full border-2 shrink-0 ${
-              pricingType === 'fixed' ? 'border-[#003366] bg-[#003366]' : 'border-slate-300'
+              pricingType === 'fixed' ? 'border-[#061f3f] bg-[#061f3f]' : 'border-slate-300'
             }`} />
           </button>
 
@@ -164,23 +164,23 @@ export default function ProductForm({ mode, product }: Props) {
             onClick={() => setPricingType('quote')}
             className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
               pricingType === 'quote'
-                ? 'border-[#ec5b13] bg-orange-50'
+                ? 'border-[#ff5f14] bg-orange-50'
                 : 'border-slate-200 hover:border-slate-300'
             }`}
           >
             <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${
-              pricingType === 'quote' ? 'bg-[#ec5b13] text-white' : 'bg-slate-100 text-slate-400'
+              pricingType === 'quote' ? 'bg-[#ff5f14] text-white' : 'bg-slate-100 text-slate-400'
             }`}>
               <FileText className="w-5 h-5" />
             </div>
             <div className="text-left">
-              <p className={`font-bold text-sm ${pricingType === 'quote' ? 'text-[#ec5b13]' : 'text-slate-600'}`}>
+              <p className={`font-bold text-sm ${pricingType === 'quote' ? 'text-[#ff5f14]' : 'text-slate-600'}`}>
                 Quote Only
               </p>
               <p className="text-xs text-slate-400 mt-0.5">Buyers request a quote; no price shown</p>
             </div>
             <div className={`ml-auto h-4 w-4 rounded-full border-2 shrink-0 ${
-              pricingType === 'quote' ? 'border-[#ec5b13] bg-[#ec5b13]' : 'border-slate-300'
+              pricingType === 'quote' ? 'border-[#ff5f14] bg-[#ff5f14]' : 'border-slate-300'
             }`} />
           </button>
         </div>
@@ -188,7 +188,7 @@ export default function ProductForm({ mode, product }: Props) {
 
       {/* ── Core fields ── */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-5">
-        <h2 className="font-bold text-[#003366] text-lg">Product Details</h2>
+        <h2 className="font-bold text-[#061f3f] text-lg">Product Details</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Name */}
@@ -217,7 +217,7 @@ export default function ProductForm({ mode, product }: Props) {
               className="h-11 font-mono text-sm"
             />
             <p className="mt-1 text-xs text-gray-400">
-              bewama.com/products/<span className="text-[#ec5b13]">{slug || '…'}</span>
+              bewama.com/products/<span className="text-[#ff5f14]">{slug || '…'}</span>
             </p>
           </div>
 
@@ -265,7 +265,7 @@ export default function ProductForm({ mode, product }: Props) {
               className={`h-11 ${pricingType === 'quote' ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : ''}`}
             />
             {pricingType === 'quote' && (
-              <p className="mt-1 text-xs text-[#ec5b13] font-medium">
+              <p className="mt-1 text-xs text-[#ff5f14] font-medium">
                 Buyers will request a quote for this product
               </p>
             )}
@@ -309,7 +309,7 @@ export default function ProductForm({ mode, product }: Props) {
               aria-checked={isActive}
               onClick={() => setIsActive((v) => !v)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                isActive ? 'bg-[#ec5b13]' : 'bg-gray-200'
+                isActive ? 'bg-[#ff5f14]' : 'bg-gray-200'
               }`}
             >
               <span
@@ -327,13 +327,13 @@ export default function ProductForm({ mode, product }: Props) {
 
       {/* ── Description ── */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
-        <h2 className="font-bold text-[#003366] text-lg">Description</h2>
+        <h2 className="font-bold text-[#061f3f] text-lg">Description</h2>
         <TiptapEditor content={initialContent} onChange={setTiptapContent} />
       </div>
 
       {/* ── Images ── */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-        <h2 className="font-bold text-[#003366] text-lg">Product Images</h2>
+        <h2 className="font-bold text-[#061f3f] text-lg">Product Images</h2>
         <p className="text-sm text-gray-500">Add image URLs. First image is used as the primary thumbnail.</p>
 
         <div className="flex gap-2">
@@ -365,7 +365,7 @@ export default function ProductForm({ mode, product }: Props) {
                   onError={(e) => { (e.target as HTMLImageElement).src = '' }}
                 />
                 {idx === 0 && (
-                  <Badge className="absolute top-1 left-1 text-[10px] bg-[#ec5b13] text-white border-none">
+                  <Badge className="absolute top-1 left-1 text-[10px] bg-[#ff5f14] text-white border-none">
                     Primary
                   </Badge>
                 )}
@@ -394,7 +394,7 @@ export default function ProductForm({ mode, product }: Props) {
           onClick={() => setSeoOpen((v) => !v)}
           className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-slate-50 transition-colors"
         >
-          <h2 className="font-bold text-[#003366] text-lg">SEO Settings</h2>
+          <h2 className="font-bold text-[#061f3f] text-lg">SEO Settings</h2>
           {seoOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
         </button>
 
@@ -460,7 +460,7 @@ export default function ProductForm({ mode, product }: Props) {
         <Button
           type="submit"
           disabled={loading}
-          className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-semibold px-8 h-11"
+          className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-semibold px-8 h-11"
         >
           {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
           {loading ? 'Saving…' : mode === 'edit' ? 'Update Product' : 'Create Product'}

@@ -59,7 +59,7 @@ export default async function QualityAssurancePage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Company</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Quality Assurance</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Quality Assurance</h1>
         <p className="text-gray-500 mt-3 text-lg leading-relaxed">
           At Bewama Investments, quality is not an afterthought. Every product we supply is backed by
           verified sourcing, documented compliance, and rigorous handling standards.
@@ -70,13 +70,13 @@ export default async function QualityAssurancePage() {
       <div className="space-y-6 mb-14">
         {pillars.map(({ icon: Icon, title, desc }, i) => (
           <div key={title} className="flex gap-5 p-5 bg-gray-50 border border-gray-100 rounded-2xl">
-            <div className="w-11 h-11 bg-[#003366] rounded-xl flex items-center justify-center shrink-0">
+            <div className="w-11 h-11 bg-[#061f3f] rounded-xl flex items-center justify-center shrink-0">
               <Icon className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-[#ec5b13]">0{i + 1}</span>
-                <h3 className="font-bold text-[#003366]">{title}</h3>
+                <span className="text-xs font-bold text-[#ff5f14]">0{i + 1}</span>
+                <h3 className="font-bold text-[#061f3f]">{title}</h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
             </div>
@@ -87,7 +87,7 @@ export default async function QualityAssurancePage() {
       <div className="space-y-8 text-gray-700 leading-relaxed">
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">Our Product Categories</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">Our Product Categories</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
             {[
               { name: 'Industrial Chemicals', detail: 'Solvents, acids, bases, industrial cleaning agents, and specialty chemicals sourced from certified manufacturers.' },
@@ -96,7 +96,7 @@ export default async function QualityAssurancePage() {
               { name: 'Specialty Compounds', detail: 'Custom or specialty compounds supplied with full batch documentation, COAs, and handling guidelines.' },
             ].map(({ name, detail }) => (
               <div key={name} className="p-4 border border-gray-100 rounded-xl">
-                <p className="font-semibold text-sm text-[#003366] mb-1">{name}</p>
+                <p className="font-semibold text-sm text-[#061f3f] mb-1">{name}</p>
                 <p className="text-xs text-gray-500 leading-relaxed">{detail}</p>
               </div>
             ))}
@@ -104,7 +104,7 @@ export default async function QualityAssurancePage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">Regulatory Compliance</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">Regulatory Compliance</h2>
           <p>
             Bewama Investments operates in compliance with relevant Kenyan legislation governing the import, storage, and
             distribution of chemical and industrial products, including:
@@ -118,44 +118,44 @@ export default async function QualityAssurancePage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">Requesting Product Documentation</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">Requesting Product Documentation</h2>
           <p>
             Customers requiring Safety Data Sheets (SDS), Certificates of Analysis, Certificates of Origin, or
             product specification sheets may request these at the time of quoting or after purchase. Contact us at{' '}
-            <a href={`mailto:${email}`} className="text-[#ec5b13] underline">{email}</a> with your order or quote reference.
+            <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a> with your order or quote reference.
           </p>
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#003366] mb-3">Reporting a Quality Issue</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">Reporting a Quality Issue</h2>
           <p>
             If a product you received does not meet the agreed specification or is defective, please contact us within
             <strong> 48 hours of delivery</strong>. Include your order number, photos of the product and packaging, and a
             description of the issue. We will investigate and, where confirmed, replace the product or issue a full refund
-            per our <Link href="/returns-policy" className="text-[#ec5b13] underline">Returns &amp; Refunds Policy</Link>.
+            per our <Link href="/returns-policy" className="text-[#ff5f14] underline">Returns &amp; Refunds Policy</Link>.
           </p>
         </section>
 
       </div>
 
       {/* CTA */}
-      <div className="mt-12 p-7 bg-[#003366] text-white rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mt-12 p-7 bg-[#061f3f] text-white rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <p className="font-bold text-lg">Need product documentation?</p>
           <p className="text-gray-300 text-sm mt-1">Request SDS, COA, or spec sheets for any product.</p>
         </div>
         <Link
           href="/request-quote"
-          className="shrink-0 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+          className="shrink-0 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
         >
           Contact Us
         </Link>
       </div>
 
       <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/shipping-policy" className="hover:text-[#003366] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#003366] transition-colors">Returns &amp; Refunds</Link>
-        <Link href="/faq" className="hover:text-[#003366] transition-colors">FAQ</Link>
+        <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/faq" className="hover:text-[#061f3f] transition-colors">FAQ</Link>
       </div>
     </div>
   )

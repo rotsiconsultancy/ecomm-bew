@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { useCart } from '@/lib/cart-store'
 import { createOrder } from './actions'
+import { getSafeImageSrc } from '@/lib/images'
 
 interface Props {
   userId: string
@@ -67,7 +68,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
         price: i.price,
         currency: i.currency,
         quantity: i.quantity,
-        image: i.image,
+        image: getSafeImageSrc(i.image),
       })),
       { full_name: fullName, phone, email, delivery_address: deliveryAddress, city, notes },
       total
@@ -92,37 +93,41 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
 
         {/* LEFT — Order Summary */}
         <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-4">
-          <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Order Summary</h2>
+          <h2 className="font-bold text-[#061f3f] text-lg border-b pb-3">Order Summary</h2>
 
           <div className="space-y-4">
-            {cartItems.map((item) => (
-              <div key={item.product_id} className="flex items-center gap-3">
+            {cartItems.map((item) => {
+              const itemImage = getSafeImageSrc(item.image)
+
+              return (
+                <div key={item.product_id} className="flex items-center gap-3">
                 <div className="h-14 w-14 rounded-lg bg-gray-50 border border-gray-100 overflow-hidden shrink-0 flex items-center justify-center">
-                  {item.image ? (
-                    <Image src={item.image} alt={item.name} width={56} height={56} className="w-full h-full object-cover" />
+                  {itemImage ? (
+                    <Image src={itemImage} alt={item.name} width={56} height={56} className="w-full h-full object-cover" />
                   ) : (
                     <Package className="w-6 h-6 text-gray-200" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-[#003366] line-clamp-1">{item.name}</p>
+                  <p className="font-semibold text-sm text-[#061f3f] line-clamp-1">{item.name}</p>
                   <p className="text-xs text-gray-400">Qty: {item.quantity}</p>
                 </div>
-                <p className="text-sm font-bold text-[#003366] shrink-0">
+                <p className="text-sm font-bold text-[#061f3f] shrink-0">
                   KES {(item.price * item.quantity).toLocaleString()}
                 </p>
               </div>
-            ))}
+              )
+            })}
           </div>
 
           <div className="border-t pt-4 space-y-2 text-sm">
             <div className="flex justify-between text-gray-500">
               <span>Subtotal</span>
-              <span className="font-semibold text-[#003366]">KES {subtotal.toLocaleString()}</span>
+              <span className="font-semibold text-[#061f3f]">KES {subtotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-gray-500">
               <span>Delivery</span>
-              <span className="font-semibold text-[#003366]">KES {DELIVERY_FEE.toLocaleString()}</span>
+              <span className="font-semibold text-[#061f3f]">KES {DELIVERY_FEE.toLocaleString()}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600">
@@ -133,7 +138,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
                 <span className="font-semibold">-KES {discount.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             )}
-            <div className="flex justify-between text-base font-extrabold text-[#003366] pt-2 border-t">
+            <div className="flex justify-between text-base font-extrabold text-[#061f3f] pt-2 border-t">
               <span>Total</span>
               <span>KES {total.toLocaleString()}</span>
             </div>
@@ -143,7 +148,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
         {/* RIGHT — Delivery Details */}
         <div className="space-y-6">
           <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-5">
-            <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Delivery Details</h2>
+            <h2 className="font-bold text-[#061f3f] text-lg border-b pb-3">Delivery Details</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -213,7 +218,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
 
           {/* Payment */}
           <Card className="p-4 sm:p-6 rounded-2xl border-none shadow-sm space-y-4">
-            <h2 className="font-bold text-[#003366] text-lg border-b pb-3">Payment</h2>
+            <h2 className="font-bold text-[#061f3f] text-lg border-b pb-3">Payment</h2>
 
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
@@ -252,7 +257,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
                 Secure checkout
               </div>
               <div className="flex items-center gap-1.5 text-xs text-gray-400">
-                <Truck className="w-3.5 h-3.5 text-[#003366]" />
+                <Truck className="w-3.5 h-3.5 text-[#061f3f]" />
                 Fast delivery
               </div>
             </div>
@@ -260,7 +265,7 @@ export function CheckoutForm({ userId, defaultEmail, defaultName, defaultPhone, 
 
           <p className="text-xs text-gray-400 text-center">
             Want a quote instead?{' '}
-            <Link href="/request-quote" className="text-[#ec5b13] hover:underline font-medium">
+            <Link href="/request-quote" className="text-[#ff5f14] hover:underline font-medium">
               Request a quote
             </Link>
           </p>

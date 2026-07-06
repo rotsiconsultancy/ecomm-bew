@@ -97,14 +97,14 @@ export function StageDelivery() {
     return (
       <div className="max-w-lg mx-auto space-y-6">
         <div className="text-center space-y-2">
-          <div className="h-16 w-16 bg-[#003366]/10 rounded-full flex items-center justify-center mx-auto">
-            <MapPin className="h-8 w-8 text-[#003366]" />
+          <div className="h-16 w-16 bg-[#061f3f]/10 rounded-full flex items-center justify-center mx-auto">
+            <MapPin className="h-8 w-8 text-[#061f3f]" />
           </div>
-          <h2 className="text-2xl font-extrabold text-[#003366]">Deliver here?</h2>
+          <h2 className="text-2xl font-extrabold text-[#061f3f]">Deliver here?</h2>
         </div>
 
         <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 space-y-2">
-          <p className="font-bold text-[#003366]">{lastAddr.full_name}</p>
+          <p className="font-bold text-[#061f3f]">{lastAddr.full_name}</p>
           <p className="text-sm text-gray-500">{lastAddr.phone}</p>
           <p className="text-sm text-gray-500">
             {lastAddr.street || lastAddr.delivery_address}
@@ -117,7 +117,7 @@ export function StageDelivery() {
         <div className="flex gap-3">
           <Button
             onClick={handleUseSaved}
-            className="flex-1 h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-base font-extrabold rounded-2xl"
+            className="flex-1 h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-base font-extrabold rounded-2xl"
           >
             <Check className="w-5 h-5 mr-2" />
             Yes, deliver here
@@ -125,7 +125,7 @@ export function StageDelivery() {
           <Button
             variant="outline"
             onClick={() => setUsingSaved(false)}
-            className="h-14 px-6 rounded-2xl font-bold text-[#003366] border-gray-200"
+            className="h-14 px-6 rounded-2xl font-bold text-[#061f3f] border-gray-200"
           >
             Change
           </Button>
@@ -150,7 +150,7 @@ export function StageDelivery() {
           <div
             key={f.key}
             className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-              i <= activeField ? 'bg-[#ec5b13]' : 'bg-gray-200'
+              i <= activeField ? 'bg-[#ff5f14]' : 'bg-gray-200'
             }`}
           />
         ))}
@@ -161,7 +161,7 @@ export function StageDelivery() {
         key={currentField.key}
         className="animate-in fade-in slide-in-from-bottom-2 duration-200 space-y-3"
       >
-        <h2 className="text-2xl font-extrabold text-[#003366]">
+        <h2 className="text-2xl font-extrabold text-[#061f3f]">
           {currentField.label}
         </h2>
         <Input
@@ -177,7 +177,7 @@ export function StageDelivery() {
             }
           }}
           placeholder={currentField.placeholder}
-          className="h-14 text-lg rounded-xl border-gray-200 focus-visible:ring-[#ec5b13]"
+          className="h-14 text-lg rounded-xl border-gray-200 focus-visible:ring-[#ff5f14]"
           autoFocus
         />
       </div>
@@ -193,7 +193,7 @@ export function StageDelivery() {
             >
               <Check className="w-4 h-4 text-green-500 shrink-0" />
               <span className="text-xs text-gray-400 w-16 shrink-0">{f.key === 'full_name' ? 'Name' : f.key === 'phone' ? 'Phone' : f.key === 'county' ? 'County' : f.key === 'town' ? 'Town' : 'Street'}</span>
-              <span className="text-sm font-semibold text-[#003366] truncate">{delivery[f.key]}</span>
+              <span className="text-sm font-semibold text-[#061f3f] truncate">{delivery[f.key]}</span>
             </button>
           ))}
         </div>
@@ -205,7 +205,7 @@ export function StageDelivery() {
           <Button
             onClick={handleFieldSubmit}
             disabled={!delivery[currentField.key]?.trim()}
-            className="flex-1 h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-base font-extrabold rounded-2xl disabled:opacity-40"
+            className="flex-1 h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-base font-extrabold rounded-2xl disabled:opacity-40"
           >
             Next
           </Button>
@@ -213,7 +213,7 @@ export function StageDelivery() {
           <Button
             onClick={handleContinue}
             disabled={!allFilled}
-            className="flex-1 h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-base font-extrabold rounded-2xl disabled:opacity-40"
+            className="flex-1 h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-base font-extrabold rounded-2xl disabled:opacity-40"
           >
             Continue
           </Button>

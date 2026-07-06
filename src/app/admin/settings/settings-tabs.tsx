@@ -56,7 +56,7 @@ function Toggle({ name, defaultChecked = false, label }: { name: string; default
       <button
         type="button"
         onClick={() => setOn(!on)}
-        className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${on ? 'bg-[#003366]' : 'bg-gray-200'}`}
+        className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${on ? 'bg-[#061f3f]' : 'bg-gray-200'}`}
       >
         <span className={`absolute top-1 left-0 w-4 h-4 bg-white rounded-full shadow transition-transform ${on ? 'translate-x-6' : 'translate-x-1'}`} />
       </button>
@@ -67,7 +67,7 @@ function Toggle({ name, defaultChecked = false, label }: { name: string; default
 
 function EnvSelect({ name, defaultValue = 'sandbox' }: { name: string; defaultValue?: string }) {
   return (
-    <select name={name} defaultValue={defaultValue} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#003366] outline-none">
+    <select name={name} defaultValue={defaultValue} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#061f3f] outline-none">
       <option value="sandbox">Sandbox</option>
       <option value="production">Production</option>
     </select>
@@ -92,7 +92,7 @@ function SectionCard({ title, children, defaultOpen = true }: { title: string; c
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-5 py-4 bg-gray-50 hover:bg-gray-100 transition-colors"
       >
-        <span className="font-semibold text-[#003366] text-sm">{title}</span>
+        <span className="font-semibold text-[#061f3f] text-sm">{title}</span>
         <span className="text-gray-400 text-xs">{open ? '▲' : '▼'}</span>
       </button>
       {open && <div className="p-5 space-y-4">{children}</div>}
@@ -113,7 +113,7 @@ function SaveBar({ isPending, result }: { isPending: boolean; result: { success:
         <Button
           type="submit"
           disabled={isPending}
-          className="bg-[#003366] hover:bg-[#002244] text-white font-bold rounded-lg px-6 h-10"
+          className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold rounded-lg px-6 h-10"
         >
           {isPending ? 'Saving…' : 'Save Changes'}
         </Button>
@@ -203,7 +203,7 @@ export function SiteTab({ s }: { s: AllSettings['site'] }) {
           <Input name="business_hours" defaultValue={s.business_hours} placeholder="Mon–Fri, 8am–6pm EAT" className="bg-gray-50 border-gray-200 rounded-lg" />
         </Field>
         <Field label="Default Currency">
-          <select name="default_currency" defaultValue={s.default_currency} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#003366] outline-none">
+          <select name="default_currency" defaultValue={s.default_currency} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#061f3f] outline-none">
             <option value="KES">KES — Kenyan Shilling</option>
             <option value="EUR">EUR — Euro</option>
             <option value="USD">USD — US Dollar</option>
@@ -211,7 +211,7 @@ export function SiteTab({ s }: { s: AllSettings['site'] }) {
         </Field>
       </div>
       <Field label="Address">
-        <textarea name="address" defaultValue={s.address} rows={3} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#003366] outline-none resize-none" />
+        <textarea name="address" defaultValue={s.address} rows={3} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#061f3f] outline-none resize-none" />
       </Field>
       <div>
         <p className="text-sm font-semibold text-gray-700 mb-3">Social Links</p>
@@ -352,7 +352,7 @@ export function LogisticsTab({ s }: { s: AllSettings['logistics'] }) {
       <SectionCard title="Self Pickup / Showroom" defaultOpen={false}>
         <Toggle name="self_pickup_enabled" defaultChecked={s.self_pickup.enabled} label="Enable self pickup" />
         <Field label="Pickup Address">
-          <textarea name="self_pickup_address" defaultValue={s.self_pickup.address} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#003366] outline-none resize-none" />
+          <textarea name="self_pickup_address" defaultValue={s.self_pickup.address} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#061f3f] outline-none resize-none" />
         </Field>
         <Field label="Hours">
           <Input name="self_pickup_hours" defaultValue={s.self_pickup.hours} placeholder="Mon–Fri 9am–5pm" className="bg-gray-50 border-gray-200 rounded-lg" />
@@ -393,7 +393,7 @@ export function NotificationsTab({ s }: { s: AllSettings['notifications'] }) {
     <form action={submit} className="space-y-5">
       {/* Email */}
       <div className="border border-gray-100 rounded-xl p-5 space-y-4">
-        <p className="font-semibold text-[#003366] text-sm">Email (Resend)</p>
+        <p className="font-semibold text-[#061f3f] text-sm">Email (Resend)</p>
         <Toggle name="email_enabled" defaultChecked={s.email.enabled} label="Enable email notifications" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Field label="Resend API Key" hint="Get your key at resend.com/api-keys">
@@ -407,7 +407,7 @@ export function NotificationsTab({ s }: { s: AllSettings['notifications'] }) {
 
       {/* SMS */}
       <div className="border border-gray-100 rounded-xl p-5 space-y-4">
-        <p className="font-semibold text-[#003366] text-sm">SMS (Africa&apos;s Talking)</p>
+        <p className="font-semibold text-[#061f3f] text-sm">SMS (Africa&apos;s Talking)</p>
         <Toggle name="sms_enabled" defaultChecked={s.sms.enabled} label="Enable SMS notifications" />
         <InfoBanner>Stub mode active — SMS will be logged to console. Activate by disabling stub mode in code once credentials are verified.</InfoBanner>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -425,7 +425,7 @@ export function NotificationsTab({ s }: { s: AllSettings['notifications'] }) {
 
       {/* Alert toggles */}
       <div className="border border-gray-100 rounded-xl p-5 space-y-3">
-        <p className="font-semibold text-[#003366] text-sm mb-1">Alert Triggers</p>
+        <p className="font-semibold text-[#061f3f] text-sm mb-1">Alert Triggers</p>
         <Toggle name="new_order_email" defaultChecked={s.new_order_email} label="New order — send email" />
         <Toggle name="new_order_sms"   defaultChecked={s.new_order_sms}   label="New order — send SMS" />
         <Toggle name="new_quote_email" defaultChecked={s.new_quote_email} label="New quote — send email" />
@@ -475,7 +475,7 @@ export function SettingsTabs({ settings }: { settings: AllSettings }) {
             onClick={() => setTab(key)}
             className={`px-5 py-3 text-sm font-semibold transition-colors rounded-t-lg ${
               tab === key
-                ? 'text-[#003366] border-b-2 border-[#003366] -mb-px bg-white'
+                ? 'text-[#061f3f] border-b-2 border-[#061f3f] -mb-px bg-white'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >

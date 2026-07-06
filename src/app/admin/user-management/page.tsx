@@ -29,18 +29,18 @@ export default async function UserManagementPage() {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Total Users</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{total}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{total}</p>
             <p className="text-xs text-gray-400">{users.filter((u) => !u.is_banned).length} active</p>
           </div>
         </Card>
 
         <Card className="rounded-xl border-none shadow-sm p-6 flex items-center gap-6">
-          <div className="h-12 w-12 bg-orange-100 text-[#ec5b13] rounded-full flex items-center justify-center shrink-0">
+          <div className="h-12 w-12 bg-orange-100 text-[#ff5f14] rounded-full flex items-center justify-center shrink-0">
             <ShoppingBag className="h-6 w-6" />
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Wholesale Buyers</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{wholesale}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{wholesale}</p>
             <p className="text-xs text-gray-400">Approved accounts</p>
           </div>
         </Card>
@@ -51,7 +51,7 @@ export default async function UserManagementPage() {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Banned Users</p>
-            <p className="text-2xl font-extrabold text-[#003366]">{banned}</p>
+            <p className="text-2xl font-extrabold text-[#061f3f]">{banned}</p>
             <p className="text-xs text-gray-400">Restricted from login</p>
           </div>
         </Card>

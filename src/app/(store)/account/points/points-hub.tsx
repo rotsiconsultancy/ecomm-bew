@@ -90,17 +90,17 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="h-12 w-12 bg-[#ec5b13]/10 rounded-full flex items-center justify-center">
-          <Star className="h-6 w-6 text-[#ec5b13]" />
+        <div className="h-12 w-12 bg-[#ff5f14]/10 rounded-full flex items-center justify-center">
+          <Star className="h-6 w-6 text-[#ff5f14]" />
         </div>
         <div>
-          <h1 className="text-3xl font-extrabold text-[#003366]">Bewama Points</h1>
+          <h1 className="text-3xl font-extrabold text-[#061f3f]">Bewama Points</h1>
           <p className="text-sm text-gray-400">Earn points, unlock discounts</p>
         </div>
       </div>
 
       {/* Balance Card */}
-      <Card className="rounded-2xl border-none shadow-sm p-8 bg-linear-to-br from-[#003366] to-[#004a8f] text-white">
+      <Card className="rounded-2xl border-none shadow-sm p-8 bg-linear-to-br from-[#061f3f] to-[#004a8f] text-white">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
             <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Your Balance</p>
@@ -123,7 +123,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
             </p>
             <div className="w-full sm:w-56 h-3 bg-white/20 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#ec5b13] rounded-full transition-all"
+                className="h-full bg-[#ff5f14] rounded-full transition-all"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -134,8 +134,8 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
 
       {/* Earn Points Section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-[#003366] flex items-center gap-2">
-          <Gift className="h-5 w-5 text-[#ec5b13]" />
+        <h2 className="text-xl font-bold text-[#061f3f] flex items-center gap-2">
+          <Gift className="h-5 w-5 text-[#ff5f14]" />
           Earn Points
         </h2>
 
@@ -157,7 +157,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
                   action.status === 'claimed'
                     ? 'bg-green-100 text-green-600'
                     : action.status === 'available'
-                      ? 'bg-[#ec5b13]/10 text-[#ec5b13]'
+                      ? 'bg-[#ff5f14]/10 text-[#ff5f14]'
                       : 'bg-gray-100 text-gray-400'
                 }`}>
                   {action.status === 'claimed' && <CheckCircle2 className="h-5 w-5" />}
@@ -167,7 +167,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
 
                 {/* Action info */}
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-sm text-[#003366]">{action.label}</p>
+                  <p className="font-bold text-sm text-[#061f3f]">{action.label}</p>
                   {action.description && (
                     <p className="text-xs text-gray-400 truncate">{action.description}</p>
                   )}
@@ -180,7 +180,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
                     className={`font-bold ${
                       action.status === 'claimed'
                         ? 'bg-green-100 text-green-700'
-                        : 'bg-[#003366]/10 text-[#003366]'
+                        : 'bg-[#061f3f]/10 text-[#061f3f]'
                     }`}
                   >
                     +{action.points_value} pts
@@ -200,7 +200,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
                       size="sm"
                       disabled={isLoading || isPending}
                       onClick={() => handleClaim(action.action_key, action.reference_id)}
-                      className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-xs font-bold h-8 px-3"
+                      className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-xs font-bold h-8 px-3"
                     >
                       {isLoading ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -227,8 +227,8 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
 
       {/* Redeem Section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-[#003366] flex items-center gap-2">
-          <ArrowDown className="h-5 w-5 text-[#ec5b13]" />
+        <h2 className="text-xl font-bold text-[#061f3f] flex items-center gap-2">
+          <ArrowDown className="h-5 w-5 text-[#ff5f14]" />
           Redeem Points
         </h2>
 
@@ -259,7 +259,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
             </div>
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-semibold text-gray-700">Discount value</label>
-              <div className="h-11 px-3 border border-input rounded-md flex items-center bg-gray-50 text-[#003366] font-bold">
+              <div className="h-11 px-3 border border-input rounded-md flex items-center bg-gray-50 text-[#061f3f] font-bold">
                 KES {redeemPreview}
               </div>
             </div>
@@ -268,7 +268,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
           <Button
             disabled={isPending || !redeemInput || parseInt(redeemInput, 10) <= 0}
             onClick={handleRedeem}
-            className="bg-[#003366] hover:bg-[#002244] text-white font-bold"
+            className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold"
           >
             {isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Redeem Points
@@ -291,8 +291,8 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
 
       {/* Ledger Section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-[#003366] flex items-center gap-2">
-          <ArrowUp className="h-5 w-5 text-[#ec5b13]" />
+        <h2 className="text-xl font-bold text-[#061f3f] flex items-center gap-2">
+          <ArrowUp className="h-5 w-5 text-[#ff5f14]" />
           Recent Activity
         </h2>
 
@@ -317,7 +317,7 @@ export function PointsHub({ balance, pendingRedemption, earnActions, ledger }: P
                     }
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-[#003366]">{entry.label}</p>
+                    <p className="text-sm font-semibold text-[#061f3f]">{entry.label}</p>
                     {entry.note && (
                       <p className="text-xs text-gray-400 truncate">{entry.note}</p>
                     )}

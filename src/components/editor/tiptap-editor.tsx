@@ -1,10 +1,7 @@
 'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TiptapImage from '@tiptap/extension-image'
-import TiptapLink from '@tiptap/extension-link'
+import { tiptapExtensions } from '@/lib/tiptap-extensions'
 import {
   Bold, Italic, Underline as UnderlineIcon, Link as LinkIcon,
   List, ListOrdered, Heading2, Heading3, Image as ImageIcon,
@@ -34,7 +31,7 @@ function ToolbarButton({
       onClick={onClick}
       className={`p-2 rounded-lg transition-colors ${
         active
-          ? 'bg-[#003366] text-white'
+          ? 'bg-[#061f3f] text-white'
           : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
       }`}
     >
@@ -46,12 +43,7 @@ function ToolbarButton({
 export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [
-      StarterKit,
-      Underline,
-      TiptapImage.configure({ inline: false }),
-      TiptapLink.configure({ openOnClick: false, HTMLAttributes: { class: 'text-[#ec5b13] underline' } }),
-    ],
+    extensions: tiptapExtensions,
     content: content ?? '',
     onUpdate: ({ editor }) => {
       onChange(editor.getJSON())
@@ -60,11 +52,11 @@ export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
       attributes: {
         class: [
           'prose prose-slate max-w-none min-h-96 px-6 py-5 outline-none',
-          'prose-headings:text-[#003366] prose-headings:font-bold',
-          'prose-a:text-[#ec5b13] prose-a:underline',
+          'prose-headings:text-[#061f3f] prose-headings:font-bold',
+          'prose-a:text-[#ff5f14] prose-a:underline',
           'prose-img:rounded-xl prose-img:shadow-md',
           'prose-code:bg-slate-100 prose-code:rounded prose-code:px-1',
-          'prose-blockquote:border-l-4 prose-blockquote:border-[#ec5b13] prose-blockquote:pl-4 prose-blockquote:italic',
+          'prose-blockquote:border-l-4 prose-blockquote:border-[#ff5f14] prose-blockquote:pl-4 prose-blockquote:italic',
         ].join(' '),
       },
     },
@@ -86,7 +78,7 @@ export default function TiptapEditor({ content, onChange }: TiptapEditorProps) {
   }
 
   return (
-    <div className="border border-slate-200 rounded-xl overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#003366]/20 transition-all">
+    <div className="border border-slate-200 rounded-xl overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#061f3f]/20 transition-all">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-1 px-4 py-2.5 border-b border-slate-200 bg-slate-50">
         <ToolbarButton title="Undo" onClick={() => editor.chain().focus().undo().run()}>

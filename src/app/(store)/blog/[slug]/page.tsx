@@ -5,10 +5,8 @@ import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
 import { Calendar, User, ArrowLeft, Download, FileText, Clock } from 'lucide-react'
 import { generateHTML } from '@tiptap/html'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TiptapImage from '@tiptap/extension-image'
-import TiptapLink from '@tiptap/extension-link'
+import { tiptapExtensions } from '@/lib/tiptap-extensions'
+import { getSafeImageSrc } from '@/lib/images'
 
 const SITE_URL = 'https://bewama.com'
 
@@ -86,10 +84,11 @@ export default async function BlogPostPage({ params }: Props) {
   let htmlContent = ''
   try {
     const tiptapJson = JSON.parse(post.content ?? '{}')
-    htmlContent = generateHTML(tiptapJson, [StarterKit, Underline, TiptapImage, TiptapLink])
+    htmlContent = generateHTML(tiptapJson, tiptapExtensions)
   } catch {
     htmlContent = '<p>Content unavailable.</p>'
   }
+  const coverImage = getSafeImageSrc(post.cover_image)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -159,10 +158,10 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </div>
 
-      {post.cover_image && (
+      {coverImage && (
         <div className="max-w-6xl mx-auto px-4 mb-16">
           <div className="relative h-100 md:h-150 rounded-3xl overflow-hidden shadow-2xl">
-            <Image src={post.cover_image} alt={post.title} fill className="object-cover" priority />
+            <Image src={coverImage} alt={post.title} fill className="object-cover" priority />
           </div>
         </div>
       )}

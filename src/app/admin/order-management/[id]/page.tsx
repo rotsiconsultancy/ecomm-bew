@@ -38,11 +38,11 @@ export default async function OrderDetailPage({ params }: Props) {
   return (
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center gap-3">
-        <Link href="/admin/order-management" className="text-gray-400 hover:text-[#003366] transition-colors">
+        <Link href="/admin/order-management" className="text-gray-400 hover:text-[#061f3f] transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-extrabold text-[#003366]">Order Detail</h1>
+          <h1 className="text-2xl font-extrabold text-[#061f3f]">Order Detail</h1>
           <p className="text-xs text-gray-400 font-mono mt-0.5">{order.id}</p>
         </div>
         <Badge className={`ml-auto border-none font-semibold capitalize ${STATUS_STYLES[status] ?? 'bg-gray-100 text-gray-600'}`}>
@@ -52,7 +52,7 @@ export default async function OrderDetailPage({ params }: Props) {
 
       {/* Shipping Details */}
       <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
-        <h2 className="font-bold text-[#003366] border-b pb-2">Shipping Details</h2>
+        <h2 className="font-bold text-[#061f3f] border-b pb-2">Shipping Details</h2>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-gray-400 text-xs font-semibold uppercase">Full Name</p>
@@ -87,7 +87,7 @@ export default async function OrderDetailPage({ params }: Props) {
 
       {/* Items */}
       <Card className="p-6 rounded-2xl border-none shadow-sm">
-        <h2 className="font-bold text-[#003366] border-b pb-2 mb-4">Order Items</h2>
+        <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-4">Order Items</h2>
         <div className="space-y-2">
           {items.map((item, i) => (
             <div key={i} className="flex items-center justify-between text-sm py-2 border-b last:border-0">
@@ -95,13 +95,13 @@ export default async function OrderDetailPage({ params }: Props) {
                 <p className="font-semibold text-gray-800">{item.name}</p>
                 <p className="text-xs text-gray-400">Qty: {item.quantity}</p>
               </div>
-              <p className="font-bold text-[#003366]">
+              <p className="font-bold text-[#061f3f]">
                 {symbol}{(item.price * item.quantity).toLocaleString()}
               </p>
             </div>
           ))}
         </div>
-        <div className="border-t pt-3 mt-3 flex justify-between font-extrabold text-[#003366]">
+        <div className="border-t pt-3 mt-3 flex justify-between font-extrabold text-[#061f3f]">
           <span>Total</span>
           <span>{symbol}{Number(order.total_amount).toLocaleString()}</span>
         </div>
@@ -110,7 +110,7 @@ export default async function OrderDetailPage({ params }: Props) {
       {/* Notes */}
       {order.notes && (
         <Card className="p-6 rounded-2xl border-none shadow-sm">
-          <h2 className="font-bold text-[#003366] border-b pb-2 mb-3">Notes</h2>
+          <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-3">Notes</h2>
           <p className="text-sm text-gray-700 whitespace-pre-wrap">{order.notes}</p>
         </Card>
       )}

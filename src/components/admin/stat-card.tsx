@@ -19,7 +19,7 @@ export function StatCard({
   subtextColor = 'gray',
   icon: Icon,
   iconBg = 'bg-blue-50',
-  iconColor = 'text-[#003366]',
+  iconColor = 'text-[#061f3f]',
 }: StatCardProps) {
   return (
     <Card className="p-6 rounded-2xl border-none shadow-sm hover:shadow-md transition-shadow">
@@ -28,7 +28,7 @@ export function StatCard({
           <Icon className={cn('w-5 h-5', iconColor)} />
         </div>
       </div>
-      <p className="text-3xl font-extrabold text-[#003366] leading-none">{value}</p>
+      <p className="text-3xl font-extrabold text-[#061f3f] leading-none">{value}</p>
       <p className="text-sm text-gray-500 mt-1.5 font-medium">{title}</p>
       <p
         className={cn('text-xs mt-2 font-semibold', {

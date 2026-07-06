@@ -2,19 +2,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AddToCartButton } from '@/components/add-to-cart-button'
-import { Package, FileText } from 'lucide-react'
+import { Package, FileText, Search, SlidersHorizontal, ArrowRight } from 'lucide-react'
 import { Pagination } from '@/components/pagination-ui'
+import { getFirstSafeImageSrc } from '@/lib/images'
 
-export const revalidate = 1800
+export const dynamic = 'force-dynamic'
 
 const SITE_URL = 'https://bewama.com'
+const ITEMS_PER_PAGE = 12
+const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
 
 type SearchParams = {
   category?: string
   brand?: string
+  q?: string
   page?: string
 }
 
@@ -24,53 +27,48 @@ type Props = {
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams
-  const { category, brand, page } = params
+  const { category, brand, q, page } = params
 
-  // Build canonical: strip page=1, keep other params
   const canonicalParams = new URLSearchParams()
   if (category) canonicalParams.set('category', category)
   if (brand) canonicalParams.set('brand', brand)
+  if (q) canonicalParams.set('q', q)
   if (page && parseInt(page, 10) > 1) canonicalParams.set('page', page)
+
   const qs = canonicalParams.toString()
   const canonical = `${SITE_URL}/products${qs ? `?${qs}` : ''}`
-
-  const titleSuffix = category ? ` — ${category}` : brand ? ` — ${brand}` : ''
-  const title = `Products${titleSuffix} | Bewama`
-  const description = 'Browse our industrial product catalog — silicones, timber, adhesives, tools and more. Quality materials sourced for professionals across East Africa.'
+  const titleSuffix = category ? ` - ${category}` : brand ? ` - ${brand}` : q ? ` - ${q}` : ''
 
   return {
-    title,
-    description,
+    title: `Products${titleSuffix} | Bewama`,
+    description:
+      'Browse Bewama construction materials, sealants, adhesives, abrasives, and industrial supplies. Add stocked items to cart or request a bulk quote.',
     alternates: { canonical },
     openGraph: {
-      title,
-      description,
+      title: `Products${titleSuffix} | Bewama`,
+      description: 'Browse Bewama construction materials and request bulk sourcing quotes.',
       type: 'website',
       url: canonical,
       images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: `Products${titleSuffix} | Bewama`,
+      description: 'Browse Bewama construction materials and request bulk sourcing quotes.',
     },
   }
 }
-
-const ITEMS_PER_PAGE = 12
-const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
 
 export default async function ProductsPage({ searchParams }: Props) {
   const params = await searchParams
   const category = params.category
   const brand = params.brand
+  const q = params.q?.trim()
   const page = parseInt(params.page ?? '1', 10)
-
-  const supabase = createBuildClient()
-
-  // Calculate range
   const from = (page - 1) * ITEMS_PER_PAGE
   const to = from + ITEMS_PER_PAGE - 1
+
+  const supabase = createBuildClient()
 
   let query = supabase
     .from('products')
@@ -79,223 +77,255 @@ export default async function ProductsPage({ searchParams }: Props) {
     .order('created_at', { ascending: false })
 
   if (category) query = query.eq('category', category)
-  if (brand)    query = query.ilike('brand', `%${brand}%`)
+  if (brand) query = query.ilike('brand', `%${brand}%`)
+  if (q) query = query.or(`name.ilike.%${q}%,category.ilike.%${q}%,brand.ilike.%${q}%`)
 
-  const { data: products, count } = await query.range(from, to)
+  const [{ data: products, count }, { data: allProducts }] = await Promise.all([
+    query.range(from, to),
+    supabase
+      .from('products')
+      .select('category, brand')
+      .eq('is_active', true),
+  ])
+
   const all = products ?? []
   const totalCount = count ?? 0
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
-
-  const { data: allProducts } = await supabase
-    .from('products')
-    .select('category, brand')
-    .eq('is_active', true)
-
-  const categories = [...new Set((allProducts ?? []).map((p) => p.category).filter(Boolean))] as string[]
-  const brands     = [...new Set((allProducts ?? []).map((p) => p.brand).filter(Boolean))] as string[]
+  const catalogRows = allProducts ?? []
+  const categories = [...new Set(catalogRows.map((p) => p.category).filter(Boolean))] as string[]
+  const brands = [...new Set(catalogRows.map((p) => p.brand).filter(Boolean))] as string[]
+  const hasFilters = Boolean(category || brand || q)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-4xl font-extrabold text-[#003366] mb-2">Product Catalog</h1>
-        <p className="text-gray-500">
-          {all.length === 0 && (category || brand)
-            ? 'No products match your filters.'
-            : `${totalCount} product${totalCount !== 1 ? 's' : ''} available`}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Sidebar Filters */}
-        <aside className="hidden lg:block space-y-8">
-          {categories.length > 0 && (
+    <div className="min-h-screen bg-[#f4f7fa]">
+      <section className="bg-[#03152d] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <p className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-[#ff5f14]">Product catalog</p>
+          <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:items-end">
             <div>
-              <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
-                Categories
-              </h3>
-              <div className="space-y-2">
-                <Link
-                  href="/products"
-                  className={`flex items-center justify-between text-sm py-1 transition-colors ${
-                    !category ? 'text-[#ec5b13] font-semibold' : 'text-gray-600 hover:text-[#ec5b13]'
-                  }`}
-                >
-                  All Categories
-                  <Badge variant="secondary" className="text-xs">{(allProducts ?? []).length}</Badge>
-                </Link>
-                {categories.map((cat) => {
-                  const count = (allProducts ?? []).filter((p) => p.category === cat).length
-                  return (
-                    <Link
-                      key={cat}
-                      href={`/products?category=${encodeURIComponent(cat)}`}
-                      className={`flex items-center justify-between text-sm py-1 transition-colors ${
-                        category === cat
-                          ? 'text-[#ec5b13] font-semibold'
-                          : 'text-gray-600 hover:text-[#ec5b13]'
-                      }`}
-                    >
-                      {cat}
-                      <Badge
-                        className={`text-xs border-none ${category === cat ? 'bg-[#ec5b13] text-white' : ''}`}
-                        variant={category === cat ? 'default' : 'secondary'}
+              <h1 className="max-w-3xl text-4xl font-black leading-tight sm:text-6xl">
+                Search, compare, cart, or quote.
+              </h1>
+              <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-white/70">
+                Use the live Bewama catalog to buy stocked materials quickly or move bulk,
+                project, and uncertain requirements into RFQ.
+              </p>
+            </div>
+            <form action="/products" className="rounded-lg border border-white/15 bg-white p-2 shadow-2xl shadow-black/20">
+              <label className="sr-only" htmlFor="catalog-search">Search catalog</label>
+              <div className="grid grid-cols-[1fr_auto] gap-2">
+                <input
+                  id="catalog-search"
+                  type="search"
+                  name="q"
+                  defaultValue={q}
+                  placeholder="Search product, brand, or category..."
+                  className="min-h-12 min-w-0 rounded-lg border border-[#d8e0ea] bg-[#f4f7fa] px-4 text-sm font-bold text-[#182333] outline-none focus:border-[#ff5f14] focus:bg-white focus:ring-4 focus:ring-[#ff5f14]/10"
+                />
+                <button className="grid h-12 w-12 place-items-center rounded-lg bg-[#ff5f14] text-white transition-colors hover:bg-[#e84f0a]" aria-label="Search">
+                  <Search className="h-5 w-5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-7 px-4 py-10 sm:px-6 lg:grid-cols-[280px_1fr] lg:px-8">
+        <aside className="space-y-4 lg:sticky lg:top-36 lg:self-start">
+          <div className="rounded-lg border border-[#d8e0ea] bg-white p-5">
+            <div className="mb-4 flex items-center gap-2">
+              <SlidersHorizontal className="h-4 w-4 text-[#ff5f14]" />
+              <h2 className="text-sm font-black uppercase tracking-[0.12em] text-[#061f3f]">Filter catalog</h2>
+            </div>
+
+            <div className="space-y-6">
+              {categories.length > 0 && (
+                <div>
+                  <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Categories</h3>
+                  <div className="grid gap-2">
+                    <FilterLink href="/products" active={!category && !brand && !q} label="All Products" count={catalogRows.length} />
+                    {categories.map((cat) => (
+                      <FilterLink
+                        key={cat}
+                        href={`/products?category=${encodeURIComponent(cat)}`}
+                        active={category === cat}
+                        label={cat}
+                        count={catalogRows.filter((p) => p.category === cat).length}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {brands.length > 0 && (
+                <div className="border-t border-[#edf1f5] pt-5">
+                  <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Brands</h3>
+                  <div className="grid gap-2">
+                    {brands.map((item) => (
+                      <Link
+                        key={item}
+                        href={`/products?brand=${encodeURIComponent(item)}${category ? `&category=${encodeURIComponent(category)}` : ''}`}
+                        className={[
+                          'rounded-lg px-3 py-2 text-sm font-black transition-colors',
+                          brand?.toLowerCase() === item.toLowerCase()
+                            ? 'bg-[#061f3f] text-white'
+                            : 'text-[#4b5a6a] hover:bg-[#f4f7fa] hover:text-[#061f3f]',
+                        ].join(' ')}
                       >
-                        {count}
-                      </Badge>
-                    </Link>
-                  )
-                })}
-              </div>
-            </div>
-          )}
+                        {item}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {brands.length > 0 && (
-            <div className="pt-6 border-t border-gray-100">
-              <h3 className="text-sm font-bold text-[#003366] uppercase tracking-widest mb-4">
-                Brands
-              </h3>
-              <div className="space-y-2">
-                {brands.map((b) => (
-                  <Link
-                    key={b}
-                    href={`/products?brand=${encodeURIComponent(b)}${category ? `&category=${encodeURIComponent(category)}` : ''}`}
-                    className={`block text-sm py-1 transition-colors ${
-                      brand?.toLowerCase() === b.toLowerCase()
-                        ? 'text-[#ec5b13] font-semibold'
-                        : 'text-gray-600 hover:text-[#ec5b13]'
-                    }`}
-                  >
-                    {b}
-                  </Link>
-                ))}
-              </div>
+              {hasFilters && (
+                <Button asChild variant="outline" className="w-full rounded-lg border-[#061f3f]/25 font-black text-[#061f3f]">
+                  <Link href="/products">Clear filters</Link>
+                </Button>
+              )}
             </div>
-          )}
+          </div>
 
-          {(category || brand) && (
-            <Link href="/products">
-              <Button variant="outline" size="sm" className="w-full text-xs">
-                Clear filters
-              </Button>
-            </Link>
-          )}
+          <div className="rounded-lg border border-[#ff5f14]/20 bg-[#fff8f4] p-5">
+            <h3 className="font-black text-[#061f3f]">Buying in bulk?</h3>
+            <p className="mt-2 text-sm font-semibold leading-6 text-[#4b5a6a]">
+              Send quantities, delivery point, and timing for a structured quote response.
+            </p>
+            <Button asChild className="mt-4 w-full rounded-lg bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">
+              <Link href="/request-quote">Request Bulk Quote</Link>
+            </Button>
+          </div>
         </aside>
 
-        {/* Product Grid */}
-        <div className="lg:col-span-3">
+        <main className="min-w-0">
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-[#e84f0a]">Live inventory</p>
+              <h2 className="mt-1 text-3xl font-black text-[#061f3f]">
+                {hasFilters ? 'Filtered products' : 'All products'}
+              </h2>
+              <p className="mt-1 text-sm font-bold text-[#728196]">
+                {all.length === 0 ? 'No products match your filters.' : `${totalCount} product${totalCount === 1 ? '' : 's'} available`}
+              </p>
+            </div>
+            {q && (
+              <span className="inline-flex rounded-full border border-[#d8e0ea] bg-white px-3 py-1 text-xs font-black text-[#061f3f]">
+                Search: {q}
+              </span>
+            )}
+          </div>
+
           {all.length === 0 ? (
-            <div className="text-center py-20 text-gray-400">
-              <Package className="w-12 h-12 mx-auto mb-4 opacity-40" />
-              <p className="font-medium">No products found.</p>
-              {(category || brand) && (
-                <Link href="/products" className="mt-3 inline-block text-sm text-[#ec5b13] hover:underline">
-                  Clear filters
-                </Link>
-              )}
+            <div className="rounded-lg border border-dashed border-[#d8e0ea] bg-white px-6 py-20 text-center">
+              <Package className="mx-auto mb-4 h-12 w-12 text-[#728196]" />
+              <h3 className="text-xl font-black text-[#061f3f]">No products found.</h3>
+              <p className="mx-auto mt-2 max-w-md text-sm font-semibold leading-6 text-[#4b5a6a]">
+                Try another category, remove filters, or send the sourcing request through RFQ.
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <Button asChild variant="outline" className="rounded-lg border-[#061f3f]/25 font-black text-[#061f3f]">
+                  <Link href="/products">Clear filters</Link>
+                </Button>
+                <Button asChild className="rounded-lg bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">
+                  <Link href="/request-quote">Request Quote</Link>
+                </Button>
+              </div>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {all.map((product) => {
-                  const thumb       = product.images?.[0] ?? null
-                  const symbol      = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
-                  const inStock     = product.stock > 0
-                  const isQuote     = product.pricing_type === 'quote'
+                  const thumb = getFirstSafeImageSrc(product.images)
+                  const symbol = CURRENCY_SYMBOLS[product.currency] ?? `${product.currency} `
+                  const inStock = product.stock > 0
+                  const isQuote = product.pricing_type === 'quote'
 
                   return (
-                    <div
+                    <article
                       key={product.id}
-                      className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col group"
+                      className="group flex min-h-full flex-col overflow-hidden rounded-lg border border-[#d8e0ea] bg-white shadow-[0_1px_0_rgba(3,21,45,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[#ff5f14]/40 hover:shadow-2xl hover:shadow-[#03152d]/10"
                     >
-                      {/* Image */}
-                      <Link href={`/products/${product.slug}`} className="block">
-                        <div className="bg-gray-50 rounded-t-xl aspect-square flex items-center justify-center overflow-hidden">
-                          {thumb ? (
-                            <Image
-                              src={thumb}
-                              alt={product.name}
-                              width={300}
-                              height={300}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          ) : (
-                            <Package className="w-16 h-16 text-gray-200" />
-                          )}
-                        </div>
+                      <Link href={`/products/${product.slug}`} className="relative grid aspect-square place-items-center overflow-hidden bg-linear-to-br from-[#f9fbfd] to-[#edf2f7] p-6">
+                        <span className="absolute left-3 top-3 z-10 rounded-full border border-[#d8e0ea] bg-white/95 px-2.5 py-1 text-[11px] font-black text-[#061f3f]">
+                          {isQuote ? 'RFQ' : inStock ? 'In stock' : 'Check stock'}
+                        </span>
+                        {thumb ? (
+                          <Image
+                            src={thumb}
+                            alt={product.name}
+                            fill
+                            className="object-contain p-6 drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+                            sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                          />
+                        ) : (
+                          <Package className="h-14 w-14 text-[#728196]" />
+                        )}
                       </Link>
 
-                      {/* Info */}
-                      <div className="p-4 flex flex-col flex-1">
+                      <div className="flex flex-1 flex-col p-4">
                         {product.category && (
-                          <Badge className="self-start mb-2 text-xs bg-orange-50 text-orange-700 border-none font-semibold">
+                          <p className="mb-2 text-[11px] font-black uppercase tracking-[0.1em] text-[#e84f0a]">
                             {product.category}
-                          </Badge>
+                          </p>
                         )}
                         <Link href={`/products/${product.slug}`}>
-                          <h3 className="font-bold text-[#003366] line-clamp-2 hover:text-[#ec5b13] transition-colors leading-snug">
+                          <h3 className="min-h-12 text-base font-black leading-snug text-[#061f3f] transition-colors hover:text-[#e84f0a]">
                             {product.name}
                           </h3>
                         </Link>
-                        {product.brand && (
-                          <p className="text-xs text-gray-400 mt-1">{product.brand}</p>
-                        )}
+                        {product.brand && <p className="mt-1 text-xs font-bold text-[#728196]">{product.brand}</p>}
 
                         <div className="mt-auto pt-4">
-                          {/* Price */}
-                          <div className="mb-3">
+                          <div className="mb-3 flex items-end justify-between gap-3">
                             {isQuote ? (
-                              <span className="text-lg font-extrabold text-[#ec5b13]">Price on Request</span>
+                              <span className="text-lg font-black text-[#e84f0a]">Price on Request</span>
                             ) : (
-                              <>
-                                <span className="text-xl font-extrabold text-[#003366]">
-                                  {symbol}{product.price.toLocaleString()}
-                                </span>
-                                {!inStock && (
-                                  <p className="text-xs text-red-500 font-semibold mt-0.5">Out of stock</p>
-                                )}
-                              </>
+                              <span className="text-xl font-black text-[#061f3f]">
+                                {symbol}{product.price.toLocaleString()}
+                              </span>
                             )}
+                            <span className={inStock || isQuote ? 'text-xs font-black text-[#3b7a57]' : 'text-xs font-black text-[#b83b32]'}>
+                              {isQuote ? 'Quote' : inStock ? 'Stocked' : 'Out'}
+                            </span>
                           </div>
 
-                          {/* CTAs */}
-                          <div className="flex items-center gap-2">
-                            {isQuote ? (
-                              <Link
-                                href={`/request-quote?product=${encodeURIComponent(product.name)}`}
-                                className="flex-1"
-                              >
-                                <Button
-                                  size="sm"
-                                  className="w-full bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-xs h-9"
-                                >
-                                  <FileText className="w-3.5 h-3.5 mr-1.5" />
-                                  Request Quote
-                                </Button>
-                              </Link>
-                            ) : (
-                              <>
-                                <AddToCartButton
-                                  product={{ id: product.id, name: product.name, slug: product.slug, price: product.price, currency: product.currency, image: thumb }}
-                                  size="sm"
-                                  className="flex-1 text-xs h-9"
-                                />
+                          <div className="grid grid-cols-[1fr_44px] gap-2">
+                            {isQuote || !inStock ? (
+                              <Button asChild size="sm" className="h-10 rounded-lg bg-[#ff5f14] text-xs font-black text-white hover:bg-[#e84f0a]">
                                 <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`}>
-                                  <Button size="sm" variant="outline" title="Request a Quote" className="text-xs h-9 text-[#003366] border-[#003366]">
-                                    <FileText className="w-3.5 h-3.5" />
-                                  </Button>
+                                  <FileText className="mr-1.5 h-3.5 w-3.5" />
+                                  Request Quote
                                 </Link>
-                              </>
+                              </Button>
+                            ) : (
+                              <AddToCartButton
+                                product={{
+                                  id: product.id,
+                                  name: product.name,
+                                  slug: product.slug,
+                                  price: product.price,
+                                  currency: product.currency,
+                                  image: thumb,
+                                }}
+                                size="sm"
+                                className="h-10 rounded-lg text-xs font-black"
+                              />
                             )}
+                            <Button asChild size="sm" variant="outline" className="h-10 rounded-lg border-[#d8e0ea] px-0 text-[#061f3f] hover:border-[#ff5f14] hover:bg-[#fff8f4]">
+                              <Link href={`/request-quote?product=${encodeURIComponent(product.name)}`} aria-label={`Request quote for ${product.name}`}>
+                                <FileText className="h-4 w-4" />
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </article>
                   )
                 })}
               </div>
 
-              {/* Pagination */}
               <Pagination
                 currentPage={page}
                 totalPages={totalPages}
@@ -304,8 +334,33 @@ export default async function ProductsPage({ searchParams }: Props) {
               />
             </>
           )}
-        </div>
-      </div>
+        </main>
+      </section>
     </div>
+  )
+}
+
+function FilterLink({
+  href,
+  active,
+  label,
+  count,
+}: {
+  href: string
+  active: boolean
+  label: string
+  count: number
+}) {
+  return (
+    <Link
+      href={href}
+      className={[
+        'flex items-center justify-between rounded-lg px-3 py-2 text-sm font-black transition-colors',
+        active ? 'bg-[#061f3f] text-white' : 'text-[#4b5a6a] hover:bg-[#f4f7fa] hover:text-[#061f3f]',
+      ].join(' ')}
+    >
+      <span>{label}</span>
+      <span className={active ? 'text-white/70' : 'text-[#728196]'}>{count}</span>
+    </Link>
   )
 }

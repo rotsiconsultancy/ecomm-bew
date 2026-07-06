@@ -21,9 +21,9 @@ function formatDate(iso: string | null | undefined) {
 }
 
 const ROLE_BADGE: Record<string, string> = {
-  admin:     'bg-[#003366]/10 text-[#003366] border-[#003366]/20',
+  admin:     'bg-[#061f3f]/10 text-[#061f3f] border-[#061f3f]/20',
   staff:     'bg-blue-50 text-blue-700 border-blue-200',
-  wholesale: 'bg-orange-50 text-[#ec5b13] border-orange-200',
+  wholesale: 'bg-orange-50 text-[#ff5f14] border-orange-200',
   customer:  'bg-slate-50 text-slate-600 border-slate-200',
 }
 
@@ -62,7 +62,7 @@ export default async function UserDetailPage({ params }: Props) {
       {/* Back */}
       <Link
         href="/admin/user-management"
-        className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#003366] transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#061f3f] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Users
       </Link>
@@ -70,7 +70,7 @@ export default async function UserDetailPage({ params }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-full bg-[#003366] text-white flex items-center justify-center text-xl font-bold shrink-0">
+          <div className="h-16 w-16 rounded-full bg-[#061f3f] text-white flex items-center justify-center text-xl font-bold shrink-0">
             {initials}
           </div>
           <div>

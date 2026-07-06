@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { useCheckout } from '../checkout-context'
 import { useCart } from '@/lib/cart-store'
 import { POINTS_TO_KES } from '@/types/points'
+import { getSafeImageSrc } from '@/lib/images'
 
 export function StageInfluence() {
   const {
@@ -42,7 +43,7 @@ export function StageInfluence() {
       price: companion.price,
       currency: companion.currency,
       quantity: 1,
-      image: companion.image,
+      image: getSafeImageSrc(companion.image),
     })
     addCompanion(companion.id)
     setAddedIds((prev) => new Set(prev).add(companion.id))
@@ -58,15 +59,15 @@ export function StageInfluence() {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Headline */}
       <div className="text-center space-y-2">
-        <div className="h-16 w-16 bg-[#ec5b13]/10 rounded-full flex items-center justify-center mx-auto">
-          <Zap className="h-8 w-8 text-[#ec5b13]" />
+        <div className="h-16 w-16 bg-[#ff5f14]/10 rounded-full flex items-center justify-center mx-auto">
+          <Zap className="h-8 w-8 text-[#ff5f14]" />
         </div>
         {primaryReason ? (
-          <h2 className="text-2xl font-extrabold text-[#003366] max-w-md mx-auto">
+          <h2 className="text-2xl font-extrabold text-[#061f3f] max-w-md mx-auto">
             {primaryReason}
           </h2>
         ) : (
-          <h2 className="text-2xl font-extrabold text-[#003366]">
+          <h2 className="text-2xl font-extrabold text-[#061f3f]">
             Complete your project
           </h2>
         )}
@@ -90,6 +91,7 @@ export function StageInfluence() {
         {companions.map((companion) => {
           const isAdded = addedIds.has(companion.id)
           const companionPoints = Math.floor(companion.price / 50) * earnRate * companion.points_multiplier
+          const companionImage = getSafeImageSrc(companion.image)
 
           return (
             <div
@@ -100,9 +102,9 @@ export function StageInfluence() {
             >
               <div className="flex items-start gap-4">
                 <div className="h-20 w-20 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden shrink-0 flex items-center justify-center">
-                  {companion.image ? (
+                  {companionImage ? (
                     <Image
-                      src={companion.image}
+                      src={companionImage}
                       alt={companion.name}
                       width={80}
                       height={80}
@@ -114,17 +116,17 @@ export function StageInfluence() {
                 </div>
 
                 <div className="flex-1 min-w-0 space-y-1.5">
-                  <p className="font-bold text-[#003366] text-sm line-clamp-2">
+                  <p className="font-bold text-[#061f3f] text-sm line-clamp-2">
                     {companion.name}
                   </p>
-                  <p className="text-base font-extrabold text-[#003366]">
+                  <p className="text-base font-extrabold text-[#061f3f]">
                     KES {companion.price.toLocaleString()}
                   </p>
 
                   {/* Badges */}
                   <div className="flex flex-wrap gap-1.5">
                     {influenceConfig.show_points_overlay && companionPoints > 0 && (
-                      <Badge className="bg-[#ec5b13]/10 text-[#ec5b13] border-none text-xs font-bold">
+                      <Badge className="bg-[#ff5f14]/10 text-[#ff5f14] border-none text-xs font-bold">
                         <Star className="w-3 h-3 mr-1" />
                         +{Math.floor(companionPoints)} pts
                       </Badge>
@@ -152,7 +154,7 @@ export function StageInfluence() {
                     <Button
                       size="sm"
                       onClick={() => handleAdd(companion)}
-                      className="bg-[#003366] hover:bg-[#002244] text-white font-bold rounded-xl h-9 px-4"
+                      className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold rounded-xl h-9 px-4"
                     >
                       Add
                     </Button>
@@ -166,7 +168,7 @@ export function StageInfluence() {
 
       {/* Bundle framing */}
       {influenceConfig.show_bundle_framing && bundlePointsBonus > 0 && (
-        <div className="bg-linear-to-r from-[#003366] to-[#004a8f] rounded-2xl p-4 text-white text-center">
+        <div className="bg-linear-to-r from-[#061f3f] to-[#004a8f] rounded-2xl p-4 text-white text-center">
           <p className="font-bold">
             Bundle bonus: +{bundlePointsBonus} extra points
           </p>
@@ -180,7 +182,7 @@ export function StageInfluence() {
       <div className="space-y-3">
         <Button
           onClick={goNext}
-          className="w-full h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-lg font-extrabold rounded-2xl shadow-lg"
+          className="w-full h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-lg font-extrabold rounded-2xl shadow-lg"
         >
           Continue
         </Button>

@@ -46,41 +46,41 @@
 ========================= */
 :root {
   /* Brand Core */
-  --brand-navy: #003366;
-  --brand-orange: #ec5b13;
-  --brand-orange-hover: #d14d0d;
+  --brand-navy: #061f3f;
+  --brand-orange: #ff5f14;
+  --brand-orange-hover: #e84f0a;
 
   /* Hierarchy Fix */
-  --primary-color: #003366;       /* NAVY = AUTHORITY */
+  --primary-color: #061f3f;       /* NAVY = AUTHORITY */
   --primary-foreground: #ffffff;
 
-  --secondary-color: #ec5b13;     /* ORANGE = ACTION */
+  --secondary-color: #ff5f14;     /* ORANGE = ACTION */
   --secondary-foreground: #ffffff;
 
   /* Base */
-  --background: #f8f6f6;
-  --foreground: #1a1a1a;
+  --background: #f7f3ed;
+  --foreground: #182333;
 
   /* UI Elements */
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #ec5b13;
+  --border: #d8e0ea;
+  --input: #d8e0ea;
+  --ring: #ff5f14;
 
   /* Radius */
-  --radius: 12px;
+  --radius: 8px;
 
   /* Sidebar (feels like a control panel now) */
-  --sidebar: #003366;
+  --sidebar: #061f3f;
   --sidebar-foreground: #ffffff;
 
-  --sidebar-primary: #ec5b13;
+  --sidebar-primary: #ff5f14;
   --sidebar-primary-foreground: #ffffff;
 
   --sidebar-accent: #ffffff1a;
   --sidebar-accent-foreground: #ffffff;
 
   --sidebar-border: #ffffff1a;
-  --sidebar-ring: #ec5b13;
+  --sidebar-ring: #ff5f14;
 }
 
 /* =========================
@@ -91,29 +91,29 @@
   --foreground: #f8f6f6;
 
   /* Keep hierarchy consistent */
-  --primary-color: #003366;
+  --primary-color: #061f3f;
   --primary-foreground: #ffffff;
 
-  --secondary-color: #ec5b13;
+  --secondary-color: #ff5f14;
   --secondary-foreground: #ffffff;
 
   /* UI */
   --border: #2e2e2e;
   --input: #2e2e2e;
-  --ring: #ec5b13;
+  --ring: #ff5f14;
 
   /* Sidebar */
   --sidebar: #140e0a;
   --sidebar-foreground: #f8f6f6;
 
-  --sidebar-primary: #ec5b13;
+  --sidebar-primary: #ff5f14;
   --sidebar-primary-foreground: #ffffff;
 
   --sidebar-accent: #ffffff14;
   --sidebar-accent-foreground: #ffffff;
 
   --sidebar-border: #ffffff14;
-  --sidebar-ring: #ec5b13;
+  --sidebar-ring: #ff5f14;
 }
 
 /* =========================

@@ -5,6 +5,7 @@ import { Package, Star, Minus, Plus, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCheckout } from '../checkout-context'
 import { useCart } from '@/lib/cart-store'
+import { getSafeImageSrc } from '@/lib/images'
 import { POINTS_TO_KES } from '@/types/points'
 
 export function StageCart() {
@@ -32,15 +33,18 @@ export function StageCart() {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Items */}
       <div className="space-y-4">
-        {cartItems.map((item) => (
-          <div
-            key={item.product_id}
-            className="flex items-center gap-4 bg-white rounded-2xl p-4 shadow-sm border border-gray-100"
-          >
+        {cartItems.map((item) => {
+          const itemImage = getSafeImageSrc(item.image)
+
+          return (
+            <div
+              key={item.product_id}
+              className="flex items-center gap-4 bg-white rounded-2xl p-4 shadow-sm border border-gray-100"
+            >
             <div className="h-20 w-20 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden shrink-0 flex items-center justify-center">
-              {item.image ? (
+              {itemImage ? (
                 <Image
-                  src={item.image}
+                  src={itemImage}
                   alt={item.name}
                   width={80}
                   height={80}
@@ -51,7 +55,7 @@ export function StageCart() {
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-bold text-[#003366] text-sm line-clamp-2">{item.name}</p>
+              <p className="font-bold text-[#061f3f] text-sm line-clamp-2">{item.name}</p>
               <p className="text-xs text-gray-400 mt-0.5">
                 KES {item.price.toLocaleString()} each
               </p>
@@ -62,7 +66,7 @@ export function StageCart() {
                 >
                   <Minus className="w-3 h-3" />
                 </button>
-                <span className="text-sm font-bold text-[#003366] w-6 text-center">
+                <span className="text-sm font-bold text-[#061f3f] w-6 text-center">
                   {item.quantity}
                 </span>
                 <button
@@ -79,22 +83,23 @@ export function StageCart() {
                 </button>
               </div>
             </div>
-            <p className="text-base font-extrabold text-[#003366] shrink-0">
+            <p className="text-base font-extrabold text-[#061f3f] shrink-0">
               KES {(item.price * item.quantity).toLocaleString()}
             </p>
           </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Totals */}
       <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100 space-y-3 text-sm">
         <div className="flex justify-between text-gray-500">
           <span>Subtotal</span>
-          <span className="font-bold text-[#003366]">KES {subtotal.toLocaleString()}</span>
+          <span className="font-bold text-[#061f3f]">KES {subtotal.toLocaleString()}</span>
         </div>
         <div className="flex justify-between text-gray-500">
           <span>Delivery</span>
-          <span className="font-bold text-[#003366]">KES {deliveryFee.toLocaleString()}</span>
+          <span className="font-bold text-[#061f3f]">KES {deliveryFee.toLocaleString()}</span>
         </div>
         {discount > 0 && (
           <div className="flex justify-between text-green-600">
@@ -104,7 +109,7 @@ export function StageCart() {
             </span>
           </div>
         )}
-        <div className="flex justify-between text-lg font-extrabold text-[#003366] pt-3 border-t">
+        <div className="flex justify-between text-lg font-extrabold text-[#061f3f] pt-3 border-t">
           <span>Total</span>
           <span>KES {total.toLocaleString()}</span>
         </div>
@@ -112,9 +117,9 @@ export function StageCart() {
 
       {/* Points earned card */}
       {pointsEarned > 0 && (
-        <div className="bg-linear-to-r from-[#003366] to-[#004a8f] rounded-2xl p-4 sm:p-5 text-white flex items-center gap-4">
+        <div className="bg-linear-to-r from-[#061f3f] to-[#004a8f] rounded-2xl p-4 sm:p-5 text-white flex items-center gap-4">
           <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-            <Star className="w-6 h-6 text-[#ec5b13]" />
+            <Star className="w-6 h-6 text-[#ff5f14]" />
           </div>
           <div>
             <p className="font-bold">
@@ -149,7 +154,7 @@ export function StageCart() {
             />
           </div>
           <div className="text-left">
-            <p className="font-bold text-sm text-[#003366]">
+            <p className="font-bold text-sm text-[#061f3f]">
               Apply {pendingPts.toLocaleString()} points
             </p>
             <p className="text-xs text-gray-400">
@@ -162,7 +167,7 @@ export function StageCart() {
       {/* Continue CTA */}
       <Button
         onClick={goNext}
-        className="w-full h-14 bg-[#ec5b13] hover:bg-[#d14d0d] text-white text-lg font-extrabold rounded-2xl shadow-lg active:scale-[0.98] transition-transform"
+        className="w-full h-14 bg-[#ff5f14] hover:bg-[#e84f0a] text-white text-lg font-extrabold rounded-2xl shadow-lg active:scale-[0.98] transition-transform"
       >
         Continue
       </Button>

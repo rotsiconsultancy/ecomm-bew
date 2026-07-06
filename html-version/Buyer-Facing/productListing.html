@@ -1,465 +1,209 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bewama | Construction Materials</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ec5b13",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#221610",
-                    },
-                    fontFamily: {
-                        "display": ["Public Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-<style>
-        body { font-family: 'Public Sans', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    </style>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Catalog | Bewama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/bewama-ui.css" />
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
-<!-- Top Navigation Bar -->
-<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex h-16 items-center justify-between gap-8">
-<!-- Logo -->
-<a class="flex items-center gap-2" href="index.html">
-<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
-<span class="material-symbols-outlined">inventory_2</span>
-</div>
-<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white uppercase">Bewama</h2>
-</a>
-<!-- Main Nav -->
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-semibold text-primary" href="productListing.html">Products</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Solutions</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="requestQuote.html">Quotes</a>
-<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="orderHistory.html">Orders</a>
-</nav>
-<!-- Search & Actions -->
-<div class="flex flex-1 items-center justify-end gap-4">
-<div class="hidden lg:flex relative w-full max-w-xs">
-<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-<span class="material-symbols-outlined text-[20px]">search</span>
-</span>
-<input class="block w-full rounded-xl border-0 bg-slate-100 dark:bg-slate-800 py-1.5 pl-10 pr-3 text-sm ring-1 ring-inset ring-transparent focus:ring-2 focus:ring-primary dark:text-white" placeholder="Search products..." type="text"/>
-</div>
-<div class="flex items-center gap-2">
-<a class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors" href="checkout.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-</a>
-<a class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors" href="login.html">
-<span class="material-symbols-outlined">account_circle</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</header>
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-<!-- Breadcrumbs & Header -->
-<div class="mb-8">
-<nav class="flex text-sm text-slate-500 dark:text-slate-400 mb-4 items-center gap-2">
-<a class="hover:text-primary" href="#">Home</a>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="text-slate-900 dark:text-slate-200 font-medium">Construction Materials</span>
-</nav>
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-<div>
-<h1 class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Construction Materials</h1>
-<p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl text-lg">High-performance silicones, MDF boards, and specialized chemicals for large-scale B2B infrastructure projects.</p>
-</div>
-<div class="flex items-center gap-3">
-<span class="text-sm font-medium text-slate-500">Sort by:</span>
-<select class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary">
-<option>Relevance</option>
-<option>Price: Low to High</option>
-<option>Price: High to Low</option>
-<option>Newest Arrivals</option>
-</select>
-</div>
-</div>
-</div>
-<div class="flex flex-col lg:flex-row gap-8">
-<!-- Sidebar Filters -->
-<aside class="w-full lg:w-64 flex-shrink-0">
-<div class="sticky top-24 space-y-6">
-<div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
-<h3 class="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-xs">Filters</h3>
-<button class="text-xs font-semibold text-primary hover:underline">Clear All</button>
-</div>
-<!-- Categories -->
-<details class="group" open="">
-<summary class="flex cursor-pointer items-center justify-between py-2 list-none">
-<span class="text-sm font-bold text-slate-900 dark:text-white">Categories</span>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="mt-2 space-y-2 pl-1">
-<label class="flex items-center gap-3 group cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Silicones</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">MDF Boards</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Adhesives</span>
-</label>
-</div>
-</details>
-<!-- Application Attributes -->
-<details class="group" open="">
-<summary class="flex cursor-pointer items-center justify-between py-2 list-none border-t border-slate-200 dark:border-slate-800 mt-4 pt-4">
-<span class="text-sm font-bold text-slate-900 dark:text-white">Application</span>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="mt-2 space-y-2 pl-1">
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Waterproof</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Fire-Rated</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">UV Resistant</span>
-</label>
-</div>
-</details>
-<!-- Brand -->
-<details class="group" open="">
-<summary class="flex cursor-pointer items-center justify-between py-2 list-none border-t border-slate-200 dark:border-slate-800 mt-4 pt-4">
-<span class="text-sm font-bold text-slate-900 dark:text-white">Brand</span>
-<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<div class="mt-2 space-y-2 pl-1">
-<label class="flex items-center gap-3 group cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Somafix</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Akfix</span>
-</label>
-<label class="flex items-center gap-3 group cursor-pointer">
-<input class="rounded border-slate-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">Soudal</span>
-</label>
-</div>
-</details>
-<div class="pt-6">
-<button class="w-full py-3 bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-bold rounded-xl text-sm transition-transform active:scale-95 shadow-lg shadow-slate-200 dark:shadow-none">
-                            Reset All Filters
-                        </button>
-</div>
-</div>
-</aside>
-<!-- Product Grid -->
-<div class="flex-1">
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-<!-- Product Card 1 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="High-quality industrial silicone tubes in row" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeDpQzR-kMbzpfuOZPmsr31_8tvysR7p1_5e6fyuTMxOFvEC7cuKjwXXYMoQ6CbYJj6qBuJzR03IfU73MlK_dptqayoaG4XHTdpDP2Nnd9nin10Z5ju_c8EVX4bsmfEL0YrSLlej-xr43kbuMx0BUTg6z2ycZXvnKGtZEJsc1gAQ46B6Lv1blV6DnredqtbgCDSyWbOEqrcwEyUpoi7oHED6ol_BZufAsBDMRz6J4EKoBJf3jEwZZkRdao2QpEjUZV-DgiiV-gcxHt"/>
-<div class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Top Seller</div>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Somafix</p>
-<a href="individualListing.html"><h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3 hover:text-primary transition-colors">Somafix S50 Multi-Purpose Silicone Sealant</h3></a>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    100% Acetoxy Silicone
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    High UV &amp; Weather Resistance
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Quick Dry Formula
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€5.50</span>
-<span class="text-sm font-medium text-slate-500">/ unit</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<a class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2" href="checkout.html">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </a>
-<a class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors flex items-center justify-center" href="requestQuote.html">
-                                    Quote
-                                </a>
-</div>
-</div>
-</div>
-<!-- Product Card 2 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Stacked wooden MDF board samples" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhpGuQ417AFPOV3XgdhXYl-a9rsbRYIpQizfIB61wc7Ss-9533aMNJlEcLpwjGTgwzAUsNns-mu6CxmTh0q50_GJcGM5hp-HOR97guFhZ8YvUnE6-ktNgoK4H0-IanVOwWgQpVGh22-pFLihXpYP0NBhEz9NkkvLWfNECa8tjYsIROKx3Iu7ACp79S8iQ8KKrEh_dQNfmYjmkW8dxLm69nmN288HvtG0v8vdJfc46DOE49i6WMbKSLVmigrp4TMiZGV2DyHwWY-4Bj"/>
-<div class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Fire-Rated</div>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Kronospan</p>
-<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3">Premium FR-MDF Board 18mm</h3>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    B-s2, d0 Fire Rating
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Sustainable Core Material
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Precision Finish Surface
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€42.00</span>
-<span class="text-sm font-medium text-slate-500">/ sheet</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </button>
-<button class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors">
-                                    Quote
-                                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 3 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Worker applying construction adhesive with caulk gun" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDctI-oKNlilDPrVCWugI4S3bu1PpX0tbAgd2U0vsPebrs2lIywKdspUkl6quPE5RBoVqPt5EqZ3RKxEryzERkhEEQ5feM3Go9LNlju6vDk-e4taboiG4Ka6KWoWAAOnMoQq5QvPUkZgWTSShUhUR5AmyxMzIKpHyGicvlO-pGveiC0fV79MKiYGoyFPAFQDLYGG2O3bU-yNa8xVg1NtMf4yJ6w4IP1LQhdUjki-Rk0WkS1I-RSGBDAKR1HIntf2MBkBX_7yAxc4RCy"/>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Somafix</p>
-<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3">Somafix High-Tack Construction Glue</h3>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Immediate Initial Grab
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Waterproof Bond
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Solvent-Free Formula
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€8.95</span>
-<span class="text-sm font-medium text-slate-500">/ unit</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </button>
-<button class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors">
-                                    Quote
-                                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 4 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close up of structural glass and metal facade" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCScNrVw7vyL2cVhQACq8d2ISqiqyrkIHTqNgcsW2UFBNE-YVqeN5QgXS0TfyhY0VMfhiK9zW-DZi4UfaqW-vaHrFc6axEcaPNNUkClJxKd83cSUiYQk7TxmS2XIbXPpArINtzDkNw-Y2XZg1HMbf1sht44t8yMzcwoPKY-d0Jkn0VWBSf9WLybWl7rGMzvGjLwD7TXIOqPvd9RYZpLGchUi1zNMvvcQO0UKmDvgBVdFO9-kmwEQXA_-p973H7wh9x77aIGySx_Tmhn"/>
-<div class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Waterproof</div>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Somafix</p>
-<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3">Structural Glazing Silicone S90</h3>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Neutral Curing
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Non-Corrosive to Metals
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Structural Strength
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€12.40</span>
-<span class="text-sm font-medium text-slate-500">/ unit</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </button>
-<button class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors">
-                                    Quote
-                                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 5 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Light wood texture MDF board surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8FuKKXtLEZt30cjGwnTMB8JIQDOHLJG79O8NLXlTYpkpcmBvBkl-WivfdpPntZEfZ8_0nbcu7BZfpEE7AKkhfIb3ae4kGAo3A9_v0Yvk9k1Pi6SU_hLlPyfUfeChJcawVFpTsRJw3kt3XQVTtjfOatlPhLxo8OHbZcuMgtS7ZEd3uidjbOm-t6i1qIck2n4IL16gu85Os0MfFtXcSDPxxPP3DdD9jzOjOSwq9i4pDn9Wo3NCOcHG5k4CHyqUGmPd8W8LnJONdC16P"/>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Kronospan</p>
-<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3">Moisture Resistant MDF MR-P5</h3>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    High Humidity Resistance
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Green Core Indicator
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Excellent Machinability
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€38.50</span>
-<span class="text-sm font-medium text-slate-500">/ sheet</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </button>
-<button class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors">
-                                    Quote
-                                </button>
-</div>
-</div>
-</div>
-<!-- Product Card 6 -->
-<div class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col transition-all hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none">
-<div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Industrial polyurethane foam expanding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfSCBTeXe_6AJn2DdeMYRw5qxYOXYPm3hyRKROj9zs7bYAgERT1BbRxCNosdlFpm8zJR35J7olZZvPbsBk54yJ13OcfXaxD9VkE6ww1ODBlmWay-fq2_svhr-myTGCw1Ij7IsDRX5nCic_4KrIdGXcMlWjYL76imAYB019liKJ3knzC0z8jcViL6b8G1rVeoMh7XmJNnDoJyx-bVmhBLuUo4vTe0Z5AMHuoGFHDWO_ifcq53h5YHP7w-syBzqaREcLfdbLbR_SRVmQ"/>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Somafix</p>
-<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug mb-3">Professional Gun PU Foam 750ml</h3>
-<ul class="space-y-1.5 mb-6 flex-1">
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    High Yield Expansion
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Low Post-Expansion
-                                </li>
-<li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
-                                    Acoustic Insulation
-                                </li>
-</ul>
-<div class="flex items-baseline gap-1 mb-4">
-<span class="text-2xl font-black text-slate-900 dark:text-white">€6.75</span>
-<span class="text-sm font-medium text-slate-500">/ unit</span>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<button class="bg-primary text-white font-bold py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Add
-                                </button>
-<button class="border border-primary text-primary font-bold py-2.5 rounded-xl text-sm hover:bg-primary/5 transition-colors">
-                                    Quote
-                                </button>
-</div>
-</div>
-</div>
-</div>
-<!-- Pagination -->
-<div class="mt-12 flex items-center justify-center gap-2">
-<button class="flex items-center justify-center size-10 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<button class="flex items-center justify-center size-10 rounded-xl bg-primary text-white font-bold">1</button>
-<button class="flex items-center justify-center size-10 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 transition-colors font-bold">2</button>
-<button class="flex items-center justify-center size-10 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 transition-colors font-bold">3</button>
-<span class="text-slate-400">...</span>
-<button class="flex items-center justify-center size-10 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 transition-colors font-bold">12</button>
-<button class="flex items-center justify-center size-10 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-</main>
-<!-- Footer -->
-<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-20">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<div class="col-span-1 md:col-span-1">
-<div class="flex items-center gap-2 mb-6">
-<div class="size-6 bg-primary rounded flex items-center justify-center text-white">
-<span class="material-symbols-outlined text-[16px]">inventory_2</span>
-</div>
-<h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white uppercase">Bewama</h2>
-</div>
-<p class="text-sm text-slate-500 dark:text-slate-400">Your trusted partner for professional construction materials and industrial solutions since 1998.</p>
-</div>
-<div>
-<h4 class="font-bold text-slate-900 dark:text-white mb-6">Quick Links</h4>
-<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-<li><a class="hover:text-primary transition-colors" href="#">Products Catalog</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Request a Quote</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Technical Data Sheets</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Shipping Information</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-slate-900 dark:text-white mb-6">Categories</h4>
-<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-<li><a class="hover:text-primary transition-colors" href="#">Silicones &amp; Sealants</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">MDF &amp; Panels</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Industrial Adhesives</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Safety Equipment</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-slate-900 dark:text-white mb-6">Support</h4>
-<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-<li><a class="hover:text-primary transition-colors" href="#">Customer Service</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Terms of Sale</a></li>
-<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
-</ul>
-</div>
-</div>
-<div class="border-t border-slate-200 dark:border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-<p class="text-xs text-slate-500">© 2024 Bewama Industrial Group. All rights reserved.</p>
-<div class="flex gap-6">
-<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">language</span>
-<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">mail</span>
-</div>
-</div>
-</div>
-</footer>
-</body></html>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="shell">
+        <div class="topbar__left"><span class="status-dot"></span><span>Catalog orders and quote requests are reviewed by the Bewama team.</span></div>
+        <div class="topbar__right"><span>Nairobi operations</span><span>Construction materials procurement</span></div>
+      </div>
+    </div>
+
+    <header class="header">
+      <div class="shell">
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="index.html"><img class="logo" src="../../public/logo.png" alt="Bewama" /></a>
+          <form class="search" action="productListing.html">
+            <input type="search" name="q" placeholder="Search adhesives, silicones, cleaners, abrasives..." />
+          </form>
+          <div class="nav__actions">
+            <a class="icon-button" href="checkout.html" aria-label="Cart">Cart</a>
+            <a class="btn btn--orange" href="requestQuote.html">Request Quote</a>
+            <button class="icon-button menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+          </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+          <form class="search" action="productListing.html"><input type="search" name="q" placeholder="Search catalog..." /></form>
+          <div class="mobile-menu__links">
+            <a href="productListing.html">All Products</a><a href="requestQuote.html">Bulk Quote</a>
+            <a href="orderHistory.html">Reorder</a><a href="profTechResources.html">Resources</a>
+          </div>
+        </div>
+      </div>
+      <div class="desktop-links">
+        <div class="shell">
+          <div class="category-links">
+            <a class="is-active" href="productListing.html">All Products</a>
+            <a href="productListing.html">Silicones</a>
+            <a href="productListing.html">Sealants</a>
+            <a href="productListing.html">Adhesives</a>
+            <a href="productListing.html">Abrasives</a>
+          </div>
+          <div class="account-links">
+            <a href="orderHistory.html">Order history</a>
+            <a href="requestQuote.html">Bulk order</a>
+            <a href="profTechResources.html">Technical resources</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="shell">
+          <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Product Catalog</span></nav>
+          <p class="kicker">Search, compare, quote, or buy</p>
+          <h1 class="page-title">Industrial materials <span>ready for procurement.</span></h1>
+          <p class="page-copy">Browse stocked construction materials, shortlist items for quote, or move simple orders straight to checkout. The catalog is structured for contractors, workshops, fabricators, and trade buyers.</p>
+          <div class="actions">
+            <a class="btn btn--orange" href="requestQuote.html">Build Multi-Item Quote</a>
+            <a class="btn btn--ghost" href="checkout.html">View Cart</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cool">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <p class="kicker">Catalog</p>
+              <h2 class="section-title">48 products available</h2>
+              <p class="section-copy">Use filters for product type, availability, and buying mode. RFQ-priority items are best handled through the quote desk.</p>
+            </div>
+            <a class="text-link" href="requestQuote.html">Need custom sourcing →</a>
+          </div>
+
+          <div class="layout">
+            <aside class="sidebar">
+              <div class="card panel">
+                <h3 style="margin:0 0 14px;color:var(--navy);font-size:16px;font-weight:900;">Filters</h3>
+                <div class="grid">
+                  <a class="chip chip--active" href="#">All products</a>
+                  <a class="chip" href="#">In stock</a>
+                  <a class="chip" href="#">Quote available</a>
+                  <a class="chip" href="#">Bulk pricing</a>
+                </div>
+              </div>
+              <div class="card panel">
+                <h3 style="margin:0 0 14px;color:var(--navy);font-size:16px;font-weight:900;">Categories</h3>
+                <div class="grid">
+                  <a class="chip" href="#">Silicones</a>
+                  <a class="chip" href="#">Sealants</a>
+                  <a class="chip" href="#">Adhesives</a>
+                  <a class="chip" href="#">Abrasives</a>
+                  <a class="chip" href="#">Cleaners</a>
+                </div>
+              </div>
+              <div class="card panel">
+                <h3 style="margin:0 0 8px;color:var(--navy);font-size:16px;font-weight:900;">Quote basket</h3>
+                <p style="margin:0 0 14px;color:var(--slate);font-size:14px;font-weight:700;">You have <strong data-quote-count>2</strong> items ready for RFQ.</p>
+                <a class="btn btn--orange btn--wide" href="requestQuote.html">Continue Quote</a>
+              </div>
+            </aside>
+
+            <div class="layout-main">
+              <div class="card panel" style="margin-bottom:16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <span class="badge badge--green">In-stock first</span>
+                  <span class="badge">KES pricing</span>
+                  <span class="badge">Bulk RFQ</span>
+                </div>
+                <select class="select" style="width:220px;">
+                  <option>Sort by relevance</option>
+                  <option>Newest products</option>
+                  <option>Stocked first</option>
+                  <option>Quote priority</option>
+                </select>
+              </div>
+
+              <div class="grid grid-3">
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge badge--orange" style="position:absolute;left:12px;top:12px;">Fast mover</span><img src="assets/soma-bond-sb340.png" alt="Soma Bond SB340 adhesive" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Adhesives</p>
+                    <h3>Soma Bond SB340</h3>
+                    <div class="product-meta"><span>KES 1,850 / unit</span><span class="stock">In stock</span></div>
+                    <div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge" style="position:absolute;left:12px;top:12px;">Bulk</span><img src="assets/soma-bond-sb3200.png" alt="Soma Bond SB3200 adhesive" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Bonding</p>
+                    <h3>Soma Bond SB3200</h3>
+                    <div class="product-meta"><span>Price on request</span><span class="stock">Verified</span></div>
+                    <div class="product-actions"><a class="btn btn--orange" href="requestQuote.html">Request Quote</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge" style="position:absolute;left:12px;top:12px;">Cleaner</span><img src="assets/pu-foam-cleaner.png" alt="PU foam cleaner" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Cleaning</p>
+                    <h3>PU Foam Cleaner</h3>
+                    <div class="product-meta"><span>KES 960 / can</span><span class="stock">In stock</span></div>
+                    <div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge" style="position:absolute;left:12px;top:12px;">Trade</span><img src="assets/somagrit-sandpaper.jpg" alt="Somagrit sandpaper" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Abrasives</p>
+                    <h3>Somagrit Sandpaper Rolls</h3>
+                    <div class="product-meta"><span>Multi-grit options</span><span class="stock">Available</span></div>
+                    <div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge" style="position:absolute;left:12px;top:12px;">Sealant</span><img src="assets/soma-bond-sc302.png" alt="Soma Bond SC302 sealant" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Sealants</p>
+                    <h3>Soma Bond SC302</h3>
+                    <div class="product-meta"><span>KES 1,240 / unit</span><span class="stock">In stock</span></div>
+                    <div class="product-actions"><a class="btn btn--navy" href="checkout.html">Add to Cart</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+
+                <article class="card product-card">
+                  <a class="product-media" href="individualListing.html"><span class="badge" style="position:absolute;left:12px;top:12px;">Category</span><img src="assets/silicones-category.png" alt="Silicone category products" /></a>
+                  <div class="product-body">
+                    <p class="product-category">Silicones</p>
+                    <h3>Silicone Sealant Range</h3>
+                    <div class="product-meta"><span>Assorted SKUs</span><span class="stock">Quote ready</span></div>
+                    <div class="product-actions"><a class="btn btn--orange" href="requestQuote.html">Request Quote</a><a class="icon-button" data-add-quote href="requestQuote.html">RFQ</a></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-grid">
+          <div><img class="footer-logo" src="../../public/logo.png" alt="Bewama" /><p>Suppliers of quality construction materials with ecommerce speed and procurement-grade quote support.</p></div>
+          <div><h3>Shop</h3><ul><li><a href="productListing.html">All products</a></li><li><a href="productListing.html">Silicones</a></li><li><a href="productListing.html">Adhesives</a></li></ul></div>
+          <div><h3>Buying Tools</h3><ul><li><a href="requestQuote.html">Request quote</a></li><li><a href="orderHistory.html">Order history</a></li><li><a href="checkout.html">Checkout</a></li></ul></div>
+          <div><h3>Support</h3><ul><li><a href="profTechResources.html">Technical resources</a></li><li><a href="profile.html">Account</a></li><li><a href="login.html">Sign in</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>Bewama catalog concept.</span><span>Built for approval before Next.js implementation.</span></div>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/bewama-ui.js"></script>
+</body>
+</html>

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 import { ArrowRight, Layers } from 'lucide-react'
+import { getFirstSafeImageSrc } from '@/lib/images'
 
 const SITE_URL = 'https://bewama.com'
 
@@ -27,12 +28,12 @@ export const metadata: Metadata = {
 export const revalidate = 1800
 
 const GRADIENTS = [
-  'from-[#003366] to-[#004a8f]',
-  'from-[#ec5b13] to-[#c74400]',
-  'from-[#1a1a2e] to-[#003366]',
-  'from-[#5c3d11] to-[#ec5b13]',
-  'from-[#0f4c75] to-[#003366]',
-  'from-[#003366] to-[#1a1a2e]',
+  'from-[#061f3f] to-[#004a8f]',
+  'from-[#ff5f14] to-[#c74400]',
+  'from-[#1a1a2e] to-[#061f3f]',
+  'from-[#5c3d11] to-[#ff5f14]',
+  'from-[#0f4c75] to-[#061f3f]',
+  'from-[#061f3f] to-[#1a1a2e]',
 ]
 
 export default async function CategoriesPage() {
@@ -49,7 +50,7 @@ export default async function CategoriesPage() {
   for (const row of rows ?? []) {
     if (!row.category) continue
     const existing = catMap.get(row.category)
-    const thumb = (row.images as string[] | null)?.[0] ?? null
+    const thumb = getFirstSafeImageSrc(row.images as string[] | null)
     if (existing) {
       existing.count++
       if (!existing.thumb && thumb) existing.thumb = thumb
@@ -67,12 +68,12 @@ export default async function CategoriesPage() {
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-2">
-          <span className="w-8 h-px bg-[#ec5b13]" />
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#ec5b13]">
+          <span className="w-8 h-px bg-[#ff5f14]" />
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#ff5f14]">
             Browse by type
           </span>
         </div>
-        <h1 className="text-4xl font-black text-[#003366] tracking-tight">
+        <h1 className="text-4xl font-black text-[#061f3f] tracking-tight">
           Product Categories
         </h1>
         <p className="text-gray-500 mt-2">
@@ -117,7 +118,7 @@ export default async function CategoriesPage() {
                       {count} product{count !== 1 ? 's' : ''}
                     </p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-[#ec5b13] group-hover:border-[#ec5b13] transition-all shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center group-hover:bg-[#ff5f14] group-hover:border-[#ff5f14] transition-all shrink-0">
                     <ArrowRight className="w-5 h-5 text-white" />
                   </div>
                 </div>

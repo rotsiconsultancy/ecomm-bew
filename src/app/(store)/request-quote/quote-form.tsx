@@ -75,11 +75,11 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-        <Link href="/" className="hover:text-[#003366] transition-colors">Home</Link>
+        <Link href="/" className="hover:text-[#061f3f] transition-colors">Home</Link>
         <span>/</span>
-        <Link href="/products" className="hover:text-[#003366] transition-colors">Products</Link>
+        <Link href="/products" className="hover:text-[#061f3f] transition-colors">Products</Link>
         <span>/</span>
-        <span className="text-[#003366] font-medium">Request a Quote</span>
+        <span className="text-[#061f3f] font-medium">Request a Quote</span>
       </nav>
 
       <div className="flex flex-col lg:flex-row gap-12">
@@ -89,11 +89,11 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
 
           {/* Page title */}
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-[#003366] rounded-xl flex items-center justify-center shrink-0 mt-1">
+            <div className="w-12 h-12 bg-[#061f3f] rounded-xl flex items-center justify-center shrink-0 mt-1">
               <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-extrabold text-[#003366]">Request a Quote</h1>
+              <h1 className="text-3xl font-extrabold text-[#061f3f]">Request a Quote</h1>
               <p className="text-gray-500 mt-1 text-base">
                 For bulk orders or custom pricing — we respond within 24 hours.
               </p>
@@ -131,8 +131,8 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
             {/* ── Section 1: Contact Info ─────────────────────────── */}
             <Card className="p-6 rounded-2xl border border-gray-100 shadow-sm space-y-5">
               <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
-                <span className="w-6 h-6 rounded-full bg-[#003366] text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
-                <h2 className="font-bold text-[#003366]">Contact Information</h2>
+                <span className="w-6 h-6 rounded-full bg-[#061f3f] text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
+                <h2 className="font-bold text-[#061f3f]">Contact Information</h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -198,7 +198,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
                   required
                   rows={4}
                   placeholder="Describe what you need — quantities, timeline, delivery location, special requirements…"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#003366] focus:bg-white placeholder:text-gray-400"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#061f3f] focus:bg-white placeholder:text-gray-400"
                 />
               </div>
             </Card>
@@ -206,8 +206,8 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
             {/* ── Section 2: Products ─────────────────────────────── */}
             <Card className="p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
-                <span className="w-6 h-6 rounded-full bg-[#003366] text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
-                <h2 className="font-bold text-[#003366]">Products Required</h2>
+                <span className="w-6 h-6 rounded-full bg-[#061f3f] text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
+                <h2 className="font-bold text-[#061f3f]">Products Required</h2>
               </div>
 
               <div className="space-y-3">
@@ -249,7 +249,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
               <button
                 type="button"
                 onClick={addItem}
-                className="flex items-center gap-2 text-sm font-semibold text-[#003366] hover:text-[#ec5b13] transition-colors"
+                className="flex items-center gap-2 text-sm font-semibold text-[#061f3f] hover:text-[#ff5f14] transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Another Item
@@ -260,7 +260,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-13 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-extrabold text-base rounded-xl shadow-md active:scale-[0.99] transition-all"
+              className="w-full h-13 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-extrabold text-base rounded-xl shadow-md active:scale-[0.99] transition-all"
             >
               {loading ? (
                 <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Submitting…</>
@@ -280,7 +280,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
         <aside className="w-full lg:w-80 xl:w-96 space-y-6 lg:pt-16">
 
           {/* Why Bewama */}
-          <div className="bg-[#003366] text-white p-7 rounded-2xl shadow-xl">
+          <div className="bg-[#061f3f] text-white p-7 rounded-2xl shadow-xl">
             <h3 className="text-xl font-bold mb-5">Why Choose Bewama?</h3>
             <div className="space-y-5">
               {[
@@ -289,7 +289,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
                 { n: '03', title: 'Dedicated Account Manager',   desc: 'One point of contact for all your industrial needs.' },
               ].map(({ n, title, desc }) => (
                 <div key={n} className="flex gap-3.5">
-                  <div className="w-9 h-9 bg-[#ec5b13]/20 rounded-full flex items-center justify-center text-[#ec5b13] font-bold text-xs shrink-0">
+                  <div className="w-9 h-9 bg-[#ff5f14]/20 rounded-full flex items-center justify-center text-[#ff5f14] font-bold text-xs shrink-0">
                     {n}
                   </div>
                   <div>
@@ -303,20 +303,20 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
 
           {/* Direct Contact */}
           <div className="bg-white p-7 rounded-2xl border border-gray-100 shadow-sm">
-            <h4 className="text-lg font-bold text-[#003366] mb-5">Direct Contact</h4>
+            <h4 className="text-lg font-bold text-[#061f3f] mb-5">Direct Contact</h4>
             <div className="space-y-4">
               {contact.phone && (
-                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex items-center gap-3.5 text-gray-600 hover:text-[#003366] transition-colors group">
+                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex items-center gap-3.5 text-gray-600 hover:text-[#061f3f] transition-colors group">
                   <div className="w-9 h-9 bg-orange-50 rounded-full flex items-center justify-center shrink-0 group-hover:bg-orange-100 transition-colors">
-                    <Phone className="h-4 w-4 text-[#ec5b13]" />
+                    <Phone className="h-4 w-4 text-[#ff5f14]" />
                   </div>
                   <span className="text-sm font-medium">{contact.phone}</span>
                 </a>
               )}
               {contact.email && (
-                <a href={`mailto:${contact.email}`} className="flex items-center gap-3.5 text-gray-600 hover:text-[#003366] transition-colors group">
+                <a href={`mailto:${contact.email}`} className="flex items-center gap-3.5 text-gray-600 hover:text-[#061f3f] transition-colors group">
                   <div className="w-9 h-9 bg-orange-50 rounded-full flex items-center justify-center shrink-0 group-hover:bg-orange-100 transition-colors">
-                    <Mail className="h-4 w-4 text-[#ec5b13]" />
+                    <Mail className="h-4 w-4 text-[#ff5f14]" />
                   </div>
                   <span className="text-sm font-medium">{contact.email}</span>
                 </a>
@@ -324,7 +324,7 @@ export function QuoteForm({ product, prefill, contact, isLoggedIn, userName }: P
               {contact.address && (
                 <div className="flex items-start gap-3.5 text-gray-600">
                   <div className="w-9 h-9 bg-orange-50 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                    <MapPin className="h-4 w-4 text-[#ec5b13]" />
+                    <MapPin className="h-4 w-4 text-[#ff5f14]" />
                   </div>
                   <span className="text-sm font-medium leading-relaxed">{contact.address}</span>
                 </div>

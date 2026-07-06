@@ -11,10 +11,8 @@ import { AddToCartButton } from '@/components/add-to-cart-button'
 import { createClient, createBuildClient } from '@/lib/supabase/server'
 import { generateProductSchema } from '@/lib/seo/product-schema'
 import { generateHTML } from '@tiptap/html'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TiptapImage from '@tiptap/extension-image'
-import TiptapLink from '@tiptap/extension-link'
+import { tiptapExtensions } from '@/lib/tiptap-extensions'
+import { getFirstSafeImageSrc, getSafeImageSrc } from '@/lib/images'
 
 const SITE_URL = 'https://bewama.com'
 
@@ -89,7 +87,7 @@ export default async function ProductDetailPage({ params }: Props) {
   if (product.description) {
     try {
       const json = JSON.parse(product.description)
-      htmlContent = generateHTML(json, [StarterKit, Underline, TiptapImage, TiptapLink])
+      htmlContent = generateHTML(json, tiptapExtensions)
     } catch {
       htmlContent = ''
     }
@@ -100,7 +98,7 @@ export default async function ProductDetailPage({ params }: Props) {
   const isQuote  = product.pricing_type === 'quote'
   const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
   const symbol   = CURRENCY_SYMBOLS[product.currency] ?? product.currency + ' '
-  const images: string[] = product.images ?? []
+  const images: string[] = (product.images ?? []).filter((image: string) => getSafeImageSrc(image))
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -146,22 +144,22 @@ export default async function ProductDetailPage({ params }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center text-sm text-gray-500 mb-8 gap-2">
-          <Link href="/" className="hover:text-[#ec5b13] transition-colors">Home</Link>
+          <Link href="/" className="hover:text-[#ff5f14] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/products" className="hover:text-[#ec5b13] transition-colors">Products</Link>
+          <Link href="/products" className="hover:text-[#ff5f14] transition-colors">Products</Link>
           {product.category && (
             <>
               <span>/</span>
               <Link
                 href={`/products?category=${encodeURIComponent(product.category)}`}
-                className="hover:text-[#ec5b13] transition-colors"
+                className="hover:text-[#ff5f14] transition-colors"
               >
                 {product.category}
               </Link>
             </>
           )}
           <span>/</span>
-          <span className="text-[#003366] font-semibold truncate">{product.name}</span>
+          <span className="text-[#061f3f] font-semibold truncate">{product.name}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -175,7 +173,7 @@ export default async function ProductDetailPage({ params }: Props) {
                   {product.category}
                 </Badge>
               )}
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[#003366] leading-tight">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-[#061f3f] leading-tight">
                 {product.name}
               </h1>
               {product.brand && (
@@ -187,7 +185,7 @@ export default async function ProductDetailPage({ params }: Props) {
             <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
               {isQuote ? (
                 <>
-                  <span className="text-3xl font-extrabold text-[#ec5b13]">Price on Request</span>
+                  <span className="text-3xl font-extrabold text-[#ff5f14]">Price on Request</span>
                   <p className="text-sm text-gray-400 mt-2">
                     Submit a quote request and our team will respond within 24 hours.
                   </p>
@@ -195,7 +193,7 @@ export default async function ProductDetailPage({ params }: Props) {
               ) : (
                 <>
                   <div className="flex items-baseline gap-3">
-                    <span className="text-4xl font-extrabold text-[#003366]">
+                    <span className="text-4xl font-extrabold text-[#061f3f]">
                       {symbol}{product.price.toLocaleString()}
                     </span>
                   </div>
@@ -244,8 +242,8 @@ export default async function ProductDetailPage({ params }: Props) {
                   variant={isQuote ? 'default' : 'outline'}
                   className={`w-full h-12 font-bold text-base transition-all ${
                     isQuote
-                      ? 'bg-[#ec5b13] hover:bg-[#d14d0d] text-white shadow-lg'
-                      : 'border-2 border-[#003366] text-[#003366] hover:bg-[#003366] hover:text-white'
+                      ? 'bg-[#ff5f14] hover:bg-[#e84f0a] text-white shadow-lg'
+                      : 'border-2 border-[#061f3f] text-[#061f3f] hover:bg-[#061f3f] hover:text-white'
                   }`}
                 >
                   <FileText className="w-5 h-5 mr-2" />
@@ -256,7 +254,7 @@ export default async function ProductDetailPage({ params }: Props) {
               <Link href="/products" className="block">
                 <Button
                   variant="outline"
-                  className="w-full h-10 border border-gray-200 text-gray-500 hover:text-[#003366] hover:border-[#003366] font-medium transition-all"
+                  className="w-full h-10 border border-gray-200 text-gray-500 hover:text-[#061f3f] hover:border-[#061f3f] font-medium transition-all"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Browse More Products
@@ -267,16 +265,16 @@ export default async function ProductDetailPage({ params }: Props) {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
               <div className="text-center space-y-2">
-                <ShieldCheck className="mx-auto h-7 w-7 text-[#ec5b13]" />
-                <p className="text-xs font-bold text-[#003366]">Quality Assured</p>
+                <ShieldCheck className="mx-auto h-7 w-7 text-[#ff5f14]" />
+                <p className="text-xs font-bold text-[#061f3f]">Quality Assured</p>
               </div>
               <div className="text-center space-y-2">
-                <Truck className="mx-auto h-7 w-7 text-[#ec5b13]" />
-                <p className="text-xs font-bold text-[#003366]">Fast Delivery</p>
+                <Truck className="mx-auto h-7 w-7 text-[#ff5f14]" />
+                <p className="text-xs font-bold text-[#061f3f]">Fast Delivery</p>
               </div>
               <div className="text-center space-y-2">
-                <RefreshCw className="mx-auto h-7 w-7 text-[#ec5b13]" />
-                <p className="text-xs font-bold text-[#003366]">Reliable Supply</p>
+                <RefreshCw className="mx-auto h-7 w-7 text-[#ff5f14]" />
+                <p className="text-xs font-bold text-[#061f3f]">Reliable Supply</p>
               </div>
             </div>
           </div>
@@ -285,9 +283,9 @@ export default async function ProductDetailPage({ params }: Props) {
         {/* Description */}
         {htmlContent && (
           <div className="mt-16 max-w-3xl">
-            <h2 className="text-2xl font-bold text-[#003366] mb-6">Product Description</h2>
+            <h2 className="text-2xl font-bold text-[#061f3f] mb-6">Product Description</h2>
             <div
-              className="prose prose-slate prose-lg max-w-none prose-headings:text-[#003366] prose-a:text-[#ec5b13] prose-img:rounded-xl"
+              className="prose prose-slate prose-lg max-w-none prose-headings:text-[#061f3f] prose-a:text-[#ff5f14] prose-img:rounded-xl"
               dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
           </div>
@@ -296,13 +294,13 @@ export default async function ProductDetailPage({ params }: Props) {
         {/* Related Products */}
         {related && related.length > 0 && (
           <div className="mt-20">
-            <h2 className="text-2xl font-bold text-[#003366] mb-8">
+            <h2 className="text-2xl font-bold text-[#061f3f] mb-8">
               More in {product.category}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {related.map((rel) => {
                 const sym   = CURRENCY_SYMBOLS[rel.currency] ?? rel.currency + ' '
-                const thumb = rel.images?.[0]
+                const thumb = getFirstSafeImageSrc(rel.images)
                 return (
                   <Link key={rel.id} href={`/products/${rel.slug}`} className="group">
                     <div className="bg-gray-50 rounded-xl aspect-square flex items-center justify-center overflow-hidden mb-3 border border-gray-100">
@@ -318,12 +316,12 @@ export default async function ProductDetailPage({ params }: Props) {
                         <Package className="w-10 h-10 text-gray-200" />
                       )}
                     </div>
-                    <p className="font-bold text-[#003366] text-sm line-clamp-2 group-hover:text-[#ec5b13] transition-colors">
+                    <p className="font-bold text-[#061f3f] text-sm line-clamp-2 group-hover:text-[#ff5f14] transition-colors">
                       {rel.name}
                     </p>
                     <p className="text-sm font-semibold text-gray-500 mt-1">
                       {rel.pricing_type === 'quote'
-                        ? <span className="text-[#ec5b13]">Price on Request</span>
+                        ? <span className="text-[#ff5f14]">Price on Request</span>
                         : `${sym}${rel.price.toLocaleString()}`}
                     </p>
                   </Link>
@@ -359,7 +357,7 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
       </div>
       {thumbs.length > 0 && (
         <div className="grid grid-cols-4 gap-3">
-          <div className="bg-white rounded-xl border-2 border-[#ec5b13] overflow-hidden aspect-square flex items-center justify-center p-2">
+          <div className="bg-white rounded-xl border-2 border-[#ff5f14] overflow-hidden aspect-square flex items-center justify-center p-2">
             {primary && (
               <Image src={primary} alt={`${name} 1`} width={80} height={80} className="object-contain" />
             )}

@@ -14,7 +14,7 @@ export default async function AdminSettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-extrabold text-[#003366]">Settings</h1>
+        <h1 className="text-3xl font-extrabold text-[#061f3f]">Settings</h1>
         <p className="text-gray-500 mt-1">Configure your store, credentials, logistics, and notifications.</p>
       </div>
 

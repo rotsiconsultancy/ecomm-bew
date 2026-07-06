@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Search, X, Package, Layers, ArrowRight, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { getFirstSafeImageSrc } from '@/lib/images'
 
 interface ProductResult {
   id: string
@@ -154,18 +155,18 @@ export function SearchCommand() {
         {/* Desktop search trigger */}
         <button
           onClick={() => setOpen(true)}
-          className="hidden md:flex flex-1 max-w-2xl items-center gap-3 px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-400 hover:border-gray-300 hover:text-gray-500 transition-colors cursor-text"
+          className="hidden min-h-12 flex-1 cursor-text items-center gap-3 rounded-lg border border-[#d8e0ea] bg-[#f4f7fa] px-4 text-sm font-bold text-[#728196] transition-colors hover:border-[#ff5f14]/50 hover:bg-white md:flex"
         >
           <Search className="w-4 h-4 shrink-0" />
-          <span className="flex-1 text-left">Search products, categories...</span>
-          <kbd className="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-gray-100 text-gray-400 rounded border border-gray-200">
+          <span className="flex-1 text-left">Search adhesives, silicones, abrasives...</span>
+          <kbd className="hidden items-center gap-0.5 rounded border border-[#d8e0ea] bg-white px-1.5 py-0.5 font-mono text-xs text-[#728196] lg:inline-flex">
             Ctrl K
           </kbd>
         </button>
         {/* Mobile search icon */}
         <button
           onClick={() => setOpen(true)}
-          className="md:hidden p-2 text-gray-500 hover:text-[#003366] transition-colors"
+          className="p-2 text-[#061f3f] transition-colors hover:text-[#ff5f14] md:hidden"
           aria-label="Search"
         >
           <Search className="w-5 h-5" />
@@ -181,16 +182,16 @@ export function SearchCommand() {
     <div className="fixed inset-0 z-100">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#03152d]/55 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
 
       {/* Modal */}
-      <div className="relative max-w-xl mx-auto mt-[10vh] mx-4">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+      <div className="relative mx-4 mt-[10vh] max-w-xl sm:mx-auto">
+        <div className="overflow-hidden rounded-lg border border-[#d8e0ea] bg-white shadow-2xl">
           {/* Search input */}
-          <div className="flex items-center gap-3 px-5 border-b border-gray-100">
-            <Search className="w-5 h-5 text-gray-400 shrink-0" />
+          <div className="flex items-center gap-3 border-b border-[#edf1f5] px-5">
+            <Search className="w-5 h-5 text-[#728196] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -198,12 +199,12 @@ export function SearchCommand() {
               onChange={(e) => onInputChange(e.target.value)}
               onKeyDown={onKeyDown}
               placeholder="Search products, categories..."
-              className="flex-1 py-4 text-base outline-none placeholder:text-gray-400"
+              className="flex-1 py-4 text-base font-bold outline-none placeholder:text-[#728196]"
             />
             {loading && <Loader2 className="w-4 h-4 text-gray-400 animate-spin shrink-0" />}
             <button
               onClick={() => setOpen(false)}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-1 text-[#728196] transition-colors hover:text-[#061f3f]"
             >
               <X className="w-5 h-5" />
             </button>
@@ -214,7 +215,7 @@ export function SearchCommand() {
             {/* Categories */}
             {categories.length > 0 && (
               <div className="px-3 py-2">
-                <p className="px-2 py-1.5 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <p className="px-2 py-1.5 text-xs font-black uppercase tracking-widest text-[#728196]">
                   Categories
                 </p>
                 {categories.map((cat, i) => (
@@ -223,15 +224,15 @@ export function SearchCommand() {
                     onClick={() => navigate(`/products?category=${encodeURIComponent(cat.name)}`)}
                     onMouseEnter={() => setActiveIndex(i)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                      activeIndex === i ? 'bg-gray-100' : 'hover:bg-gray-50'
+                      activeIndex === i ? 'bg-[#f4f7fa]' : 'hover:bg-[#f4f7fa]'
                     }`}
                   >
-                    <div className="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
-                      <Layers className="w-4 h-4 text-[#ec5b13]" />
+                    <div className="w-9 h-9 rounded-lg bg-[#fff1e8] flex items-center justify-center shrink-0">
+                      <Layers className="w-4 h-4 text-[#ff5f14]" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-[#003366] truncate">{cat.name}</p>
-                      <p className="text-xs text-gray-400">{cat.count} product{cat.count !== 1 ? 's' : ''}</p>
+                      <p className="text-sm font-black text-[#061f3f] truncate">{cat.name}</p>
+                      <p className="text-xs text-[#728196]">{cat.count} product{cat.count !== 1 ? 's' : ''}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-gray-300 shrink-0" />
                   </button>
@@ -242,12 +243,12 @@ export function SearchCommand() {
             {/* Products */}
             {products.length > 0 && (
               <div className="px-3 py-2">
-                <p className="px-2 py-1.5 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <p className="px-2 py-1.5 text-xs font-black text-[#728196] uppercase tracking-widest">
                   Products
                 </p>
                 {products.map((product, i) => {
                   const globalIdx = categories.length + i
-                  const thumb = product.images?.[0] ?? null
+                  const thumb = getFirstSafeImageSrc(product.images)
                   const sym = CURRENCY_SYMBOLS[product.currency] ?? `${product.currency} `
 
                   return (
@@ -256,27 +257,27 @@ export function SearchCommand() {
                       onClick={() => navigate(`/products/${product.slug}`)}
                       onMouseEnter={() => setActiveIndex(globalIdx)}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                        activeIndex === globalIdx ? 'bg-gray-100' : 'hover:bg-gray-50'
+                        activeIndex === globalIdx ? 'bg-[#f4f7fa]' : 'hover:bg-[#f4f7fa]'
                       }`}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 rounded-lg bg-[#f4f7fa] border border-[#edf1f5] flex items-center justify-center shrink-0 overflow-hidden">
                         {thumb ? (
                           <Image src={thumb} alt={product.name} width={40} height={40} className="object-cover w-full h-full" />
                         ) : (
-                          <Package className="w-4 h-4 text-gray-300" />
+                          <Package className="w-4 h-4 text-[#728196]" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-[#003366] truncate">{product.name}</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-sm font-black text-[#061f3f] truncate">{product.name}</p>
+                        <p className="text-xs text-[#728196]">
                           {product.category && <span>{product.category} · </span>}
                           {product.pricing_type === 'quote'
-                            ? <span className="text-[#ec5b13]">Quote</span>
+                            ? <span className="text-[#ff5f14]">Quote</span>
                             : <span>{sym}{product.price.toLocaleString()}</span>
                           }
                         </p>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-gray-300 shrink-0" />
+                      <ArrowRight className="w-4 h-4 text-[#728196] shrink-0" />
                     </button>
                   )
                 })}
@@ -286,11 +287,11 @@ export function SearchCommand() {
             {/* Empty state */}
             {showEmpty && (
               <div className="px-5 py-10 text-center">
-                <Package className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                <p className="text-sm text-gray-400">No results for &ldquo;{query}&rdquo;</p>
+                <Package className="w-10 h-10 text-[#728196] mx-auto mb-3" />
+                <p className="text-sm text-[#728196]">No results for &ldquo;{query}&rdquo;</p>
                 <button
                   onClick={() => navigate('/products')}
-                  className="mt-3 text-sm font-semibold text-[#ec5b13] hover:underline"
+                  className="mt-3 text-sm font-black text-[#ff5f14] hover:underline"
                 >
                   Browse all products
                 </button>
@@ -300,17 +301,17 @@ export function SearchCommand() {
             {/* Idle state */}
             {query.length < 2 && (
               <div className="px-5 py-8 text-center">
-                <p className="text-sm text-gray-400">Type at least 2 characters to search</p>
+                <p className="text-sm text-[#728196]">Type at least 2 characters to search</p>
               </div>
             )}
           </div>
 
           {/* Footer */}
-          <div className="px-5 py-2.5 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+          <div className="px-5 py-2.5 border-t border-[#edf1f5] flex items-center justify-between text-xs text-[#728196]">
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] border border-gray-200">↑↓</kbd> Navigate</span>
-              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] border border-gray-200">↵</kbd> Open</span>
-              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] border border-gray-200">esc</kbd> Close</span>
+              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-[#f4f7fa] rounded text-[10px] border border-[#d8e0ea]">↑↓</kbd> Navigate</span>
+              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-[#f4f7fa] rounded text-[10px] border border-[#d8e0ea]">↵</kbd> Open</span>
+              <span className="flex items-center gap-1"><kbd className="px-1 py-0.5 bg-[#f4f7fa] rounded text-[10px] border border-[#d8e0ea]">esc</kbd> Close</span>
             </div>
           </div>
         </div>

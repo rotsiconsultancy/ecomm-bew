@@ -49,7 +49,7 @@ export function PointsAdminTabs({ config, ledger: initialLedger, users }: Props)
               onClick={() => setActiveTab(tab.key)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex-1 justify-center ${
                 activeTab === tab.key
-                  ? 'bg-white text-[#003366] shadow-sm'
+                  ? 'bg-white text-[#061f3f] shadow-sm'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -155,7 +155,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
                 const fb = feedback[cfg.id]
                 return (
                   <tr key={cfg.id} className="hover:bg-gray-50/50">
-                    <td className="px-5 py-3 font-semibold text-[#003366]">{cfg.label}</td>
+                    <td className="px-5 py-3 font-semibold text-[#061f3f]">{cfg.label}</td>
                     <td className="px-5 py-3">
                       <Badge variant="secondary" className="font-mono text-xs">{cfg.action_key}</Badge>
                     </td>
@@ -183,7 +183,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
                           }))
                         }
                         className={`shrink-0 w-11 h-6 rounded-full transition-colors relative overflow-hidden ${
-                          edit.is_active ? 'bg-[#003366]' : 'bg-gray-200'
+                          edit.is_active ? 'bg-[#061f3f]' : 'bg-gray-200'
                         }`}
                       >
                         <span
@@ -204,7 +204,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
                           size="sm"
                           onClick={() => handleSave(cfg.id)}
                           disabled={isPending && savingId === cfg.id}
-                          className="bg-[#003366] hover:bg-[#002244] text-white text-xs font-bold h-7 px-3"
+                          className="bg-[#061f3f] hover:bg-[#03152d] text-white text-xs font-bold h-7 px-3"
                         >
                           {isPending && savingId === cfg.id ? (
                             <Loader2 className="h-3 w-3 animate-spin" />
@@ -238,7 +238,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
       {/* Add new action */}
       {showAdd ? (
         <Card className="rounded-xl border-none shadow-sm p-5 space-y-4">
-          <h3 className="text-sm font-bold text-[#003366]">Add New Points Action</h3>
+          <h3 className="text-sm font-bold text-[#061f3f]">Add New Points Action</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-gray-500">Action Key</label>
@@ -276,7 +276,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
               onClick={handleAdd}
               disabled={isPending || !newKey.trim() || !newLabel.trim()}
               size="sm"
-              className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold"
+              className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold"
             >
               {isPending ? <Loader2 className="h-3 w-3 animate-spin mr-1" /> : <Plus className="h-3 w-3 mr-1" />}
               Add Action
@@ -300,7 +300,7 @@ function ConfigureTab({ config }: { config: PointsConfig[] }) {
         <Button
           variant="outline"
           onClick={() => setShowAdd(true)}
-          className="border-dashed border-gray-300 text-gray-500 hover:text-[#003366] hover:border-[#003366]"
+          className="border-dashed border-gray-300 text-gray-500 hover:text-[#061f3f] hover:border-[#061f3f]"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add New Action
@@ -377,7 +377,7 @@ function GrantTab({ users }: { users: { id: string; full_name: string }[] }) {
                 }}
                 className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center justify-between border-b border-gray-100 last:border-none"
               >
-                <span className="font-semibold text-[#003366]">{u.full_name}</span>
+                <span className="font-semibold text-[#061f3f]">{u.full_name}</span>
                 <span className="text-xs text-gray-400 font-mono">{u.id.slice(0, 8)}</span>
               </button>
             ))}
@@ -417,7 +417,7 @@ function GrantTab({ users }: { users: { id: string; full_name: string }[] }) {
       <Button
         onClick={handleGrant}
         disabled={isPending || !selectedUser || !points || !note.trim()}
-        className="bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold"
+        className="bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold"
       >
         {isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
         Grant Points
@@ -469,7 +469,7 @@ function ActivityTab({
             <select
               value={actionFilter}
               onChange={(e) => setActionFilter(e.target.value)}
-              className="h-9 px-3 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#003366] outline-none"
+              className="h-9 px-3 border border-gray-200 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-[#061f3f] outline-none"
             >
               <option value="">All actions</option>
               {actionKeys.map((k) => (
@@ -499,7 +499,7 @@ function ActivityTab({
             onClick={handleFilter}
             disabled={isPending}
             size="sm"
-            className="bg-[#003366] hover:bg-[#002244] text-white font-bold h-9"
+            className="bg-[#061f3f] hover:bg-[#03152d] text-white font-bold h-9"
           >
             {isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Filter'}
           </Button>
@@ -528,7 +528,7 @@ function ActivityTab({
               <tbody className="divide-y divide-gray-100">
                 {ledger.map((row) => (
                   <tr key={row.id} className="hover:bg-gray-50/50">
-                    <td className="px-5 py-3 font-semibold text-[#003366]">
+                    <td className="px-5 py-3 font-semibold text-[#061f3f]">
                       {row.user_name}
                     </td>
                     <td className="px-5 py-3">

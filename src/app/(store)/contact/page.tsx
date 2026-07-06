@@ -37,7 +37,7 @@ export default async function ContactPage() {
       {/* Header */}
       <div className="mb-12">
         <p className="text-sm text-gray-400 mb-2">Get in Touch</p>
-        <h1 className="text-4xl font-extrabold text-[#003366]">Contact Us</h1>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Contact Us</h1>
         <p className="text-gray-500 mt-3 max-w-xl">
           Have a question, need a quote, or want to discuss a bulk order? Reach out — our team responds within 24 hours.
         </p>
@@ -49,14 +49,14 @@ export default async function ContactPage() {
           {/* Email */}
           <a
             href={`mailto:${email}`}
-            className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-[#ec5b13]/30 hover:shadow-sm transition-all group"
+            className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-[#ff5f14]/30 hover:shadow-sm transition-all group"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#003366]/5 flex items-center justify-center shrink-0 group-hover:bg-[#ec5b13]/10 transition-colors">
-              <Mail className="w-5 h-5 text-[#003366] group-hover:text-[#ec5b13] transition-colors" />
+            <div className="w-10 h-10 rounded-xl bg-[#061f3f]/5 flex items-center justify-center shrink-0 group-hover:bg-[#ff5f14]/10 transition-colors">
+              <Mail className="w-5 h-5 text-[#061f3f] group-hover:text-[#ff5f14] transition-colors" />
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-800">Email</p>
-              <p className="text-sm text-[#ec5b13] mt-0.5">{email}</p>
+              <p className="text-sm text-[#ff5f14] mt-0.5">{email}</p>
             </div>
           </a>
 
@@ -64,10 +64,10 @@ export default async function ContactPage() {
           {phone && (
             <a
               href={`tel:${phone.replace(/\s/g, '')}`}
-              className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-[#ec5b13]/30 hover:shadow-sm transition-all group"
+              className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white hover:border-[#ff5f14]/30 hover:shadow-sm transition-all group"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#003366]/5 flex items-center justify-center shrink-0 group-hover:bg-[#ec5b13]/10 transition-colors">
-                <Phone className="w-5 h-5 text-[#003366] group-hover:text-[#ec5b13] transition-colors" />
+              <div className="w-10 h-10 rounded-xl bg-[#061f3f]/5 flex items-center justify-center shrink-0 group-hover:bg-[#ff5f14]/10 transition-colors">
+                <Phone className="w-5 h-5 text-[#061f3f] group-hover:text-[#ff5f14] transition-colors" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-800">Phone</p>
@@ -79,8 +79,8 @@ export default async function ContactPage() {
           {/* Address */}
           {address && (
             <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white">
-              <div className="w-10 h-10 rounded-xl bg-[#003366]/5 flex items-center justify-center shrink-0">
-                <MapPin className="w-5 h-5 text-[#003366]" />
+              <div className="w-10 h-10 rounded-xl bg-[#061f3f]/5 flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5 text-[#061f3f]" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-800">Office</p>
@@ -91,8 +91,8 @@ export default async function ContactPage() {
 
           {/* Business Hours */}
           <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100 bg-white">
-            <div className="w-10 h-10 rounded-xl bg-[#003366]/5 flex items-center justify-center shrink-0">
-              <Clock className="w-5 h-5 text-[#003366]" />
+            <div className="w-10 h-10 rounded-xl bg-[#061f3f]/5 flex items-center justify-center shrink-0">
+              <Clock className="w-5 h-5 text-[#061f3f]" />
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-800">Business Hours</p>
@@ -108,7 +108,7 @@ export default async function ContactPage() {
             method="GET"
             className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 space-y-5"
           >
-            <h2 className="text-lg font-bold text-[#003366]">Send us a message</h2>
+            <h2 className="text-lg font-bold text-[#061f3f]">Send us a message</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -121,7 +121,7 @@ export default async function ContactPage() {
                   type="text"
                   required
                   placeholder="Jane Smith"
-                  className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ec5b13] focus:ring-1 focus:ring-[#ec5b13] outline-none transition-colors"
+                  className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ff5f14] focus:ring-1 focus:ring-[#ff5f14] outline-none transition-colors"
                 />
               </div>
               <div>
@@ -134,7 +134,7 @@ export default async function ContactPage() {
                   type="email"
                   required
                   placeholder="name@company.com"
-                  className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ec5b13] focus:ring-1 focus:ring-[#ec5b13] outline-none transition-colors"
+                  className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ff5f14] focus:ring-1 focus:ring-[#ff5f14] outline-none transition-colors"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@ export default async function ContactPage() {
                 name="phone"
                 type="tel"
                 placeholder="+254 7XX XXX XXX"
-                className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ec5b13] focus:ring-1 focus:ring-[#ec5b13] outline-none transition-colors"
+                className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ff5f14] focus:ring-1 focus:ring-[#ff5f14] outline-none transition-colors"
               />
             </div>
 
@@ -162,7 +162,7 @@ export default async function ContactPage() {
                 type="text"
                 required
                 placeholder="Bulk order enquiry"
-                className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ec5b13] focus:ring-1 focus:ring-[#ec5b13] outline-none transition-colors"
+                className="w-full h-11 rounded-lg border border-gray-300 px-3 text-sm focus:border-[#ff5f14] focus:ring-1 focus:ring-[#ff5f14] outline-none transition-colors"
               />
             </div>
 
@@ -176,20 +176,20 @@ export default async function ContactPage() {
                 required
                 rows={5}
                 placeholder="Tell us how we can help..."
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-[#ec5b13] focus:ring-1 focus:ring-[#ec5b13] outline-none transition-colors resize-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-[#ff5f14] focus:ring-1 focus:ring-[#ff5f14] outline-none transition-colors resize-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full h-12 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-semibold rounded-xl transition-colors text-sm"
+              className="w-full h-12 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-semibold rounded-xl transition-colors text-sm"
             >
               Send Message
             </button>
 
             <p className="text-xs text-gray-400 text-center">
               This opens your email client with a pre-filled message. For bulk orders,{' '}
-              <Link href="/request-quote" className="text-[#ec5b13] underline">
+              <Link href="/request-quote" className="text-[#ff5f14] underline">
                 request a quote
               </Link>{' '}
               instead.
@@ -199,7 +199,7 @@ export default async function ContactPage() {
       </div>
 
       {/* Quick links CTA */}
-      <div className="mt-14 bg-[#003366] text-white rounded-2xl p-8 text-center">
+      <div className="mt-14 bg-[#061f3f] text-white rounded-2xl p-8 text-center">
         <h3 className="text-xl font-bold mb-2">Need something specific?</h3>
         <p className="text-gray-300 text-sm mb-6 max-w-md mx-auto">
           For product enquiries, quotes, or order support — use one of these shortcuts.
@@ -207,7 +207,7 @@ export default async function ContactPage() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/request-quote"
-            className="inline-flex items-center gap-2 bg-[#ec5b13] hover:bg-[#d14d0d] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            className="inline-flex items-center gap-2 bg-[#ff5f14] hover:bg-[#e84f0a] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
           >
             Request a Quote <ArrowRight className="w-4 h-4" />
           </Link>
@@ -222,10 +222,10 @@ export default async function ContactPage() {
 
       {/* Related links */}
       <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
-        <Link href="/faq" className="hover:text-[#003366] transition-colors">FAQ</Link>
-        <Link href="/shipping-policy" className="hover:text-[#003366] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#003366] transition-colors">Returns &amp; Refunds</Link>
-        <Link href="/quality-assurance" className="hover:text-[#003366] transition-colors">Quality Assurance</Link>
+        <Link href="/faq" className="hover:text-[#061f3f] transition-colors">FAQ</Link>
+        <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/quality-assurance" className="hover:text-[#061f3f] transition-colors">Quality Assurance</Link>
       </div>
     </div>
   )

@@ -35,11 +35,11 @@ export default async function QuoteDetailPage({ params }: Props) {
   return (
     <div className="max-w-3xl space-y-6">
       <div className="flex items-center gap-3">
-        <Link href="/admin/quote-management" className="text-gray-400 hover:text-[#003366] transition-colors">
+        <Link href="/admin/quote-management" className="text-gray-400 hover:text-[#061f3f] transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-extrabold text-[#003366]">Quote Detail</h1>
+          <h1 className="text-2xl font-extrabold text-[#061f3f]">Quote Detail</h1>
           <p className="text-xs text-gray-400 font-mono mt-0.5">{quote.id}</p>
         </div>
         <Badge className={`ml-auto border-none font-semibold capitalize ${STATUS_STYLES[status] ?? 'bg-gray-100 text-gray-600'}`}>
@@ -49,7 +49,7 @@ export default async function QuoteDetailPage({ params }: Props) {
 
       {/* Contact Info */}
       <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
-        <h2 className="font-bold text-[#003366] border-b pb-2">Contact Information</h2>
+        <h2 className="font-bold text-[#061f3f] border-b pb-2">Contact Information</h2>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-gray-400 text-xs font-semibold uppercase">Full Name</p>
@@ -81,14 +81,14 @@ export default async function QuoteDetailPage({ params }: Props) {
       {/* Message */}
       {quote.message && (
         <Card className="p-6 rounded-2xl border-none shadow-sm">
-          <h2 className="font-bold text-[#003366] border-b pb-2 mb-3">Message</h2>
+          <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-3">Message</h2>
           <p className="text-sm text-gray-700 whitespace-pre-wrap">{quote.message}</p>
         </Card>
       )}
 
       {/* Items */}
       <Card className="p-6 rounded-2xl border-none shadow-sm">
-        <h2 className="font-bold text-[#003366] border-b pb-2 mb-4">Products Requested</h2>
+        <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-4">Products Requested</h2>
         <div className="space-y-2">
           {items.map((item, i) => (
             <div key={i} className="flex items-center justify-between text-sm py-2 border-b last:border-0">
