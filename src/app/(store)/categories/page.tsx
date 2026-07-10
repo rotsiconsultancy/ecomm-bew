@@ -43,6 +43,7 @@ export default async function CategoriesPage() {
     .from('products')
     .select('category, images')
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
     .not('category', 'is', null)
 
   // Build categories: name → { count, thumb }

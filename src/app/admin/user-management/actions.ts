@@ -14,7 +14,7 @@ function createAdminClient() {
   )
 }
 
-export type UserRole = 'admin' | 'staff' | 'wholesale' | 'customer'
+export type UserRole = 'admin' | 'staff' | 'wholesale' | 'customer' | 'supplier'
 
 export interface CombinedUser {
   id: string
@@ -98,9 +98,10 @@ export async function getUserById(userId: string): Promise<CombinedUser | null> 
     .maybeSingle()
 
   const authUser = authData.user
+  const bannedUntil = (authUser as { banned_until?: string | null }).banned_until
   const isBanned =
-    !!(authUser as any).banned_until &&
-    new Date((authUser as any).banned_until) > new Date()
+    !!bannedUntil &&
+    new Date(bannedUntil) > new Date()
 
   return {
     id:              authUser.id,

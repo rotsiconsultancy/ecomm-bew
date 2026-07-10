@@ -6,18 +6,19 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCheckout } from '../checkout-context'
 
-type FieldKey = 'full_name' | 'phone' | 'county' | 'town' | 'street'
+type FieldKey = 'full_name' | 'phone' | 'county' | 'delivery_region_id' | 'town' | 'street'
 
 const FIELDS: { key: FieldKey; label: string; placeholder: string }[] = [
   { key: 'full_name', label: "What's your name?", placeholder: 'Full name' },
   { key: 'phone', label: 'Phone number for delivery updates', placeholder: '+254 7XX XXX XXX' },
   { key: 'county', label: 'Which county?', placeholder: 'e.g. Nairobi' },
+  { key: 'delivery_region_id', label: 'Select delivery region', placeholder: 'Choose region' },
   { key: 'town', label: 'Town or area', placeholder: 'e.g. Westlands' },
   { key: 'street', label: 'Street address / building', placeholder: 'e.g. Muthangari Drive, Apt 4B' },
 ]
 
 export function StageDelivery() {
-  const { goNext, userCheckout, state, setDelivery, deliveryFee } = useCheckout()
+  const { goNext, userCheckout, state, setDelivery, deliveryFee, deliveryRegions } = useCheckout()
   const lastAddr = userCheckout.last_shipping_address
 
   // If user has a saved address, show confirmation card first
@@ -45,11 +46,15 @@ export function StageDelivery() {
   // Prefill from last order address
   useEffect(() => {
     if (lastAddr && usingSaved === false && !delivery.county) {
+      const region = deliveryRegions.find((r) =>
+        [lastAddr.county, lastAddr.city, lastAddr.town].filter(Boolean).some((v) => r.name.toLowerCase() === String(v).toLowerCase())
+      )
       setLocalDelivery((d) => ({
         ...d,
         full_name: d.full_name || lastAddr.full_name || '',
         phone: d.phone || lastAddr.phone || '',
         county: lastAddr.county || lastAddr.city || '',
+        delivery_region_id: d.delivery_region_id || region?.id || '',
         town: lastAddr.town || '',
         street: lastAddr.street || lastAddr.delivery_address || '',
       }))
@@ -84,6 +89,9 @@ export function StageDelivery() {
       full_name: lastAddr.full_name || userCheckout.full_name,
       phone: lastAddr.phone || userCheckout.phone,
       county: lastAddr.county || lastAddr.city || '',
+      delivery_region_id: deliveryRegions.find((r) =>
+        [lastAddr.county, lastAddr.city, lastAddr.town].filter(Boolean).some((v) => r.name.toLowerCase() === String(v).toLowerCase())
+      )?.id || '',
       town: lastAddr.town || '',
       street: lastAddr.street || lastAddr.delivery_address || '',
     }
@@ -164,22 +172,36 @@ export function StageDelivery() {
         <h2 className="text-2xl font-extrabold text-[#061f3f]">
           {currentField.label}
         </h2>
-        <Input
-          ref={inputRef}
-          value={delivery[currentField.key]}
-          onChange={(e) =>
-            setLocalDelivery((d) => ({ ...d, [currentField.key]: e.target.value }))
-          }
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && delivery[currentField.key]?.trim()) {
-              e.preventDefault()
-              handleFieldSubmit()
+        {currentField.key === 'delivery_region_id' ? (
+          <select
+            value={delivery.delivery_region_id}
+            onChange={(e) => setLocalDelivery((d) => ({ ...d, delivery_region_id: e.target.value }))}
+            className="h-14 w-full rounded-xl border border-gray-200 bg-white px-3 text-lg focus:outline-none focus:ring-2 focus:ring-[#ff5f14]/20"
+            autoFocus
+          >
+            <option value="">Choose delivery region</option>
+            {deliveryRegions.map((region) => (
+              <option key={region.id} value={region.id}>{region.name}</option>
+            ))}
+          </select>
+        ) : (
+          <Input
+            ref={inputRef}
+            value={delivery[currentField.key]}
+            onChange={(e) =>
+              setLocalDelivery((d) => ({ ...d, [currentField.key]: e.target.value }))
             }
-          }}
-          placeholder={currentField.placeholder}
-          className="h-14 text-lg rounded-xl border-gray-200 focus-visible:ring-[#ff5f14]"
-          autoFocus
-        />
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && delivery[currentField.key]?.trim()) {
+                e.preventDefault()
+                handleFieldSubmit()
+              }
+            }}
+            placeholder={currentField.placeholder}
+            className="h-14 text-lg rounded-xl border-gray-200 focus-visible:ring-[#ff5f14]"
+            autoFocus
+          />
+        )}
       </div>
 
       {/* Completed fields summary */}
@@ -192,8 +214,12 @@ export function StageDelivery() {
               className="w-full text-left flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <Check className="w-4 h-4 text-green-500 shrink-0" />
-              <span className="text-xs text-gray-400 w-16 shrink-0">{f.key === 'full_name' ? 'Name' : f.key === 'phone' ? 'Phone' : f.key === 'county' ? 'County' : f.key === 'town' ? 'Town' : 'Street'}</span>
-              <span className="text-sm font-semibold text-[#061f3f] truncate">{delivery[f.key]}</span>
+              <span className="text-xs text-gray-400 w-16 shrink-0">{f.key === 'full_name' ? 'Name' : f.key === 'phone' ? 'Phone' : f.key === 'county' ? 'County' : f.key === 'delivery_region_id' ? 'Region' : f.key === 'town' ? 'Town' : 'Street'}</span>
+              <span className="text-sm font-semibold text-[#061f3f] truncate">
+                {f.key === 'delivery_region_id'
+                  ? deliveryRegions.find((r) => r.id === delivery.delivery_region_id)?.name ?? delivery.delivery_region_id
+                  : delivery[f.key]}
+              </span>
             </button>
           ))}
         </div>

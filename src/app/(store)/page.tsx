@@ -118,12 +118,14 @@ async function fetchHomeData() {
       .from('products')
       .select('id, name, slug, category, brand, price, currency, pricing_type, stock, images')
       .eq('is_active', true)
+      .or('product_status.is.null,product_status.eq.active')
       .order('created_at', { ascending: false })
       .limit(4),
     supabase
       .from('products')
       .select('category, images')
       .eq('is_active', true)
+      .or('product_status.is.null,product_status.eq.active')
       .not('category', 'is', null),
   ])
 
@@ -357,7 +359,7 @@ export default async function HomePage() {
                     key={category.name}
                     href={`/products?category=${encodeURIComponent(category.name)}`}
                     className={[
-                      'group relative min-h-[310px] overflow-hidden rounded-lg bg-[#061f3f] shadow-lg shadow-[#03152d]/10',
+                      'group relative min-h-[310px] overflow-hidden rounded-lg border border-[#d8e0ea] bg-[#f8fafc] shadow-lg shadow-[#03152d]/5',
                       isFeatured ? 'lg:row-span-2 lg:min-h-[636px]' : '',
                     ].join(' ')}
                   >
@@ -365,21 +367,21 @@ export default async function HomePage() {
                       src={image}
                       alt={`${category.name} category`}
                       fill
-                      className="object-contain p-8 opacity-60 transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain p-8 opacity-85 transition-transform duration-700 group-hover:scale-105"
                       sizes={isFeatured ? '(min-width: 1024px) 48vw, 100vw' : '(min-width: 1024px) 26vw, 100vw'}
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#03152d] via-[#03152d]/72 to-[#03152d]/20" />
-                    <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                    <div className="absolute inset-0 bg-linear-to-t from-white via-white/85 to-white/20" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 text-[#061f3f]">
                       <div className="mb-4 flex items-center justify-between gap-4">
-                        <span className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-xs font-black backdrop-blur">
+                        <span className="rounded-full border border-[#d8e0ea] bg-white/90 px-3 py-1 text-xs font-black text-[#061f3f] shadow-sm backdrop-blur">
                           {category.count} product{category.count === 1 ? '' : 's'}
                         </span>
-                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#ff5f14] transition-transform group-hover:translate-x-1">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#ff5f14] text-white transition-transform group-hover:translate-x-1">
                           <ArrowRight className="h-5 w-5" />
                         </span>
                       </div>
                       <h3 className="text-3xl font-black leading-tight sm:text-4xl">{category.name}</h3>
-                      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-white/75">
+                      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-[#4b5a6a]">
                         View available {category.name.toLowerCase()} products, check stock status, or request pricing for project quantities.
                       </p>
                     </div>

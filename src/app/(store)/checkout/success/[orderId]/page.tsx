@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getUser } from '@/lib/auth'
 import { getUserPointsBalance } from '@/lib/points'
+import { createServiceClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Order Confirmed | Bewama',
@@ -19,9 +20,21 @@ export default async function CheckoutSuccessPage({ params }: Props) {
   const user = await getUser()
   if (!user) redirect('/login')
 
-  const [balance, prompts] = await Promise.all([
+  const supabase = await createServiceClient()
+  const [balance, prompts, fulfilmentsRes, supportRes] = await Promise.all([
     getUserPointsBalance(user.id),
     getPostPurchasePrompts(),
+    supabase
+      .from('supplier_fulfilments')
+      .select('id, fulfilment_owner, status, items, subtotal_amount, delivery_fee, currency, lead_time_min_days, lead_time_max_days')
+      .eq('order_id', orderId)
+      .order('created_at', { ascending: true }),
+    supabase
+      .from('quotes')
+      .select('id, items, status, support_items')
+      .eq('source_order_id', orderId)
+      .eq('quote_type', 'supplier_support')
+      .order('created_at', { ascending: true }),
   ])
 
   return (
@@ -30,7 +43,8 @@ export default async function CheckoutSuccessPage({ params }: Props) {
         orderId={orderId}
         pointsBalance={balance}
         prompts={prompts}
-        userId={user.id}
+        fulfilments={fulfilmentsRes.data ?? []}
+        supportRequests={supportRes.data ?? []}
       />
     </div>
   )

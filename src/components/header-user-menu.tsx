@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { User, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react'
+import { User, LayoutDashboard, LogOut, ChevronDown, Handshake } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 type AuthUser = { id: string; email: string }
@@ -33,6 +33,7 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
   const displayName = profile.full_name ?? user.email.split('@')[0]
   const initials = getInitials(displayName)
   const isAdmin = profile.role === 'admin' || profile.role === 'staff'
+  const isSupplier = profile.role === 'supplier'
 
   // Close on outside click
   useEffect(() => {
@@ -96,6 +97,17 @@ export function HeaderUserMenu({ user, profile }: HeaderUserMenuProps) {
               >
                 <LayoutDashboard className="w-4 h-4 text-gray-400" />
                 Admin Dashboard
+              </Link>
+            )}
+
+            {isSupplier && (
+              <Link
+                href="/supplier-portal"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <Handshake className="w-4 h-4 text-gray-400" />
+                Supplier Portal
               </Link>
             )}
           </div>

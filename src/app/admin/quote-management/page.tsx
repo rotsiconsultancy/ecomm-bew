@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MessageSquare, Clock, Search, CheckCircle2, TrendingUp } from 'lucide-react'
+import { MessageSquare, Clock, Search, TrendingUp } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { createServiceClient } from '@/lib/supabase/server'
@@ -18,7 +18,7 @@ export default async function QuoteManagementPage() {
 
   const { data: quotes } = await supabase
     .from('quotes')
-    .select('id, full_name, email, company, items, status, created_at')
+    .select('id, full_name, email, company, items, status, quote_type, created_at')
     .order('created_at', { ascending: false })
 
   const all       = quotes ?? []
@@ -83,6 +83,9 @@ export default async function QuoteManagementPage() {
                       <td className="px-6 py-4">
                         <p className="font-semibold text-[#061f3f]">{q.full_name}</p>
                         {q.company && <p className="text-xs text-gray-400">{q.company}</p>}
+                        {q.quote_type === 'supplier_support' && (
+                          <Badge className="mt-1 border-none bg-amber-100 text-amber-700">Supplier support</Badge>
+                        )}
                       </td>
                       <td className="px-6 py-4 text-gray-600">{q.email}</td>
                       <td className="px-6 py-4 text-center font-semibold text-gray-700">{itemCount}</td>

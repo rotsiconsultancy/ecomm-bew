@@ -13,6 +13,7 @@ import {
   ChevronRight,
   AwardIcon,
   ShoppingBag,
+  Handshake,
 } from "lucide-react"
 import {
   Sidebar,
@@ -39,6 +40,7 @@ const items = [
   { title: "Quotes",     url: "/admin/quote-management",     icon: MessageSquare },
   { title: "Carts",      url: "/admin/cart-management",      icon: Warehouse },
   { title: "Users",      url: "/admin/user-management",      icon: Users },
+  { title: "Suppliers",  url: "/admin/suppliers",            icon: Handshake },
   { title: "Content",    url: "/admin/content-management",   icon: FileText },
   { title: "Social Media", url: "/admin/social-media",    icon: MessageSquare },
   { title: "Points",    url: "/admin/points",   icon: AwardIcon },
@@ -60,7 +62,7 @@ interface AppSidebarProps {
   userRole: string
 }
 
-export function AppSidebar({ userName, userEmail, userRole }: AppSidebarProps) {
+export function AppSidebar({ userName, userRole }: AppSidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
   const { state } = useSidebar()

@@ -6,7 +6,7 @@ import { banUser, unbanUser, deleteUser, updateUserProfile, type CombinedUser, t
 import { Card } from '@/components/ui/card'
 import { Loader2, Save, Ban, ShieldOff, Trash2 } from 'lucide-react'
 
-const ROLES: UserRole[] = ['admin', 'staff', 'wholesale', 'customer']
+const ROLES: UserRole[] = ['admin', 'staff', 'wholesale', 'customer', 'supplier']
 
 interface Props {
   user:    CombinedUser

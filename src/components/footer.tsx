@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPublicSiteSettings } from '@/lib/settings'
+import type { IconType } from 'react-icons'
 import { FaWhatsapp, FaInstagram, FaTwitter, FaLinkedin, FaFacebook } from 'react-icons/fa'
 
 export async function Footer() {
@@ -13,7 +14,7 @@ export async function Footer() {
     { label: 'LinkedIn',  href: site.social_links.linkedin,  icon: FaLinkedin },
     { label: 'Twitter',   href: site.social_links.twitter,   icon: FaTwitter },
     { label: 'WhatsApp',  href: site.social_links.whatsapp,  icon: FaWhatsapp },
-  ].filter((s): s is { label: string; href: string; icon: any } => Boolean(s.href))
+  ].filter((s): s is { label: string; href: string; icon: IconType } => Boolean(s.href))
 
   return (
     <footer className="bg-[#03152d] text-white pt-16 pb-8">
@@ -60,6 +61,7 @@ export async function Footer() {
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/products">Product Catalog</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/categories">Categories</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/request-quote">Request a Quote</Link></li>
+              <li><Link className="hover:text-[#ff5f14] transition-colors" href="/become-supplier">Become a Supplier</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/blog">Blog</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/resources">Resources</Link></li>
             </ul>

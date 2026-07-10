@@ -52,7 +52,7 @@ export interface PostPurchasePrompt {
 }
 
 export type PaymentMethodKey = 'mpesa' | 'card' | 'cod' | 'account'
-export type UserTier = 'customer' | 'wholesale' | 'admin' | 'staff'
+export type UserTier = 'customer' | 'wholesale' | 'admin' | 'staff' | 'supplier'
 
 export interface PaymentMethod {
   id: string
@@ -122,6 +122,7 @@ export interface DeliveryDetails {
   county: string
   town: string
   street: string
+  delivery_region_id: string
 }
 
 export interface CheckoutState {
@@ -139,6 +140,7 @@ export const DEFAULT_DELIVERY: DeliveryDetails = {
   county: '',
   town: '',
   street: '',
+  delivery_region_id: '',
 }
 
 export const DEFAULT_CHECKOUT_STATE: CheckoutState = {

@@ -9,6 +9,7 @@ const ROLES: { value: UserRole; label: string }[] = [
   { value: 'staff',     label: 'Staff' },
   { value: 'wholesale', label: 'Wholesale' },
   { value: 'customer',  label: 'Customer' },
+  { value: 'supplier',  label: 'Supplier' },
 ]
 
 interface RoleSelectProps {

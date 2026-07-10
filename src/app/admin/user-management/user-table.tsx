@@ -32,6 +32,7 @@ const ROLE_COLORS: Record<string, string> = {
   staff:     'bg-blue-600 text-white',
   wholesale: 'bg-[#ff5f14] text-white',
   customer:  'bg-slate-400 text-white',
+  supplier:  'bg-emerald-600 text-white',
 }
 
 const ROLE_BADGE: Record<string, string> = {
@@ -39,6 +40,7 @@ const ROLE_BADGE: Record<string, string> = {
   staff:     'bg-blue-50 text-blue-700 border-blue-200',
   wholesale: 'bg-orange-50 text-[#ff5f14] border-orange-200',
   customer:  'bg-slate-50 text-slate-600 border-slate-200',
+  supplier:  'bg-emerald-50 text-emerald-700 border-emerald-200',
 }
 
 // ─── Ban/Unban Button ────────────────────────────────────────────────────────

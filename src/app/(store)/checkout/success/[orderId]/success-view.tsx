@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import {
   Star, Camera, Bell, MessageSquare, Users,
-  Check, Loader2, PartyPopper, ShoppingBag,
+  Check, Loader2, PartyPopper, ShoppingBag, Truck, AlertTriangle,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -24,10 +24,25 @@ interface Props {
   orderId: string
   pointsBalance: number
   prompts: PostPurchasePrompt[]
-  userId: string
+  fulfilments: {
+    id: string
+    fulfilment_owner: string
+    status: string
+    items: { name: string; quantity: number; price: number; currency: string }[]
+    subtotal_amount: number
+    delivery_fee: number
+    currency: string
+    lead_time_min_days: number | null
+    lead_time_max_days: number | null
+  }[]
+  supportRequests: {
+    id: string
+    status: string
+    items: { product_name: string; quantity: number; unit: string }[]
+  }[]
 }
 
-export function SuccessView({ orderId, pointsBalance, prompts, userId }: Props) {
+export function SuccessView({ orderId, pointsBalance, prompts, fulfilments, supportRequests }: Props) {
   const [isPending, startTransition] = useTransition()
   const [claimed, setClaimed] = useState<Set<string>>(new Set())
   const [dismissed, setDismissed] = useState<Set<string>>(new Set())
@@ -72,6 +87,64 @@ export function SuccessView({ orderId, pointsBalance, prompts, userId }: Props) 
           <p className="text-sm text-white/60">points in your account</p>
         </div>
       </div>
+
+      {(fulfilments.length > 0 || supportRequests.length > 0) && (
+        <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-600 fill-mode-both">
+          {fulfilments.length > 0 && (
+            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+              <div className="mb-3 flex items-center gap-2">
+                <Truck className="h-4 w-4 text-[#ff5f14]" />
+                <h2 className="text-base font-extrabold text-[#061f3f]">Paid fulfilments</h2>
+              </div>
+              <div className="space-y-2">
+                {fulfilments.map((fulfilment) => (
+                  <div key={fulfilment.id} className="rounded-xl bg-gray-50 px-4 py-3 text-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-bold text-[#061f3f]">
+                        {fulfilment.fulfilment_owner === 'bewama' ? 'Bewama delivery' : 'Supplier fulfilment'}
+                      </span>
+                      <span className="font-bold text-[#061f3f]">
+                        {fulfilment.currency} {(Number(fulfilment.subtotal_amount) + Number(fulfilment.delivery_fee)).toLocaleString()}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-gray-500">
+                      {fulfilment.items.length} item{fulfilment.items.length !== 1 ? 's' : ''} · Delivery {fulfilment.currency} {Number(fulfilment.delivery_fee).toLocaleString()}
+                      {fulfilment.lead_time_min_days !== null && fulfilment.lead_time_max_days !== null
+                        ? ` · ${fulfilment.lead_time_min_days}-${fulfilment.lead_time_max_days} days`
+                        : ''}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {supportRequests.length > 0 && (
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
+              <div className="mb-2 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-600" />
+                <h2 className="text-base font-extrabold text-[#061f3f]">Delivery support requests</h2>
+              </div>
+              <p className="mb-3 text-sm text-amber-900">
+                A dedicated agent will follow up on items that needed delivery support.
+              </p>
+              <div className="space-y-2">
+                {supportRequests.map((request) => (
+                  <div key={request.id} className="rounded-xl bg-white/80 px-4 py-3 text-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-bold text-[#061f3f]">Ref #{request.id.slice(0, 8).toUpperCase()}</span>
+                      <span className="text-xs font-bold capitalize text-amber-700">{request.status}</span>
+                    </div>
+                    <p className="mt-1 text-xs text-amber-800">
+                      {request.items.length} item{request.items.length !== 1 ? 's' : ''} moved to support.
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Post-purchase prompt cards */}
       {visiblePrompts.length > 0 && (

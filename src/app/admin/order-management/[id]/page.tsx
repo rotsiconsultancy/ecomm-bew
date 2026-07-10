@@ -28,6 +28,20 @@ export default async function OrderDetailPage({ params }: Props) {
     .eq('id', id)
     .maybeSingle()
 
+  const [{ data: fulfilments }, { data: supportRequests }] = await Promise.all([
+    supabase
+      .from('supplier_fulfilments')
+      .select('*, suppliers(company_name)')
+      .eq('order_id', id)
+      .order('created_at', { ascending: true }),
+    supabase
+      .from('quotes')
+      .select('id, status, items, supplier_id, delivery_region_id, created_at')
+      .eq('source_order_id', id)
+      .eq('quote_type', 'supplier_support')
+      .order('created_at', { ascending: true }),
+  ])
+
   if (!order) notFound()
 
   const addr  = (order.shipping_address ?? {}) as { full_name?: string; phone?: string; email?: string; delivery_address?: string; city?: string; notes?: string }
@@ -106,6 +120,70 @@ export default async function OrderDetailPage({ params }: Props) {
           <span>{symbol}{Number(order.total_amount).toLocaleString()}</span>
         </div>
       </Card>
+
+      {fulfilments && fulfilments.length > 0 && (
+        <Card className="p-6 rounded-2xl border-none shadow-sm">
+          <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-4">Fulfilment Sections</h2>
+          <div className="space-y-3">
+            {fulfilments.map((fulfilment) => {
+              const fulfilmentItems = (fulfilment.items ?? []) as { name: string; quantity: number; price: number; currency: string }[]
+              const fulfilmentTotal = Number(fulfilment.subtotal_amount ?? 0) + Number(fulfilment.delivery_fee ?? 0)
+              return (
+                <div key={fulfilment.id} className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-sm">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="font-extrabold text-[#061f3f]">
+                        {fulfilment.fulfilment_owner === 'bewama'
+                          ? 'Bewama fulfilment'
+                          : fulfilment.suppliers?.company_name ?? 'Supplier fulfilment'}
+                      </p>
+                      <p className="mt-1 text-xs text-gray-500">
+                        {fulfilmentItems.length} item{fulfilmentItems.length !== 1 ? 's' : ''} · Delivery {symbol}{Number(fulfilment.delivery_fee ?? 0).toLocaleString()}
+                        {fulfilment.lead_time_min_days !== null && fulfilment.lead_time_max_days !== null
+                          ? ` · ${fulfilment.lead_time_min_days}-${fulfilment.lead_time_max_days} days`
+                          : ''}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <Badge className="border-none bg-white text-[#061f3f] capitalize">{fulfilment.status}</Badge>
+                      <p className="mt-2 font-extrabold text-[#061f3f]">{symbol}{fulfilmentTotal.toLocaleString()}</p>
+                    </div>
+                  </div>
+                  {fulfilment.rejected_reason && (
+                    <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">
+                      Rejected: {fulfilment.rejected_reason}
+                    </p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </Card>
+      )}
+
+      {supportRequests && supportRequests.length > 0 && (
+        <Card className="p-6 rounded-2xl border-none shadow-sm">
+          <h2 className="font-bold text-[#061f3f] border-b pb-2 mb-4">Linked Support Requests</h2>
+          <div className="space-y-2">
+            {supportRequests.map((request) => {
+              const requestItems = (request.items ?? []) as { product_name: string; quantity: number; unit: string }[]
+              return (
+                <Link
+                  key={request.id}
+                  href={`/admin/quote-management/${request.id}`}
+                  className="flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm transition-colors hover:bg-amber-100"
+                >
+                  <div>
+                    <p className="font-bold text-[#061f3f]">Support ref #{request.id.slice(0, 8).toUpperCase()}</p>
+                    <p className="text-xs text-amber-800">{requestItems.length} item{requestItems.length !== 1 ? 's' : ''}</p>
+                  </div>
+                  <Badge className="border-none bg-white text-amber-700 capitalize">{request.status}</Badge>
+                </Link>
+              )
+            })}
+          </div>
+        </Card>
+      )}
 
       {/* Notes */}
       {order.notes && (

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { getUser } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import {
-  getCheckoutConfig,
   getActivePaymentMethods,
   getCompanionProducts,
   getInfluenceMode,
@@ -11,6 +10,7 @@ import {
   getDeliveryFee,
 } from '@/lib/checkout'
 import { getPointsConfig } from '@/lib/points'
+import { getActiveDeliveryRegions } from '@/lib/suppliers'
 import { CheckoutProvider } from './checkout-context'
 import { CheckoutFlow } from './checkout-flow'
 import { CheckoutAuthModal } from './checkout-auth-modal'
@@ -61,6 +61,7 @@ export default async function CheckoutPage() {
     postPurchasePrompts,
     deliveryFee,
     pointsConfig,
+    deliveryRegions,
   ] = await Promise.all([
     getUserCheckoutData(user.id),
     getInfluenceMode(user.id, userTier),
@@ -69,6 +70,7 @@ export default async function CheckoutPage() {
     getPostPurchasePrompts(),
     getDeliveryFee(),
     getPointsConfig(),
+    getActiveDeliveryRegions(),
   ])
 
   // Get earn rate: points per KES 50 from purchase config
@@ -87,6 +89,7 @@ export default async function CheckoutPage() {
         postPurchasePrompts={postPurchasePrompts}
         deliveryFee={deliveryFee}
         earnRate={earnRate}
+        deliveryRegions={deliveryRegions}
       >
         <CheckoutFlow />
       </CheckoutProvider>

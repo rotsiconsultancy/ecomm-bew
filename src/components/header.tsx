@@ -28,6 +28,7 @@ const categoryLinks = [
 const utilityLinks = [
   { label: 'Order history', href: '/order-history' },
   { label: 'Bulk order', href: '/request-quote' },
+  { label: 'Become a Supplier', href: '/become-supplier' },
   { label: 'Technical resources', href: '/resources' },
 ]
 

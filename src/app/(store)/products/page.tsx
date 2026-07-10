@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
 import { AddToCartButton } from '@/components/add-to-cart-button'
-import { Package, FileText, Search, SlidersHorizontal, ArrowRight } from 'lucide-react'
+import { Package, FileText, Search, SlidersHorizontal } from 'lucide-react'
 import { Pagination } from '@/components/pagination-ui'
 import { getFirstSafeImageSrc } from '@/lib/images'
 
@@ -74,6 +74,7 @@ export default async function ProductsPage({ searchParams }: Props) {
     .from('products')
     .select('id, name, slug, category, brand, price, currency, pricing_type, stock, images, is_active', { count: 'exact' })
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
     .order('created_at', { ascending: false })
 
   if (category) query = query.eq('category', category)
@@ -85,7 +86,8 @@ export default async function ProductsPage({ searchParams }: Props) {
     supabase
       .from('products')
       .select('category, brand')
-      .eq('is_active', true),
+      .eq('is_active', true)
+      .or('product_status.is.null,product_status.eq.active'),
   ])
 
   const all = products ?? []

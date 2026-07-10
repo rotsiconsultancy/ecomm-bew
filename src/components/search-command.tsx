@@ -92,12 +92,14 @@ export function SearchCommand() {
         .from('products')
         .select('id, name, slug, category, price, currency, pricing_type, images')
         .eq('is_active', true)
+        .or('product_status.is.null,product_status.eq.active')
         .ilike('name', `%${q}%`)
         .limit(6),
       supabase
         .from('products')
         .select('category')
         .eq('is_active', true)
+        .or('product_status.is.null,product_status.eq.active')
         .not('category', 'is', null),
     ])
 

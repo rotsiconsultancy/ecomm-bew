@@ -50,8 +50,9 @@ export async function getActivePaymentMethods(
 
 export async function getCompanionProducts(
   cartProductIds: string[],
-  _userId: string
+  userId: string
 ): Promise<CompanionProduct[]> {
+  void userId
   if (cartProductIds.length === 0) return []
 
   const supabase = await createClient()
@@ -74,6 +75,7 @@ export async function getCompanionProducts(
         .select('id, name, slug, price, currency, stock, orders_last_30_days, images, category')
         .in('id', companionIds)
         .eq('is_active', true)
+        .or('product_status.is.null,product_status.eq.active')
 
       if (products && products.length > 0) {
         return products.map((p) => ({
@@ -120,6 +122,7 @@ export async function getCompanionProducts(
     .select('id, name, slug, price, currency, stock, orders_last_30_days, images, category')
     .in('category', targetCategories)
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
     .not('id', 'in', `(${cartProductIds.join(',')})`)
     .limit(10)
 

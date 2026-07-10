@@ -47,6 +47,23 @@ export default async function QuoteDetailPage({ params }: Props) {
         </Badge>
       </div>
 
+      {quote.quote_type === 'supplier_support' && (
+        <Card className="p-5 rounded-2xl border border-amber-200 bg-amber-50 shadow-sm">
+          <Badge className="mb-3 border-none bg-white text-amber-700">Supplier delivery support</Badge>
+          <p className="text-sm text-amber-900">
+            This request was created during checkout because one or more supplier items needed delivery support for the selected region.
+          </p>
+          {quote.source_order_id && (
+            <Link
+              href={`/admin/order-management/${quote.source_order_id}`}
+              className="mt-3 inline-flex text-sm font-bold text-[#ff5f14] hover:underline"
+            >
+              View paid order →
+            </Link>
+          )}
+        </Card>
+      )}
+
       {/* Contact Info */}
       <Card className="p-6 rounded-2xl border-none shadow-sm space-y-4">
         <h2 className="font-bold text-[#061f3f] border-b pb-2">Contact Information</h2>
