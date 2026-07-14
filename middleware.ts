@@ -7,7 +7,6 @@ const PROTECTED_USER_ROUTES = [
   '/profile',
   '/order-history',
   '/order-details',
-  '/checkout',
 ]
 
 export async function middleware(request: NextRequest) {

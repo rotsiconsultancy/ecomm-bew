@@ -3,7 +3,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { ShieldCheck, Truck, RefreshCw, FileText, ArrowLeft, Package } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -28,12 +28,12 @@ export async function generateStaticParams() {
     .from('products')
     .select('slug')
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
   return (data ?? []).map((p) => ({ id: p.slug }))
 }
 
 export async function generateMetadata(
-  { params }: Props,
-  _parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const { id: slug } = await params
   const supabase = await createClient()
@@ -42,6 +42,7 @@ export async function generateMetadata(
     .select('name, description, images, seo_title, seo_description, seo_keywords, brand, category')
     .eq('slug', slug)
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
     .maybeSingle()
 
   if (!product) return { title: 'Not Found' }
@@ -69,6 +70,7 @@ export default async function ProductDetailPage({ params }: Props) {
     .select('*')
     .eq('slug', slug)
     .eq('is_active', true)
+    .or('product_status.is.null,product_status.eq.active')
     .maybeSingle()
 
   if (!product) notFound()
@@ -78,6 +80,7 @@ export default async function ProductDetailPage({ params }: Props) {
         .from('products')
         .select('id, name, slug, images, price, currency, pricing_type, category')
         .eq('is_active', true)
+        .or('product_status.is.null,product_status.eq.active')
         .eq('category', product.category)
         .neq('id', product.id)
         .limit(4)

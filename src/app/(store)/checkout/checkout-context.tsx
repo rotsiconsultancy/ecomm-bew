@@ -21,6 +21,7 @@ import type {
 } from '@/types/checkout'
 import { DEFAULT_CHECKOUT_STATE, DEFAULT_DELIVERY } from '@/types/checkout'
 import type { CartItem } from '@/lib/cart-store'
+import type { DeliveryRegion } from '@/types/supplier'
 
 const STORAGE_KEY = 'bewama_checkout_state'
 
@@ -52,6 +53,7 @@ interface CheckoutContextValue {
   postPurchasePrompts: PostPurchasePrompt[]
   deliveryFee: number
   earnRate: number // points per KES 50 spent
+  deliveryRegions: DeliveryRegion[]
 }
 
 const CheckoutContext = createContext<CheckoutContextValue | null>(null)
@@ -73,6 +75,7 @@ interface ProviderProps {
   postPurchasePrompts: PostPurchasePrompt[]
   deliveryFee: number
   earnRate: number
+  deliveryRegions: DeliveryRegion[]
 }
 
 export function CheckoutProvider({
@@ -86,6 +89,7 @@ export function CheckoutProvider({
   postPurchasePrompts,
   deliveryFee,
   earnRate,
+  deliveryRegions,
 }: ProviderProps) {
   const [state, setState] = useState<CheckoutState>(() => {
     // Try to restore from localStorage
@@ -193,6 +197,7 @@ export function CheckoutProvider({
         postPurchasePrompts,
         deliveryFee,
         earnRate,
+        deliveryRegions,
       }}
     >
       {children}

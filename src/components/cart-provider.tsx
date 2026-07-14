@@ -1,10 +1,11 @@
 'use client'
 
-import { useReducer, useMemo, useEffect, useRef, useState, useCallback } from 'react'
-import { CartContext, cartReducer, CartItem } from '@/lib/cart-store'
+import { useReducer, useMemo, useEffect, useRef, useCallback } from 'react'
+import { CartContext, cartReducer, CartItem, CartAction } from '@/lib/cart-store'
 import { createClient } from '@/lib/supabase/client'
 
 const SESSION_KEY = 'bewama_cart_session'
+const LEGACY_CART_STORAGE_KEY = 'bewama_cart_items'
 
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return ''
@@ -18,20 +19,80 @@ function getOrCreateSessionId(): string {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [] })
-  const [ready, setReady] = useState(false)
   const cartDbId  = useRef<string | null>(null)
   const lastSaved = useRef<string>('[]')
-  const syncTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const hydrated  = useRef(false) // guard against StrictMode double-run
+  const currentItems = useRef<CartItem[]>([])
+  const ready = useRef(false)
+  const changedBeforeReady = useRef(false)
+  const writeQueue = useRef<Promise<void>>(Promise.resolve())
 
-  // ── Hydrate from DB on mount (single source of truth) ───────────────────
+  const syncToDb = useCallback(async (items: CartItem[]) => {
+    const serialized = JSON.stringify(items)
+    if (serialized === lastSaved.current) return
+
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    const sessionId = getOrCreateSessionId()
+    const now = new Date().toISOString()
+
+    if (cartDbId.current) {
+      const { error } = await supabase
+        .from('carts')
+        .update({ items, updated_at: now })
+        .eq('id', cartDbId.current)
+      if (error) throw error
+    } else if (items.length > 0) {
+      const { data, error } = await supabase
+        .from('carts')
+        .insert({
+          items,
+          status:     'active',
+          user_id:    user?.id ?? null,
+          session_id: user ? null : sessionId,
+          updated_at: now,
+        })
+        .select('id')
+        .maybeSingle()
+      if (error) throw error
+      if (data?.id) cartDbId.current = data.id
+    }
+
+    lastSaved.current = serialized
+  }, [])
+
+  const queueDbSync = useCallback((items: CartItem[]) => {
+    const snapshot = [...items]
+    writeQueue.current = writeQueue.current
+      .then(() => syncToDb(snapshot))
+      .catch((error) => {
+        console.error('Failed to sync cart', error)
+      })
+  }, [syncToDb])
+
+  const commitCartAction = useCallback((action: CartAction) => {
+    const nextState = cartReducer({ items: currentItems.current }, action)
+    currentItems.current = nextState.items
+    dispatch({ type: 'SET_ITEMS', items: nextState.items })
+
+    if (ready.current) {
+      queueDbSync(nextState.items)
+    } else {
+      changedBeforeReady.current = true
+    }
+  }, [queueDbSync])
+
+  // ── Hydrate cart contents from DB; client only stores the guest session id ─
   useEffect(() => {
     if (hydrated.current) return
     hydrated.current = true
 
-    const supabase = createClient()
-
     async function init() {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem(LEGACY_CART_STORAGE_KEY)
+      }
+
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       const sessionId = getOrCreateSessionId()
 
@@ -48,59 +109,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (data) {
         cartDbId.current  = data.id
-        const items = (data.items ?? []) as CartItem[]
-        lastSaved.current = JSON.stringify(items)
-        // Replace state entirely — never add/merge
-        dispatch({ type: 'SET_ITEMS', items })
+        const dbItems = (data.items ?? []) as CartItem[]
+        lastSaved.current = JSON.stringify(dbItems)
+        if (!changedBeforeReady.current) {
+          currentItems.current = dbItems
+          dispatch({ type: 'SET_ITEMS', items: dbItems })
+        }
       }
 
-      setReady(true)
+      ready.current = true
+      if (changedBeforeReady.current) {
+        queueDbSync(currentItems.current)
+      }
     }
 
     init()
-  }, [])
-
-  // ── Sync to DB (debounced 1.2s, skip if data unchanged) ─────────────────
-  const syncToDb = useCallback(async (items: CartItem[]) => {
-    const serialized = JSON.stringify(items)
-    if (serialized === lastSaved.current) return
-    lastSaved.current = serialized
-
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const sessionId = getOrCreateSessionId()
-    const now = new Date().toISOString()
-
-    if (cartDbId.current) {
-      await supabase
-        .from('carts')
-        .update({ items, updated_at: now })
-        .eq('id', cartDbId.current)
-    } else {
-      const { data } = await supabase
-        .from('carts')
-        .insert({
-          items,
-          status:     'active',
-          user_id:    user?.id ?? null,
-          session_id: user ? null : sessionId,
-          updated_at: now,
-        })
-        .select('id')
-        .maybeSingle()
-      if (data?.id) cartDbId.current = data.id
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!ready) return
-    clearTimeout(syncTimer.current)
-    syncTimer.current = setTimeout(() => syncToDb(state.items), 1200)
-    return () => clearTimeout(syncTimer.current)
-  }, [state.items, ready, syncToDb])
+  }, [queueDbSync])
 
   // ── clearCart marks DB row as 'converted' ────────────────────────────────
   const clearCart = useCallback(() => {
+    currentItems.current = []
     dispatch({ type: 'CLEAR_CART' })
     if (cartDbId.current) {
       const supabase = createClient()
@@ -121,13 +149,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       cartItems: state.items,
       cartCount,
       cartTotal,
-      addToCart:      (item: CartItem) => dispatch({ type: 'ADD_ITEM', item }),
-      removeFromCart: (product_id: string) => dispatch({ type: 'REMOVE_ITEM', product_id }),
+      addToCart:      (item: CartItem) => commitCartAction({ type: 'ADD_ITEM', item }),
+      removeFromCart: (product_id: string) => commitCartAction({ type: 'REMOVE_ITEM', product_id }),
       updateQuantity: (product_id: string, quantity: number) =>
-        dispatch({ type: 'UPDATE_QUANTITY', product_id, quantity }),
+        commitCartAction({ type: 'UPDATE_QUANTITY', product_id, quantity }),
       clearCart,
     }),
-    [state.items, cartCount, cartTotal, clearCart]
+    [state.items, cartCount, cartTotal, commitCartAction, clearCart]
   )
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

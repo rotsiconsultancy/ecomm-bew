@@ -28,6 +28,7 @@ const categoryLinks = [
 const utilityLinks = [
   { label: 'Order history', href: '/order-history' },
   { label: 'Bulk order', href: '/request-quote' },
+  { label: 'Become a Supplier', href: '/become-supplier' },
   { label: 'Technical resources', href: '/resources' },
 ]
 
@@ -87,7 +88,7 @@ export function Header({ user = null, profile = null }: HeaderProps) {
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            className="grid h-11 w-11 place-items-center rounded-lg border border-[#d8e0ea] bg-white text-[#061f3f] transition-colors hover:border-[#ff5f14]/50 hover:bg-[#fff8f4]"
+            className="grid h-11 w-11 place-items-center rounded-lg border border-[#d8e0ea] bg-white text-[#061f3f] transition-colors hover:border-[#ff5f14]/50 hover:bg-[#fff8f4] lg:hidden"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
           >

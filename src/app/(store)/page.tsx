@@ -118,12 +118,14 @@ async function fetchHomeData() {
       .from('products')
       .select('id, name, slug, category, brand, price, currency, pricing_type, stock, images')
       .eq('is_active', true)
+      .or('product_status.is.null,product_status.eq.active')
       .order('created_at', { ascending: false })
       .limit(4),
     supabase
       .from('products')
       .select('category, images')
       .eq('is_active', true)
+      .or('product_status.is.null,product_status.eq.active')
       .not('category', 'is', null),
   ])
 
@@ -181,7 +183,7 @@ export default async function HomePage() {
       />
 
       <section className="bg-[#03152d] text-white">
-        <div className="mx-auto grid min-h-[660px] max-w-7xl grid-cols-1 items-center gap-11 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,590px)_minmax(320px,1fr)] lg:px-8">
+        <div className="mx-auto grid min-h-165 max-w-7xl grid-cols-1 items-center gap-11 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,590px)_minmax(320px,1fr)] lg:px-8">
           <div>
             <p className="mb-5 inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.14em] text-white/75">
               <span className="h-0.5 w-9 rounded-full bg-[#ff5f14]" />
@@ -235,7 +237,7 @@ export default async function HomePage() {
             </form>
           </div>
 
-          <aside className="w-full max-w-[500px] justify-self-end max-lg:justify-self-start" aria-label="Featured catalog preview">
+          <aside className="w-full max-w-125 justify-self-end max-lg:justify-self-start" aria-label="Featured catalog preview">
             <div className="rounded-lg border border-white/15 bg-white p-4 text-[#182333] shadow-2xl shadow-black/20">
               <div className="mb-4 flex items-center justify-between gap-4">
                 <div>
@@ -299,19 +301,6 @@ export default async function HomePage() {
                 ))}
               </ul>
             </div>
-
-            <div className="mt-3 grid grid-cols-3 gap-3">
-              {[
-                { value: '39+', label: 'Active catalog items' },
-                { value: 'RFQ', label: 'Bulk order support' },
-                { value: 'KES', label: 'Local buying path' },
-              ].map((metric) => (
-                <div key={metric.label} className="min-h-24 rounded-lg border border-white/15 bg-white/10 p-4 backdrop-blur">
-                  <strong className="block text-2xl font-black leading-none text-white">{metric.value}</strong>
-                  <span className="mt-2 block text-xs font-bold leading-snug text-white/70">{metric.label}</span>
-                </div>
-              ))}
-            </div>
           </aside>
         </div>
       </section>
@@ -357,29 +346,29 @@ export default async function HomePage() {
                     key={category.name}
                     href={`/products?category=${encodeURIComponent(category.name)}`}
                     className={[
-                      'group relative min-h-[310px] overflow-hidden rounded-lg bg-[#061f3f] shadow-lg shadow-[#03152d]/10',
-                      isFeatured ? 'lg:row-span-2 lg:min-h-[636px]' : '',
+                      'group relative min-h-77.5 overflow-hidden rounded-lg border border-[#d8e0ea] bg-[#f8fafc] shadow-lg shadow-[#03152d]/5',
+                      isFeatured ? 'lg:row-span-2 lg:min-h-159' : '',
                     ].join(' ')}
                   >
                     <Image
                       src={image}
                       alt={`${category.name} category`}
                       fill
-                      className="object-contain p-8 opacity-60 transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain p-8 opacity-85 transition-transform duration-700 group-hover:scale-105"
                       sizes={isFeatured ? '(min-width: 1024px) 48vw, 100vw' : '(min-width: 1024px) 26vw, 100vw'}
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#03152d] via-[#03152d]/72 to-[#03152d]/20" />
-                    <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                    <div className="absolute inset-0" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 text-[#061f3f]">
                       <div className="mb-4 flex items-center justify-between gap-4">
-                        <span className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-xs font-black backdrop-blur">
+                        <span className="rounded-full border border-[#d8e0ea] bg-white/90 px-3 py-1 text-xs font-black text-[#061f3f] shadow-sm backdrop-blur">
                           {category.count} product{category.count === 1 ? '' : 's'}
                         </span>
-                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#ff5f14] transition-transform group-hover:translate-x-1">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[#ff5f14] text-white transition-transform group-hover:translate-x-1">
                           <ArrowRight className="h-5 w-5" />
                         </span>
                       </div>
                       <h3 className="text-3xl font-black leading-tight sm:text-4xl">{category.name}</h3>
-                      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-white/75">
+                      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-[#4b5a6a]">
                         View available {category.name.toLowerCase()} products, check stock status, or request pricing for project quantities.
                       </p>
                     </div>
@@ -547,7 +536,7 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-[#03152d] text-white">
-        <div className="mx-auto grid min-h-[440px] max-w-7xl grid-cols-1 items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,600px)_minmax(280px,1fr)] lg:px-8">
+        <div className="mx-auto grid min-h-110 max-w-7xl grid-cols-1 items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,600px)_minmax(280px,1fr)] lg:px-8">
           <div>
             <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-[#ff5f14]">Bulk and project orders</p>
             <h2 className="text-4xl font-black leading-[1.02] text-white sm:text-5xl">
@@ -570,7 +559,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <aside className="w-full max-w-[420px] justify-self-end rounded-lg bg-white/95 p-5 text-[#182333] shadow-2xl max-lg:justify-self-start">
+          <aside className="w-full max-w-105 justify-self-end rounded-lg bg-white/95 p-5 text-[#182333] shadow-2xl max-lg:justify-self-start">
             <h3 className="mb-4 text-lg font-black text-[#061f3f]">Quick quote starter</h3>
             <form action="/request-quote" className="grid gap-3">
               <label className="sr-only" htmlFor="quote-product">Product or category</label>
