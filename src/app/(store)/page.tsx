@@ -305,7 +305,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-[#d8e0ea] bg-white" aria-label="Store trust signals">
+      {/* <section className="border-b border-[#d8e0ea] bg-white" aria-label="Store trust signals">
         <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-[#edf1f5] px-4 sm:px-6 md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-4 lg:px-8">
           {trustItems.map(({ icon: Icon, title, copy }) => (
             <div key={title} className="flex items-center gap-4 py-5 md:px-4 lg:px-5">
@@ -319,7 +319,7 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section className="bg-white py-18 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

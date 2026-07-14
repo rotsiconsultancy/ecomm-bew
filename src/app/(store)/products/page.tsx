@@ -4,9 +4,10 @@ import { Metadata } from 'next'
 import { createBuildClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
 import { AddToCartButton } from '@/components/add-to-cart-button'
-import { Package, FileText, Search, SlidersHorizontal } from 'lucide-react'
+import { Package, FileText, Search } from 'lucide-react'
 import { Pagination } from '@/components/pagination-ui'
 import { getFirstSafeImageSrc } from '@/lib/images'
+import { ProductFilters } from './product-filters'
 
 export const dynamic = 'force-dynamic'
 
@@ -97,6 +98,10 @@ export default async function ProductsPage({ searchParams }: Props) {
   const categories = [...new Set(catalogRows.map((p) => p.category).filter(Boolean))] as string[]
   const brands = [...new Set(catalogRows.map((p) => p.brand).filter(Boolean))] as string[]
   const hasFilters = Boolean(category || brand || q)
+  const categoryOptions = categories.map((name) => ({
+    name,
+    count: catalogRows.filter((product) => product.category === name).length,
+  }))
 
   return (
     <div className="min-h-screen bg-[#f4f7fa]">
@@ -133,90 +138,44 @@ export default async function ProductsPage({ searchParams }: Props) {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-7 px-4 py-10 sm:px-6 lg:grid-cols-[280px_1fr] lg:px-8">
-        <aside className="space-y-4 lg:sticky lg:top-36 lg:self-start">
-          <div className="rounded-lg border border-[#d8e0ea] bg-white p-5">
-            <div className="mb-4 flex items-center gap-2">
-              <SlidersHorizontal className="h-4 w-4 text-[#ff5f14]" />
-              <h2 className="text-sm font-black uppercase tracking-[0.12em] text-[#061f3f]">Filter catalog</h2>
-            </div>
-
-            <div className="space-y-6">
-              {categories.length > 0 && (
-                <div>
-                  <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Categories</h3>
-                  <div className="grid gap-2">
-                    <FilterLink href="/products" active={!category && !brand && !q} label="All Products" count={catalogRows.length} />
-                    {categories.map((cat) => (
-                      <FilterLink
-                        key={cat}
-                        href={`/products?category=${encodeURIComponent(cat)}`}
-                        active={category === cat}
-                        label={cat}
-                        count={catalogRows.filter((p) => p.category === cat).length}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {brands.length > 0 && (
-                <div className="border-t border-[#edf1f5] pt-5">
-                  <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Brands</h3>
-                  <div className="grid gap-2">
-                    {brands.map((item) => (
-                      <Link
-                        key={item}
-                        href={`/products?brand=${encodeURIComponent(item)}${category ? `&category=${encodeURIComponent(category)}` : ''}`}
-                        className={[
-                          'rounded-lg px-3 py-2 text-sm font-black transition-colors',
-                          brand?.toLowerCase() === item.toLowerCase()
-                            ? 'bg-[#061f3f] text-white'
-                            : 'text-[#4b5a6a] hover:bg-[#f4f7fa] hover:text-[#061f3f]',
-                        ].join(' ')}
-                      >
-                        {item}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {hasFilters && (
-                <Button asChild variant="outline" className="w-full rounded-lg border-[#061f3f]/25 font-black text-[#061f3f]">
-                  <Link href="/products">Clear filters</Link>
-                </Button>
-              )}
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-[#ff5f14]/20 bg-[#fff8f4] p-5">
-            <h3 className="font-black text-[#061f3f]">Buying in bulk?</h3>
-            <p className="mt-2 text-sm font-semibold leading-6 text-[#4b5a6a]">
-              Send quantities, delivery point, and timing for a structured quote response.
-            </p>
-            <Button asChild className="mt-4 w-full rounded-lg bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">
-              <Link href="/request-quote">Request Bulk Quote</Link>
-            </Button>
-          </div>
-        </aside>
+      <section className="mx-auto grid max-w-7xl gap-7 px-4 py-7 sm:px-6 sm:py-10 lg:grid-cols-[280px_1fr] lg:px-8">
+        <ProductFilters
+          categories={categoryOptions}
+          brands={brands}
+          category={category}
+          brand={brand}
+          hasFilters={hasFilters}
+          totalCatalogCount={catalogRows.length}
+          display="desktop"
+        />
 
         <main className="min-w-0">
-          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-5 flex items-end justify-between gap-2 sm:mb-6 sm:gap-4">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#e84f0a]">Live inventory</p>
-              <h2 className="mt-1 text-3xl font-black text-[#061f3f]">
+              <h2 className="mt-1 text-2xl font-black text-[#061f3f] sm:text-3xl">
                 {hasFilters ? 'Filtered products' : 'All products'}
               </h2>
               <p className="mt-1 text-sm font-bold text-[#728196]">
                 {all.length === 0 ? 'No products match your filters.' : `${totalCount} product${totalCount === 1 ? '' : 's'} available`}
               </p>
             </div>
-            {q && (
-              <span className="inline-flex rounded-full border border-[#d8e0ea] bg-white px-3 py-1 text-xs font-black text-[#061f3f]">
-                Search: {q}
-              </span>
-            )}
+            <div className="flex shrink-0 flex-col items-end gap-2">
+              <ProductFilters
+                categories={categoryOptions}
+                brands={brands}
+                category={category}
+                brand={brand}
+                hasFilters={hasFilters}
+                totalCatalogCount={catalogRows.length}
+                display="mobile"
+              />
+              {q && (
+                <span className="hidden max-w-48 truncate rounded-full border border-[#d8e0ea] bg-white px-3 py-1 text-xs font-black text-[#061f3f] sm:inline-flex">
+                  Search: {q}
+                </span>
+              )}
+            </div>
           </div>
 
           {all.length === 0 ? (
@@ -339,30 +298,5 @@ export default async function ProductsPage({ searchParams }: Props) {
         </main>
       </section>
     </div>
-  )
-}
-
-function FilterLink({
-  href,
-  active,
-  label,
-  count,
-}: {
-  href: string
-  active: boolean
-  label: string
-  count: number
-}) {
-  return (
-    <Link
-      href={href}
-      className={[
-        'flex items-center justify-between rounded-lg px-3 py-2 text-sm font-black transition-colors',
-        active ? 'bg-[#061f3f] text-white' : 'text-[#4b5a6a] hover:bg-[#f4f7fa] hover:text-[#061f3f]',
-      ].join(' ')}
-    >
-      <span>{label}</span>
-      <span className={active ? 'text-white/70' : 'text-[#728196]'}>{count}</span>
-    </Link>
   )
 }
