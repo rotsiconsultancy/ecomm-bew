@@ -108,10 +108,10 @@ export default async function ProductsPage({ searchParams }: Props) {
               <h1 className="max-w-3xl text-4xl font-black leading-tight sm:text-6xl">
                 Search, compare, cart, or quote.
               </h1>
-              <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-white/70">
+              {/* <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-white/70">
                 Use the live Bewama catalog to buy stocked materials quickly or move bulk,
                 project, and uncertain requirements into RFQ.
-              </p>
+              </p> */}
             </div>
             <form action="/products" className="rounded-lg border border-white/15 bg-white p-2 shadow-2xl shadow-black/20">
               <label className="sr-only" htmlFor="catalog-search">Search catalog</label>
@@ -268,7 +268,7 @@ export default async function ProductsPage({ searchParams }: Props) {
 
                       <div className="flex flex-1 flex-col p-4">
                         {product.category && (
-                          <p className="mb-2 text-[11px] font-black uppercase tracking-[0.1em] text-[#e84f0a]">
+                          <p className="mb-2 text-[11px] font-black uppercase tracking-widest text-[#e84f0a]">
                             {product.category}
                           </p>
                         )}

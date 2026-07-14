@@ -19,8 +19,9 @@ interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ product, size = 'sm', className }: AddToCartButtonProps) {
-  const { addToCart } = useCart()
+  const { addToCart, cartItems } = useCart()
   const [added, setAdded] = useState(false)
+  const inCart = cartItems.some((item) => item.product_id === product.id)
 
   function handleClick() {
     addToCart({
@@ -40,13 +41,13 @@ export function AddToCartButton({ product, size = 'sm', className }: AddToCartBu
     <Button
       size={size}
       onClick={handleClick}
-      title={added ? 'Added to cart!' : `Add ${product.name} to cart`}
+      title={inCart ? `${product.name} is in your cart. Click to add another.` : `Add ${product.name} to cart`}
       className={`bg-[#061f3f] hover:bg-[#03152d] text-white transition-all ${className ?? ''}`}
     >
-      {added ? (
+      {added || inCart ? (
         <>
           <Check className="w-3.5 h-3.5 mr-1.5" />
-          Added!
+          {added ? 'Added!' : 'In Cart'}
         </>
       ) : (
         <>
