@@ -1,35 +1,32 @@
 import Link from 'next/link'
-import { AlertTriangle, ClipboardList, Package, Truck, Users } from 'lucide-react'
+import type { ElementType, ReactNode } from 'react'
+import { AlertTriangle, Bell, Building2, ChevronRight, ClipboardList, LayoutDashboard, MapPin, Package, Settings2, ShoppingBag, Truck, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { createServiceClient } from '@/lib/supabase/server'
 import { getSupplierContext } from '@/lib/suppliers'
-import { SUPPLIER_MEMBER_ROLES, SUPPLIER_NOTIFICATION_EVENTS } from '@/types/supplier'
-import type { DeliveryRegion, SupplierDeliveryRule } from '@/types/supplier'
+import { SUPPLIER_MEMBER_ROLES } from '@/types/supplier'
 import {
-  inviteSupplierStaff,
-  saveSupplierDeliveryRule,
-  saveSupplierNotificationEmail,
-  saveSupplierProduct,
   updateSupplierCompany,
   updateSupplierFulfilmentStatus,
   updateSupplierMember,
 } from './actions'
+import { DeliveryRuleDialog, NotificationDialog, ProductEditorDialog, StaffInviteDialog } from './portal-dialogs'
 
 export const dynamic = 'force-dynamic'
 
 type Props = { searchParams: Promise<{ tab?: string }> }
 
 const TABS = [
-  ['dashboard', 'Dashboard'],
-  ['products', 'Products'],
-  ['orders', 'Orders'],
-  ['staff', 'Staff'],
-  ['delivery', 'Delivery Regions'],
-  ['notifications', 'Notifications'],
-  ['company', 'Company Profile'],
-  ['package', 'Package'],
-]
+  ['dashboard', 'Overview', LayoutDashboard],
+  ['products', 'Products', Package],
+  ['orders', 'Orders', ShoppingBag],
+  ['staff', 'Team', Users],
+  ['delivery', 'Delivery', MapPin],
+  ['notifications', 'Notifications', Bell],
+  ['company', 'Company profile', Building2],
+  ['package', 'Plan & limits', Settings2],
+] as const
 
 type FormAction = (formData: FormData) => void | Promise<void>
 
@@ -84,12 +81,13 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
   const fulfilmentRows = fulfilments ?? []
 
   const checklist = [
-    ['Company profile', Boolean(ctx.supplier.primary_contact_name && ctx.supplier.phone && ctx.supplier.location)],
-    ['Delivery regions', ruleRows.some((r) => r.is_active)],
-    ['Notification emails', notificationRows.some((n) => n.is_active)],
-    ['First product', productRows.length > 0],
-    ['Published product', productRows.some((p) => p.is_active && p.product_status === 'active')],
+    ['Complete company profile', Boolean(ctx.supplier.primary_contact_name && ctx.supplier.phone && ctx.supplier.location), 'company'],
+    ['Set delivery regions', ruleRows.some((r) => r.is_active), 'delivery'],
+    ['Add notification recipient', notificationRows.some((n) => n.is_active), 'notifications'],
+    ['Add your first product', productRows.length > 0, 'products'],
+    ['Publish a product', productRows.some((p) => p.is_active && p.product_status === 'active'), 'products'],
   ] as const
+  const completedChecklistItems = checklist.filter(([, done]) => done).length
 
   if (ctx.supplier.status === 'suspended') {
     return (
@@ -107,6 +105,7 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
     <PortalShell supplierName={ctx.supplier.company_name} tab={tab}>
       {tab === 'dashboard' && (
         <div className="grid gap-5">
+          <div><h2 className="text-2xl font-black text-[#061f3f]">Welcome back</h2><p className="mt-1 text-sm font-semibold text-[#728196]">Here’s what needs your attention across the supplier account.</p></div>
           <div className="grid gap-4 md:grid-cols-4">
             <Stat icon={Package} label="Products" value={productRows.length} />
             <Stat icon={ClipboardList} label="Fulfilments" value={fulfilmentRows.length} />
@@ -114,13 +113,14 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
             <Stat icon={Truck} label="Delivery rules" value={ruleRows.filter((r) => r.is_active).length} />
           </div>
           <Card className="p-5">
-            <h2 className="text-lg font-black text-[#061f3f]">Setup checklist</h2>
+            <div className="flex items-end justify-between gap-4"><div><h2 className="text-lg font-black text-[#061f3f]">Get ready to sell</h2><p className="mt-1 text-sm font-semibold text-[#728196]">Complete these essentials before taking orders.</p></div><span className="shrink-0 text-sm font-black text-[#061f3f]">{completedChecklistItems}/{checklist.length}</span></div>
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#e7ecf1]"><div className="h-full rounded-full bg-[#ff5f14]" style={{ width: `${(completedChecklistItems / checklist.length) * 100}%` }} /></div>
             <div className="mt-4 grid gap-2">
-              {checklist.map(([label, done]) => (
-                <div key={label} className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3 text-sm">
-                  <span className="font-bold text-[#061f3f]">{label}</span>
-                  <span className={done ? 'font-black text-green-600' : 'font-black text-yellow-600'}>{done ? 'Done' : 'Needed'}</span>
-                </div>
+              {checklist.map(([label, done, destination]) => (
+                <Link key={label} href={`/supplier-portal?tab=${destination}`} className="flex items-center justify-between rounded-lg bg-[#f7f9fb] px-4 py-3 text-sm transition-colors hover:bg-[#eef2f6]">
+                  <span className="flex items-center gap-3 font-bold text-[#061f3f]"><span className={`grid h-6 w-6 place-items-center rounded-full ${done ? 'bg-green-100 text-green-700' : 'border border-[#ccd5df] bg-white text-[#8a97a8]'}`}>{done ? <span>✓</span> : <span className="text-[10px]">{checklist.findIndex(([item]) => item === label) + 1}</span>}</span>{label}</span>
+                  <span className={done ? 'font-black text-green-600' : 'font-black text-[#ff5f14]'}>{done ? 'Done' : 'Set up'}</span>
+                </Link>
               ))}
             </div>
           </Card>
@@ -128,30 +128,41 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
       )}
 
       {tab === 'products' && (
-        <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
-          <ProductForm />
-          <Card className="p-5">
-            <h2 className="mb-4 text-lg font-black text-[#061f3f]">Your products</h2>
-            <div className="grid gap-3">
-              {productRows.map((product) => (
-                <details key={product.id} className="rounded-lg border p-3">
-                  <summary className="cursor-pointer font-black text-[#061f3f]">
-                    {product.name} <span className="text-xs text-gray-400">· {product.is_active ? 'Active' : 'Inactive'} · {product.product_status}</span>
-                  </summary>
-                  <div className="mt-4">
-                    <ProductForm product={product} />
+        <div className="grid gap-5">
+          <SectionHeading title="Products" description="Manage what buyers can discover and order from your company." action={<ProductEditorDialog />} />
+          <Card className="overflow-hidden border-[#dce3eb] bg-white">
+            {productRows.length > 0 ? (
+              <div className="divide-y divide-[#edf1f5]">
+                {productRows.map((product) => (
+                  <div key={product.id} className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="truncate font-black text-[#061f3f]">{product.name}</h3>
+                        <StatusBadge active={Boolean(product.is_active)} paused={product.product_status === 'paused_by_admin'} />
+                      </div>
+                      <p className="mt-1 text-sm font-semibold text-[#728196]">
+                        {[product.brand, product.category, product.supplier_sku].filter(Boolean).join(' · ') || 'Product details incomplete'}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 sm:justify-end">
+                      <div className="text-left sm:text-right">
+                        <p className="font-black text-[#061f3f]">{product.pricing_type === 'quote' ? 'Quote only' : `KES ${Number(product.price).toLocaleString()}`}</p>
+                        <p className="text-xs font-bold text-[#8a97a8]">{product.stock ?? 0} in stock</p>
+                      </div>
+                      <ProductEditorDialog product={product} />
+                    </div>
                   </div>
-                </details>
-              ))}
-              {productRows.length === 0 && <p className="text-sm font-semibold text-gray-400">No supplier products yet.</p>}
-            </div>
+                ))}
+              </div>
+            ) : <EmptyState icon={Package} title="No products yet" description="Add your first product to start building your supplier catalog." action={<ProductEditorDialog />} />}
           </Card>
         </div>
       )}
 
       {tab === 'orders' && (
+        <div className="grid gap-5">
+          <SectionHeading title="Orders" description="Review incoming fulfilments and keep customers updated as orders progress." action={<span className="rounded-full bg-white px-3 py-2 text-xs font-black text-[#061f3f]">{fulfilmentRows.length} total</span>} />
         <Card className="p-5">
-          <h2 className="mb-4 text-lg font-black text-[#061f3f]">Supplier fulfilments</h2>
           <div className="grid gap-3">
             {fulfilmentRows.map((fulfilment) => {
               const addr = fulfilment.orders?.shipping_address as { full_name?: string; city?: string } | null
@@ -179,22 +190,13 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
             {fulfilmentRows.length === 0 && <p className="text-sm font-semibold text-gray-400">No fulfilments yet.</p>}
           </div>
         </Card>
+        </div>
       )}
 
       {tab === 'staff' && (
-        <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <div className="grid gap-5">
+          <SectionHeading title="Team access" description="Control who can manage products, orders, and company settings." action={<StaffInviteDialog />} />
           <Card className="p-5">
-            <h2 className="text-lg font-black text-[#061f3f]">Invite staff</h2>
-            <form action={asFormAction(inviteSupplierStaff)} className="mt-4 grid gap-3">
-              <Input name="email" type="email" placeholder="staff@company.com" required />
-              <select name="member_role" className="h-10 rounded-md border px-3 text-sm">
-                {SUPPLIER_MEMBER_ROLES.filter((r) => r.value !== 'owner').map((role) => <option key={role.value} value={role.value}>{role.label}</option>)}
-              </select>
-              <Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">Send invite</Button>
-            </form>
-          </Card>
-          <Card className="p-5">
-            <h2 className="mb-4 text-lg font-black text-[#061f3f]">Members</h2>
             <div className="grid gap-2">
               {memberRows.map((member) => (
                 <form key={member.id} action={asFormAction(updateSupplierMember.bind(null, member.id))} className="grid gap-2 rounded-lg border p-3 md:grid-cols-[1fr_180px_130px_100px]">
@@ -219,44 +221,31 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
       )}
 
       {tab === 'delivery' && (
-        <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
+        <div className="grid gap-5">
+          <SectionHeading title="Delivery regions" description="Tell buyers where you deliver, what it costs, and how long it takes." action={<DeliveryRuleDialog regions={regionRows} />} />
           <Card className="p-5">
-            <h2 className="text-lg font-black text-[#061f3f]">Add delivery rule</h2>
-            <DeliveryRuleForm regions={regionRows} />
-          </Card>
-          <Card className="p-5">
-            <h2 className="mb-4 text-lg font-black text-[#061f3f]">Configured regions</h2>
             <div className="grid gap-3">
-              {ruleRows.map((rule) => <DeliveryRuleForm key={rule.id} rule={rule} regions={regionRows} />)}
-              {ruleRows.length === 0 && <p className="text-sm font-semibold text-gray-400">No delivery rules configured.</p>}
+              {ruleRows.map((rule) => (
+                <div key={rule.id} className="flex flex-col gap-3 rounded-xl border border-[#e2e7ed] p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div><h3 className="font-black text-[#061f3f]">{rule.delivery_regions?.name ?? 'Delivery region'}</h3><p className="mt-1 text-sm font-semibold text-[#728196]">KES {Number(rule.base_fee).toLocaleString()} base fee · {rule.lead_time_min_days}–{rule.lead_time_max_days} days</p></div>
+                  <DeliveryRuleDialog regions={regionRows} rule={rule} />
+                </div>
+              ))}
+              {ruleRows.length === 0 && <EmptyState icon={Truck} title="No delivery regions" description="Add a region so customers know where you can fulfil orders." action={<DeliveryRuleDialog regions={regionRows} />} />}
             </div>
           </Card>
         </div>
       )}
 
       {tab === 'notifications' && (
-        <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
-          <Card className="p-5">
-            <h2 className="text-lg font-black text-[#061f3f]">Notification email</h2>
-            <form action={asFormAction(saveSupplierNotificationEmail)} className="mt-4 grid gap-3">
-              <Input name="label" placeholder="Operations team" required />
-              <Input name="email" type="email" placeholder="orders@company.com" required />
-              <Input name="events" placeholder={SUPPLIER_NOTIFICATION_EVENTS.map((e) => e.value).join(', ')} />
-              <Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">Save email</Button>
-            </form>
-          </Card>
-          <div className="grid gap-5">
+        <div className="grid gap-5">
+          <SectionHeading title="Notifications" description="Choose who receives order and account alerts." action={<NotificationDialog />} />
+          <div className="grid gap-5 xl:grid-cols-[1fr_0.8fr]">
             <Card className="p-5">
               <h2 className="mb-4 text-lg font-black text-[#061f3f]">Recipients</h2>
               <div className="grid gap-2">
                 {notificationRows.map((n) => (
-                  <form key={n.id} action={asFormAction(saveSupplierNotificationEmail)} className="grid gap-2 rounded-lg border p-3 md:grid-cols-[1fr_1fr_1fr_100px]">
-                    <input type="hidden" name="id" value={n.id} />
-                    <Input name="label" defaultValue={n.label} />
-                    <Input name="email" defaultValue={n.email} />
-                    <Input name="events" defaultValue={(n.events ?? []).join(', ')} />
-                    <Button variant="outline">Save</Button>
-                  </form>
+                  <div key={n.id} className="flex flex-col gap-3 rounded-xl border border-[#e2e7ed] p-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-black text-[#061f3f]">{n.label}</p><p className="mt-1 text-sm font-semibold text-[#728196]">{n.email} · {(n.events ?? []).length} alert types</p></div><NotificationDialog recipient={n} /></div>
                 ))}
               </div>
             </Card>
@@ -277,18 +266,17 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
       )}
 
       {tab === 'company' && (
-        <Card className="max-w-2xl p-5">
-          <h2 className="text-lg font-black text-[#061f3f]">Company profile</h2>
-          <form action={asFormAction(updateSupplierCompany)} className="mt-4 grid gap-3">
-            <Input name="primary_contact_name" defaultValue={ctx.supplier.primary_contact_name} />
-            <Input name="phone" defaultValue={ctx.supplier.phone} />
-            <Input name="location" defaultValue={ctx.supplier.location ?? ''} />
-            <Input name="website_url" defaultValue={ctx.supplier.website_url ?? ''} />
-            <Input name="product_categories" defaultValue={(ctx.supplier.product_categories ?? []).join(', ')} />
-            <textarea name="business_description" defaultValue={ctx.supplier.business_description ?? ''} className="rounded-md border px-3 py-2 text-sm" rows={4} />
-            <Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">Save profile</Button>
+        <div className="grid gap-5"><SectionHeading title="Company profile" description="Keep the business details shown to Bewama and used for supplier communication accurate." action={<span />} /><Card className="max-w-3xl p-5 sm:p-6">
+          <form action={asFormAction(updateSupplierCompany)} className="grid gap-4 sm:grid-cols-2">
+            <LabeledInput label="Primary contact" name="primary_contact_name" defaultValue={ctx.supplier.primary_contact_name} />
+            <LabeledInput label="Phone number" name="phone" defaultValue={ctx.supplier.phone} />
+            <LabeledInput label="Business location" name="location" defaultValue={ctx.supplier.location ?? ''} />
+            <LabeledInput label="Website" name="website_url" type="url" defaultValue={ctx.supplier.website_url ?? ''} />
+            <LabeledInput label="Product categories" name="product_categories" defaultValue={(ctx.supplier.product_categories ?? []).join(', ')} className="sm:col-span-2" />
+            <label className="grid gap-1.5 text-xs font-black uppercase tracking-wider text-[#526173] sm:col-span-2">Business description<textarea name="business_description" defaultValue={ctx.supplier.business_description ?? ''} className="min-h-28 rounded-lg border border-[#d8e0ea] px-3 py-2 text-sm outline-none focus:border-[#ff5f14]" rows={4} /></label>
+            <div className="sm:col-span-2"><Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">Save company profile</Button></div>
           </form>
-        </Card>
+        </Card></div>
       )}
 
       {tab === 'package' && (
@@ -310,120 +298,35 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
 }
 
 function PortalShell({ supplierName, tab, children }: { supplierName: string; tab: string; children: React.ReactNode }) {
+  const currentTab = TABS.find(([key]) => key === tab) ?? TABS[0]
   return (
-    <main className="min-h-screen bg-[#f6f8fb] px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-7">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <main className="min-h-screen bg-[#f4f7fa] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-6 flex flex-col gap-4 border-b border-[#dce3eb] pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.14em] text-[#ff5f14]">Supplier Portal</p>
-            <h1 className="mt-1 text-3xl font-black text-[#061f3f]">{supplierName}</h1>
+            <h1 className="mt-1 text-2xl font-black text-[#061f3f] sm:text-3xl">{supplierName}</h1>
           </div>
-          <Link href="/products" className="text-sm font-black text-[#ff5f14]">View catalog</Link>
+          <Button asChild variant="outline" className="w-fit bg-white font-black text-[#061f3f]"><Link href="/products">View live catalog <ChevronRight /></Link></Button>
+        </header>
+
+        <nav className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-2 lg:hidden" aria-label="Supplier portal">
+          {TABS.map(([key, label, Icon]) => <Link key={key} href={`/supplier-portal?tab=${key}`} className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-black ${tab === key ? 'bg-[#061f3f] text-white' : 'border border-[#dce3eb] bg-white text-[#526173]'}`}><Icon className="h-4 w-4" />{label}</Link>)}
+        </nav>
+
+        <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+          <aside className="hidden lg:block">
+            <nav className="sticky top-28 grid gap-1" aria-label="Supplier portal">
+              {TABS.map(([key, label, Icon]) => <Link key={key} href={`/supplier-portal?tab=${key}`} className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-black transition-colors ${tab === key ? 'bg-[#061f3f] text-white shadow-sm' : 'text-[#526173] hover:bg-white hover:text-[#061f3f]'}`}><Icon className={`h-4 w-4 ${tab === key ? 'text-[#ff7a3d]' : ''}`} />{label}</Link>)}
+            </nav>
+          </aside>
+          <section className="min-w-0">
+            {tab !== 'dashboard' && <div className="mb-5"><p className="text-xs font-black uppercase tracking-[0.12em] text-[#8a97a8]">{currentTab[1]}</p></div>}
+            {children}
+          </section>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {TABS.map(([key, label]) => (
-            <Link key={key} href={`/supplier-portal?tab=${key}`} className={`rounded-lg px-3 py-2 text-sm font-black ${tab === key ? 'bg-[#061f3f] text-white' : 'bg-white text-[#061f3f]'}`}>
-              {label}
-            </Link>
-          ))}
-        </div>
-        {children}
       </div>
     </main>
-  )
-}
-
-type SupplierProductFormValue = {
-  id: string
-  name: string
-  slug: string
-  brand: string | null
-  category: string | null
-  pricing_type: string | null
-  price: number | string | null
-  currency: string
-  stock: number | null
-  fulfilment_type: string | null
-  supplier_sku: string | null
-  weight_kg: number | string | null
-  length_cm: number | string | null
-  width_cm: number | string | null
-  height_cm: number | string | null
-  images: string[] | null
-  description: string | null
-  seo_title: string | null
-  seo_description: string | null
-  seo_keywords: string | null
-  is_active: boolean | null
-}
-
-function ProductForm({ product }: { product?: SupplierProductFormValue }) {
-  return (
-    <Card className="p-5">
-      <h2 className="text-lg font-black text-[#061f3f]">{product ? 'Edit product' : 'Add product'}</h2>
-      <form action={asFormAction(saveSupplierProduct)} className="mt-4 grid gap-3">
-        {product && <input type="hidden" name="id" value={product.id} />}
-        <Input name="name" placeholder="Product name" defaultValue={product?.name ?? ''} required />
-        <Input name="slug" placeholder="Slug" defaultValue={product?.slug ?? ''} />
-        <Input name="brand" placeholder="Brand" defaultValue={product?.brand ?? ''} required />
-        <Input name="category" placeholder="Category" defaultValue={product?.category ?? ''} required />
-        <select name="pricing_type" defaultValue={product?.pricing_type ?? 'fixed'} className="h-10 rounded-md border px-3 text-sm">
-          <option value="fixed">Fixed price</option>
-          <option value="quote">Quote only</option>
-        </select>
-        <Input name="price" type="number" step="0.01" placeholder="Price" defaultValue={product?.price ?? ''} />
-        <Input name="currency" placeholder="Currency" defaultValue={product?.currency ?? 'KES'} />
-        <Input name="stock" type="number" placeholder="Stock" defaultValue={product?.stock ?? 0} required />
-        <select name="fulfilment_type" defaultValue={product?.fulfilment_type ?? 'supplier_fulfilled'} className="h-10 rounded-md border px-3 text-sm">
-          <option value="supplier_fulfilled">Supplier fulfilled</option>
-          <option value="stocked">Stocked</option>
-          <option value="quote_only">Quote only</option>
-          <option value="preorder">Preorder</option>
-          <option value="made_to_order">Made to order</option>
-        </select>
-        <Input name="supplier_sku" placeholder="Supplier SKU" defaultValue={product?.supplier_sku ?? ''} />
-        <div className="grid grid-cols-2 gap-2">
-          <Input name="weight_kg" type="number" step="0.01" placeholder="Weight kg" defaultValue={product?.weight_kg ?? ''} required />
-          <Input name="length_cm" type="number" step="0.01" placeholder="Length cm" defaultValue={product?.length_cm ?? ''} required />
-          <Input name="width_cm" type="number" step="0.01" placeholder="Width cm" defaultValue={product?.width_cm ?? ''} required />
-          <Input name="height_cm" type="number" step="0.01" placeholder="Height cm" defaultValue={product?.height_cm ?? ''} required />
-        </div>
-        <Input name="images" placeholder="Image URLs, comma separated" defaultValue={(product?.images ?? []).join(', ')} />
-        <textarea name="description" placeholder="Description" defaultValue={product?.description ?? ''} className="rounded-md border px-3 py-2 text-sm" rows={4} />
-        <Input name="seo_title" placeholder="SEO title" defaultValue={product?.seo_title ?? ''} />
-        <Input name="seo_description" placeholder="SEO description" defaultValue={product?.seo_description ?? ''} />
-        <Input name="seo_keywords" placeholder="SEO keywords" defaultValue={product?.seo_keywords ?? ''} />
-        <label className="flex items-center gap-2 text-sm font-bold text-gray-600"><input name="is_active" type="checkbox" defaultChecked={product?.is_active ?? false} /> Published</label>
-        <Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">{product ? 'Save product' : 'Create product'}</Button>
-      </form>
-    </Card>
-  )
-}
-
-function DeliveryRuleForm({ rule, regions }: { rule?: SupplierDeliveryRule; regions: DeliveryRegion[] }) {
-  return (
-    <form action={asFormAction(saveSupplierDeliveryRule)} className="grid gap-3 rounded-lg border p-3">
-      {rule && <input type="hidden" name="id" value={rule.id} />}
-      <select name="region_id" defaultValue={rule?.region_id ?? ''} className="h-10 rounded-md border px-3 text-sm" required>
-        <option value="">Select region</option>
-        {regions.map((region) => <option key={region.id} value={region.id}>{region.name}</option>)}
-      </select>
-      <select name="fee_strategy" defaultValue={rule?.fee_strategy ?? 'flat'} className="h-10 rounded-md border px-3 text-sm">
-        <option value="flat">Flat</option>
-        <option value="cart_total">Cart total</option>
-        <option value="weight">Weight</option>
-        <option value="order_size">Order size</option>
-      </select>
-      <Input name="base_fee" type="number" step="0.01" placeholder="Base fee" defaultValue={rule?.base_fee ?? 0} />
-      <Input name="free_over_amount" type="number" step="0.01" placeholder="Free over amount" defaultValue={rule?.free_over_amount ?? ''} />
-      <Input name="per_kg_fee" type="number" step="0.01" placeholder="Per kg fee" defaultValue={rule?.per_kg_fee ?? ''} />
-      <Input name="per_item_fee" type="number" step="0.01" placeholder="Per item fee" defaultValue={rule?.per_item_fee ?? ''} />
-      <div className="grid grid-cols-2 gap-2">
-        <Input name="lead_time_min_days" type="number" placeholder="Min days" defaultValue={rule?.lead_time_min_days ?? 1} />
-        <Input name="lead_time_max_days" type="number" placeholder="Max days" defaultValue={rule?.lead_time_max_days ?? 3} />
-      </div>
-      <Button variant="outline" className="font-black">Save delivery rule</Button>
-    </form>
   )
 }
 
@@ -437,10 +340,28 @@ function Stat({ icon: Icon, label, value }: { icon: React.ElementType; label: st
   )
 }
 
+function SectionHeading({ title, description, action }: { title: string; description: string; action: ReactNode }) {
+  return <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><h2 className="text-2xl font-black text-[#061f3f]">{title}</h2><p className="mt-1 max-w-2xl text-sm font-semibold leading-6 text-[#728196]">{description}</p></div><div className="shrink-0">{action}</div></div>
+}
+
+function StatusBadge({ active, paused }: { active: boolean; paused: boolean }) {
+  const label = paused ? 'Paused by Bewama' : active ? 'Live' : 'Draft'
+  const color = paused ? 'bg-red-50 text-red-700' : active ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'
+  return <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider ${color}`}>{label}</span>
+}
+
+function EmptyState({ icon: Icon, title, description, action }: { icon: ElementType; title: string; description: string; action: ReactNode }) {
+  return <div className="grid place-items-center px-6 py-14 text-center"><div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[#eef2f6]"><Icon className="h-6 w-6 text-[#728196]" /></div><h3 className="text-lg font-black text-[#061f3f]">{title}</h3><p className="mb-5 mt-1 max-w-sm text-sm font-semibold leading-6 text-[#728196]">{description}</p>{action}</div>
+}
+
 function Limit({ label, value }: { label: string; value: string | number }) {
   return <div className="flex justify-between rounded-lg bg-gray-50 px-4 py-3"><span className="font-bold text-gray-500">{label}</span><span className="font-black text-[#061f3f]">{value}</span></div>
 }
 
 function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={`h-10 rounded-md border px-3 text-sm ${props.className ?? ''}`} />
+}
+
+function LabeledInput({ label, className = '', ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
+  return <label className={`grid gap-1.5 text-xs font-black uppercase tracking-wider text-[#526173] ${className}`}>{label}<Input {...props} className="h-11 rounded-lg border-[#d8e0ea] font-semibold normal-case tracking-normal" /></label>
 }

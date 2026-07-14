@@ -226,7 +226,7 @@ export async function saveSupplierNotificationEmail(formData: FormData) {
   const ctx = await requireSupplierRole(['owner', 'manager'])
   const supabase = await createServiceClient()
   const id = clean(formData.get('id'))
-  const events = categories(formData.get('events'))
+  const events = formData.getAll('events').flatMap((value) => categories(value))
   const payload = {
     supplier_id: ctx.supplier.id,
     label: clean(formData.get('label')),

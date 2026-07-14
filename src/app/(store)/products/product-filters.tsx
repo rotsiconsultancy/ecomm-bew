@@ -50,7 +50,7 @@ export function ProductFilters(props: ProductFiltersProps) {
             className="max-h-[88dvh] gap-0 overflow-hidden rounded-t-2xl border-[#d8e0ea] bg-white p-0"
           >
             <SheetHeader className="border-b border-[#edf1f5] px-5 py-5 pr-12 text-left">
-              <SheetTitle className="flex items-center gap-2 text-base font-black uppercase tracking-[0.1em] text-[#061f3f]">
+              <SheetTitle className="flex items-center gap-2 text-base font-black uppercase tracking-widest text-[#061f3f]">
                 <SlidersHorizontal className="h-4 w-4 text-[#ff5f14]" />
                 Filter catalog
               </SheetTitle>
