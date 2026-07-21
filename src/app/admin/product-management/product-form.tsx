@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import TiptapEditor from '@/components/editor/tiptap-editor'
 import { ImageUploadButton } from '@/components/ui/image-upload'
 import { createProduct, updateProduct } from './actions'
+import CategoryCombobox from './category-combobox'
 import {
   Plus, Trash2, ChevronDown, ChevronUp, Image as ImageIcon, Loader2, Tag, FileText,
 } from 'lucide-react'
@@ -22,7 +23,8 @@ const CATEGORIES = [
   'Sealant',
   'Aerosol',
   'PU Foam & Cleaner', 
-  'Other'
+  'Other',
+  'Construction Guns'
 ]
 const CURRENCIES = ['KES', 'EUR', 'USD']
 
@@ -104,12 +106,13 @@ export default function ProductForm({ mode, product }: Props) {
     const formData = new FormData(formRef.current!)
     formData.set('is_active', String(isActive))
     formData.set('pricing_type', pricingType)
+    const description = JSON.stringify(tiptapContent)
 
     let result
     if (mode === 'edit') {
-      result = await updateProduct(product.id, formData, images, tiptapContent)
+      result = await updateProduct(product.id, formData, images, description)
     } else {
-      result = await createProduct(formData, images, tiptapContent)
+      result = await createProduct(formData, images, description)
     }
 
     if (!result.success) {
@@ -235,16 +238,11 @@ export default function ProductForm({ mode, product }: Props) {
           {/* Category */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Category</label>
-            <Input
+            <CategoryCombobox
               name="category"
-              list="category-list"
               defaultValue={product?.category ?? ''}
-              placeholder="Select or type a category"
-              className="h-11"
+              categories={CATEGORIES}
             />
-            <datalist id="category-list">
-              {CATEGORIES.map((c) => <option key={c} value={c} />)}
-            </datalist>
           </div>
 
           {/* Price */}

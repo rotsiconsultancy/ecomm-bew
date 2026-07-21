@@ -44,7 +44,7 @@ export function Header({ user = null, profile = null }: HeaderProps) {
             <span className="truncate">Search the catalog, buy stocked items, or request a procurement quote.</span>
           </div>
           <div className="hidden items-center gap-6 lg:flex">
-            <span>Nairobi operations</span>
+            {/* <span>Nairobi operations</span> */}
             <span>Quality construction materials</span>
           </div>
         </div>

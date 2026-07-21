@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import type { ReactNode } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { useState, type ReactNode } from 'react'
+import { Check, ChevronDown, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -15,10 +15,15 @@ import {
 } from '@/components/ui/sheet'
 
 type ProductFiltersProps = {
-  categories: Array<{ name: string; count: number }>
-  brands: string[]
+  brandGroups: Array<{
+    name: string
+    value: string
+    count: number
+    categories: Array<{ name: string; count: number }>
+  }>
   category?: string
   brand?: string
+  query?: string
   hasFilters: boolean
   totalCatalogCount: number
   display?: 'mobile' | 'desktop' | 'both'
@@ -55,7 +60,7 @@ export function ProductFilters(props: ProductFiltersProps) {
                 Filter catalog
               </SheetTitle>
               <SheetDescription className="font-semibold text-[#728196]">
-                Narrow the catalog by category or brand.
+                Open a brand, then choose one of its categories.
               </SheetDescription>
             </SheetHeader>
             <div className="overflow-y-auto overscroll-contain px-5 py-5">
@@ -89,54 +94,98 @@ export function ProductFilters(props: ProductFiltersProps) {
 }
 
 function FilterContent({
-  categories,
-  brands,
+  brandGroups,
   category,
   brand,
+  query,
   hasFilters,
   totalCatalogCount,
   closeOnSelect = false,
 }: ProductFiltersProps & { closeOnSelect?: boolean }) {
   const link = (content: ReactNode) => closeOnSelect ? <SheetClose asChild>{content}</SheetClose> : content
+  const [openBrands, setOpenBrands] = useState<string[]>(brand ? [brand.toLowerCase()] : [])
+
+  function buildHref(next: { brand?: string; category?: string }) {
+    const params = new URLSearchParams()
+    if (next.brand) params.set('brand', next.brand)
+    if (next.category) params.set('category', next.category)
+    if (query) params.set('q', query)
+    const value = params.toString()
+    return `/products${value ? `?${value}` : ''}`
+  }
+
+  function toggleBrand(value: string) {
+    const key = value.toLowerCase()
+    setOpenBrands((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key])
+  }
 
   return (
     <div className="space-y-6">
-      {categories.length > 0 && (
+      {brandGroups.length > 0 && (
         <div>
-          <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Categories</h3>
-          <div className="grid gap-2">
-            {link(<FilterLink href="/products" active={!hasFilters} label="All Products" count={totalCatalogCount} />)}
-            {categories.map((item) => link(
-              <FilterLink
-                key={item.name}
-                href={`/products?category=${encodeURIComponent(item.name)}`}
-                active={category === item.name}
-                label={item.name}
-                count={item.count}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+          <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Brands &amp; categories</h3>
+          <div className="grid gap-2.5">
+            {link(<FilterLink href={buildHref({})} active={!category && !brand} label="All products" count={totalCatalogCount} />)}
+            {brandGroups.map((group) => {
+              const groupKey = group.value.toLowerCase()
+              const selectedBrand = brand?.toLowerCase() === groupKey
+              const expanded = openBrands.includes(groupKey) || selectedBrand
 
-      {brands.length > 0 && (
-        <div className="border-t border-[#edf1f5] pt-5">
-          <h3 className="mb-3 text-xs font-black uppercase tracking-[0.12em] text-[#728196]">Brands</h3>
-          <div className="grid gap-2">
-            {brands.map((item) => link(
-              <Link
-                key={item}
-                href={`/products?brand=${encodeURIComponent(item)}${category ? `&category=${encodeURIComponent(category)}` : ''}`}
-                className={[
-                  'rounded-lg px-3 py-2.5 text-sm font-black transition-colors',
-                  brand?.toLowerCase() === item.toLowerCase()
-                    ? 'bg-[#061f3f] text-white'
-                    : 'text-[#4b5a6a] hover:bg-[#f4f7fa] hover:text-[#061f3f]',
-                ].join(' ')}
-              >
-                {item}
-              </Link>
-            ))}
+              return (
+                <div key={group.value} className="overflow-hidden rounded-lg border border-[#e1e7ed] bg-white">
+                  <div className="grid grid-cols-[minmax(0,1fr)_44px] items-stretch">
+                    {link(
+                      <Link
+                        href={buildHref({ brand: group.value })}
+                        className={`flex min-h-11 min-w-0 items-center justify-between gap-2 px-3 py-2.5 text-sm font-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#ff5f14] ${
+                          selectedBrand && !category ? 'bg-[#061f3f] text-white' : 'text-[#334155] hover:bg-[#f4f7fa]'
+                        }`}
+                      >
+                        <span className="truncate">{group.name}</span>
+                        <span className={selectedBrand && !category ? 'text-white/70' : 'text-[#728196]'}>{group.count}</span>
+                      </Link>,
+                    )}
+                    <button
+                      type="button"
+                      aria-expanded={expanded}
+                      aria-label={`${expanded ? 'Collapse' : 'Expand'} ${group.name} categories`}
+                      onClick={() => toggleBrand(group.value)}
+                      className={`grid min-h-11 place-items-center border-l border-[#e1e7ed] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#ff5f14] ${
+                        selectedBrand && !category ? 'bg-[#061f3f] text-white hover:bg-[#0a2d58]' : 'text-[#64748b] hover:bg-[#f4f7fa] hover:text-[#061f3f]'
+                      }`}
+                    >
+                      <ChevronDown className={`h-4 w-4 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+                    </button>
+                  </div>
+
+                  {expanded && (
+                    <div className="grid gap-1 border-t border-[#e1e7ed] bg-[#f8fafc] p-2">
+                      {group.categories.length > 0 ? group.categories.map((item) => {
+                        const selected = selectedBrand && category?.toLowerCase() === item.name.toLowerCase()
+                        return link(
+                          <Link
+                            key={`${group.value}-${item.name}`}
+                            href={buildHref({ brand: group.value, category: item.name })}
+                            aria-current={selected ? 'page' : undefined}
+                            className={`flex min-h-10 items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5f14] ${
+                              selected ? 'bg-[#fff0e8] text-[#a83a08]' : 'text-[#526274] hover:bg-white hover:text-[#061f3f]'
+                            }`}
+                          >
+                            <span className="flex min-w-0 items-center gap-2">
+                              <Check className={`h-3.5 w-3.5 shrink-0 ${selected ? 'opacity-100' : 'opacity-0'}`} />
+                              <span className="truncate">{item.name}</span>
+                            </span>
+                            <span className="text-xs tabular-nums text-[#728196]">{item.count}</span>
+                          </Link>,
+                        )
+                      }) : (
+                        <p className="px-3 py-2 text-xs font-semibold text-[#728196]">No categories assigned.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
       )}

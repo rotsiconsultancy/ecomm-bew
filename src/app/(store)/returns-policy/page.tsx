@@ -6,20 +6,20 @@ import { RotateCcw, CheckCircle2, XCircle, Phone } from 'lucide-react'
 const SITE_URL = 'https://bewama.com'
 
 export const metadata: Metadata = {
-  title: 'Returns & Refunds Policy | Bewama',
-  description: 'Return eligibility, process, and refund timelines for Bewama orders. Most items returnable within 14 days.',
+  title: 'Returns & Store Credit Policy | Bewama',
+  description: 'Return eligibility, store credit, and the returns process for Bewama orders. Most unused items are returnable within 14 days.',
   alternates: { canonical: `${SITE_URL}/returns-policy` },
   openGraph: {
-    title: 'Returns & Refunds Policy | Bewama',
-    description: 'Return eligibility, process, and refund timelines for Bewama orders.',
+    title: 'Returns & Store Credit Policy | Bewama',
+    description: 'Return eligibility, store credit, and the returns process for Bewama orders.',
     type: 'website',
     url: `${SITE_URL}/returns-policy`,
     images: [{ url: `${SITE_URL}/logo.png`, width: 512, height: 512, alt: 'Bewama' }],
   },
   twitter: {
     card: 'summary',
-    title: 'Returns & Refunds Policy | Bewama',
-    description: 'Return eligibility, process, and refund timelines for Bewama orders.',
+    title: 'Returns & Store Credit Policy | Bewama',
+    description: 'Return eligibility, store credit, and the returns process for Bewama orders.',
   },
 }
 
@@ -31,18 +31,21 @@ export default async function ReturnsPolicyPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14">
       <div className="mb-10">
         <p className="text-sm text-gray-400 mb-2">Support</p>
-        <h1 className="text-4xl font-extrabold text-[#061f3f]">Returns &amp; Refunds</h1>
-        <p className="text-gray-500 mt-3">Bewama Investments &nbsp;·&nbsp; Last updated January {new Date().getFullYear()}</p>
+        <h1 className="text-4xl font-extrabold text-[#061f3f]">Returns &amp; Store Credit</h1>
+        <p className="text-gray-500 mt-3">Bewama Investments &nbsp;·&nbsp; Last updated 22 July 2026</p>
       </div>
 
       {/* Summary banner */}
       <div className="bg-[#061f3f] text-white rounded-2xl p-6 mb-10 flex gap-4">
         <RotateCcw className="w-8 h-8 text-[#ff5f14] shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-lg">14-Day Return Window</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="font-bold text-lg">Return it. Choose something else.</p>
+            <span className="rounded-full bg-[#ff5f14] px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-white">Store credit</span>
+          </div>
           <p className="text-gray-300 text-sm mt-1">
             Most unused items in original packaging can be returned within 14 calendar days of delivery.
-            Refunds are processed within 7–14 business days.
+            Approved voluntary returns receive Bewama Store Credit rather than a cash refund.
           </p>
         </div>
       </div>
@@ -84,6 +87,10 @@ export default async function ReturnsPolicyPage() {
               </div>
             ))}
           </div>
+          <p className="mt-4 text-sm">
+            These exclusions apply to voluntary returns only. They do not remove any remedy available to you under applicable
+            Kenyan law where goods are defective, unsafe, materially misdescribed, incorrect, or not supplied.
+          </p>
         </section>
 
         <section>
@@ -113,29 +120,34 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#061f3f] mb-3">4. Refunds</h2>
-          <p>Upon approval of your return:</p>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">4. Bewama Store Credit</h2>
+          <p><strong>We do not offer cash refunds for voluntary returns.</strong> Once an eligible return passes inspection:</p>
           <ul className="list-disc pl-6 mt-3 space-y-2 text-sm">
-            <li>Refunds are issued via the <strong>original payment method</strong> (M-Pesa, bank transfer, card, etc.).</li>
-            <li>Processing time: <strong>7–14 business days</strong> from the date we confirm the return.</li>
-            <li>Where applicable, original delivery fees are non-refundable unless the return is due to a Bewama error.</li>
-            <li>Partial refunds may apply where items are returned with minor packaging damage.</li>
+            <li>Credit equal to the approved product value is added to your Bewama customer account.</li>
+            <li>Use it toward any other eligible Bewama product. If the new item costs more, you pay the difference.</li>
+            <li>If the new item costs less, the unused credit remains available for a future purchase.</li>
+            <li>Original delivery charges are not included unless the return resulted from a Bewama error.</li>
+            <li>Where an item is returned with packaging damage or missing parts, the credit may be reduced by the resulting loss in value.</li>
           </ul>
         </section>
 
         <section>
           <h2 className="text-xl font-bold text-[#061f3f] mb-3">5. Damaged or Defective Goods</h2>
           <p>
-            If your order arrives damaged, defective, or incorrect, please notify us within <strong>48 hours</strong> of delivery.
-            Include photographs of the damage and the packaging. In these cases, Bewama will cover return shipping costs and
-            either replace the item or issue a full refund, at your preference.
+            If your order arrives damaged, defective, unsafe, materially different from its description, or incorrect, please
+            notify us as soon as possible—ideally within <strong>48 hours</strong> of delivery—and include photographs of the item
+            and packaging. Bewama will cover reasonable return costs where we are at fault and will first offer a suitable
+            replacement or, where you prefer another product, Bewama Store Credit. This policy does not limit remedies available
+            under Kenyan law, including a refund where the law requires one.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-bold text-[#061f3f] mb-3">6. Order Cancellations</h2>
           <p>
-            Orders may be cancelled free of charge before they are dispatched. Once dispatched, the standard return process applies.
+            Orders may be cancelled free of charge before they are dispatched; the cancelled product value will be placed in your
+            Bewama Store Credit balance for another purchase, except where a refund is required by law. Once dispatched, the standard
+            return process applies.
             To cancel, contact us immediately at <a href={`mailto:${email}`} className="text-[#ff5f14] underline">{email}</a> or{' '}
             {site.contact_phone || 'our contact number'}.
           </p>
@@ -146,7 +158,17 @@ export default async function ReturnsPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-[#061f3f] mb-3">7. Contact Us</h2>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">7. Your Statutory Rights</h2>
+          <p>
+            This policy adds a voluntary return option and does not exclude, restrict, or replace rights and remedies that cannot
+            lawfully be waived under the Constitution of Kenya, the Consumer Protection Act, the Competition Act, or other
+            applicable law. Where the law entitles you to a refund, repair, replacement, compensation, or another remedy, that
+            entitlement takes priority over the store-credit terms above.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-bold text-[#061f3f] mb-3">8. Contact Us</h2>
           <div className="mt-3 bg-gray-50 rounded-xl p-5 text-sm flex items-start gap-3">
             <Phone className="w-4 h-4 text-[#ff5f14] shrink-0 mt-0.5" />
             <div className="space-y-1">

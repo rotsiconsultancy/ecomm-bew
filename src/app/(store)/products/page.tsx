@@ -14,6 +14,7 @@ export const dynamic = 'force-dynamic'
 const SITE_URL = 'https://bewama.com'
 const ITEMS_PER_PAGE = 12
 const CURRENCY_SYMBOLS: Record<string, string> = { KES: 'KES ', EUR: '€', USD: '$' }
+const UNBRANDED_FILTER = '__unbranded__'
 
 type SearchParams = {
   category?: string
@@ -38,7 +39,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
   const qs = canonicalParams.toString()
   const canonical = `${SITE_URL}/products${qs ? `?${qs}` : ''}`
-  const titleSuffix = category ? ` - ${category}` : brand ? ` - ${brand}` : q ? ` - ${q}` : ''
+  const brandLabel = brand === UNBRANDED_FILTER ? 'Unbranded' : brand
+  const titleSuffix = category ? ` - ${category}` : brandLabel ? ` - ${brandLabel}` : q ? ` - ${q}` : ''
 
   return {
     title: `Products${titleSuffix} | Bewama`,
@@ -79,7 +81,8 @@ export default async function ProductsPage({ searchParams }: Props) {
     .order('created_at', { ascending: false })
 
   if (category) query = query.eq('category', category)
-  if (brand) query = query.ilike('brand', `%${brand}%`)
+  if (brand === UNBRANDED_FILTER) query = query.is('brand', null)
+  else if (brand) query = query.ilike('brand', brand)
   if (q) query = query.or(`name.ilike.%${q}%,category.ilike.%${q}%,brand.ilike.%${q}%`)
 
   const [{ data: products, count }, { data: allProducts }] = await Promise.all([
@@ -95,13 +98,48 @@ export default async function ProductsPage({ searchParams }: Props) {
   const totalCount = count ?? 0
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
   const catalogRows = allProducts ?? []
-  const categories = [...new Set(catalogRows.map((p) => p.category).filter(Boolean))] as string[]
-  const brands = [...new Set(catalogRows.map((p) => p.brand).filter(Boolean))] as string[]
   const hasFilters = Boolean(category || brand || q)
-  const categoryOptions = categories.map((name) => ({
-    name,
-    count: catalogRows.filter((product) => product.category === name).length,
-  }))
+  const brandMap = new Map<string, {
+    name: string
+    value: string
+    count: number
+    categories: Map<string, { name: string; count: number }>
+  }>()
+
+  for (const product of catalogRows) {
+    const brandName = product.brand?.trim() || 'Unbranded'
+    const brandValue = product.brand?.trim() || UNBRANDED_FILTER
+    const brandKey = brandValue.toLowerCase()
+    const existing = brandMap.get(brandKey) ?? {
+      name: brandName,
+      value: brandValue,
+      count: 0,
+      categories: new Map<string, { name: string; count: number }>(),
+    }
+    existing.count += 1
+
+    const categoryName = product.category?.trim()
+    if (categoryName) {
+      const categoryKey = categoryName.toLowerCase()
+      const categoryEntry = existing.categories.get(categoryKey) ?? { name: categoryName, count: 0 }
+      categoryEntry.count += 1
+      existing.categories.set(categoryKey, categoryEntry)
+    }
+    brandMap.set(brandKey, existing)
+  }
+
+  const brandGroups = [...brandMap.values()]
+    .map((item) => ({
+      name: item.name,
+      value: item.value,
+      count: item.count,
+      categories: [...item.categories.values()].sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+    .sort((a, b) => {
+      if (a.value === UNBRANDED_FILTER) return 1
+      if (b.value === UNBRANDED_FILTER) return -1
+      return a.name.localeCompare(b.name)
+    })
 
   return (
     <div className="min-h-screen bg-[#f4f7fa]">
@@ -140,10 +178,10 @@ export default async function ProductsPage({ searchParams }: Props) {
 
       <section className="mx-auto grid max-w-7xl gap-7 px-4 py-7 sm:px-6 sm:py-10 lg:grid-cols-[280px_1fr] lg:px-8">
         <ProductFilters
-          categories={categoryOptions}
-          brands={brands}
+          brandGroups={brandGroups}
           category={category}
           brand={brand}
+          query={q}
           hasFilters={hasFilters}
           totalCatalogCount={catalogRows.length}
           display="desktop"
@@ -162,10 +200,10 @@ export default async function ProductsPage({ searchParams }: Props) {
             </div>
             <div className="flex shrink-0 flex-col items-end gap-2">
               <ProductFilters
-                categories={categoryOptions}
-                brands={brands}
+                brandGroups={brandGroups}
                 category={category}
                 brand={brand}
+                query={q}
                 hasFilters={hasFilters}
                 totalCatalogCount={catalogRows.length}
                 display="mobile"

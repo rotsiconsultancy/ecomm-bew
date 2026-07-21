@@ -112,7 +112,7 @@ export default async function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-[#061f3f] mb-3">8. Returns &amp; Cancellations</h2>
           <p>
-            Our <Link href="/returns-policy" className="text-[#ff5f14] underline">Returns &amp; Refunds Policy</Link> forms part of
+            Our <Link href="/returns-policy" className="text-[#ff5f14] underline">Returns &amp; Store Credit Policy</Link> forms part of
             these Terms. Please review it before placing an order. Certain product categories (custom orders, opened bulk chemicals)
             are non-returnable.
           </p>
@@ -177,7 +177,7 @@ export default async function TermsPage() {
       <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
         <Link href="/privacy-policy" className="hover:text-[#061f3f] transition-colors">Privacy Policy</Link>
         <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Store Credit</Link>
       </div>
     </div>
   )

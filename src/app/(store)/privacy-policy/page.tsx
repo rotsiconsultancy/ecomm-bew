@@ -165,7 +165,7 @@ export default async function PrivacyPolicyPage() {
       <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
         <Link href="/terms" className="hover:text-[#061f3f] transition-colors">Terms &amp; Conditions</Link>
         <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Store Credit</Link>
       </div>
     </div>
   )

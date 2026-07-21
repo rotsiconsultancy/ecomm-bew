@@ -91,19 +91,19 @@ const faqs = [
     ],
   },
   {
-    category: 'Returns & Refunds',
+    category: 'Returns & Store Credit',
     items: [
       {
         q: 'What is your return policy?',
-        a: 'Most unused items in original packaging can be returned within 14 days of delivery. See our Returns & Refunds page for full details, including non-returnable items.',
+        a: 'Most unused items in their original packaging can be returned within 14 days of delivery. Once approved, the product value is issued as Bewama Store Credit for another purchase. See our Returns & Store Credit page for exclusions and the complete process.',
       },
       {
         q: 'My order arrived damaged — what do I do?',
-        a: 'Contact us within 48 hours of delivery with photos of the damage. We will arrange a replacement or full refund, and cover any return shipping costs.',
+        a: 'Contact us as soon as possible—ideally within 48 hours—with photos of the item and packaging. Where we are at fault, we will cover reasonable return costs and arrange a replacement or Bewama Store Credit. Any remedy required by Kenyan law remains available.',
       },
       {
-        q: 'When will I receive my refund?',
-        a: 'Approved refunds are processed within 7–14 business days and returned via your original payment method.',
+        q: 'Do you offer cash refunds?',
+        a: 'We do not offer cash refunds for voluntary returns. Approved returns receive Bewama Store Credit: use it for another product, pay only any price difference, and keep any unused balance for later. This does not limit a refund or another remedy where Kenyan law requires one.',
       },
     ],
   },
@@ -203,7 +203,7 @@ export default async function FAQPage() {
 
       <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
         <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Store Credit</Link>
         <Link href="/quality-assurance" className="hover:text-[#061f3f] transition-colors">Quality Assurance</Link>
       </div>
     </div>

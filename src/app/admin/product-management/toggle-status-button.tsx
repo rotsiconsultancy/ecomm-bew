@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react'
 import { toggleProductStatus } from './actions'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 
 export default function ToggleStatusButton({
   id,
@@ -23,14 +23,15 @@ export default function ToggleStatusButton({
     <button
       onClick={handleClick}
       disabled={isPending}
-      title={isActive ? 'Deactivate product' : 'Activate product'}
-      className={`p-2 transition-colors disabled:opacity-40 ${
+      aria-label={isActive ? 'Hide product from store' : 'Show product in store'}
+      title={isActive ? 'Hide product from store' : 'Show product in store'}
+      className={`grid h-11 w-11 place-items-center rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5f14] disabled:cursor-not-allowed disabled:opacity-40 ${
         isActive
-          ? 'text-green-500 hover:text-gray-400'
-          : 'text-gray-300 hover:text-green-500'
+          ? 'text-emerald-700 hover:bg-slate-100 hover:text-slate-600'
+          : 'text-slate-400 hover:bg-emerald-50 hover:text-emerald-700'
       }`}
     >
-      {isActive ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+      {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : isActive ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
     </button>
   )
 }

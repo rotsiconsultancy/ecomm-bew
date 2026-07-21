@@ -131,8 +131,9 @@ export default async function QualityAssurancePage() {
           <p>
             If a product you received does not meet the agreed specification or is defective, please contact us within
             <strong> 48 hours of delivery</strong>. Include your order number, photos of the product and packaging, and a
-            description of the issue. We will investigate and, where confirmed, replace the product or issue a full refund
-            per our <Link href="/returns-policy" className="text-[#ff5f14] underline">Returns &amp; Refunds Policy</Link>.
+            description of the issue. We will investigate and, where confirmed, arrange a suitable replacement, Bewama Store
+            Credit, or any other remedy required by Kenyan law under our{' '}
+            <Link href="/returns-policy" className="text-[#ff5f14] underline">Returns &amp; Store Credit Policy</Link>.
           </p>
         </section>
 
@@ -154,7 +155,7 @@ export default async function QualityAssurancePage() {
 
       <div className="mt-10 pt-8 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-gray-400">
         <Link href="/shipping-policy" className="hover:text-[#061f3f] transition-colors">Shipping Policy</Link>
-        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Refunds</Link>
+        <Link href="/returns-policy" className="hover:text-[#061f3f] transition-colors">Returns &amp; Store Credit</Link>
         <Link href="/faq" className="hover:text-[#061f3f] transition-colors">FAQ</Link>
       </div>
     </div>

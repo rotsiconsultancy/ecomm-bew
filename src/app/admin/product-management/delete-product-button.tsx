@@ -1,25 +1,37 @@
 'use client'
 
 import { useTransition } from 'react'
-import { Trash2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
 import { deleteProduct } from './actions'
 
-export default function DeleteProductButton({ id }: { id: string }) {
+export default function DeleteProductButton({ id, name }: { id: string; name: string }) {
   const [isPending, startTransition] = useTransition()
 
   function handleClick() {
-    if (!confirm('Deactivate this product? It will be hidden from the store (soft delete).')) return
-    startTransition(async () => { await deleteProduct(id) })
+    const confirmation = window.prompt(
+      `Permanently delete “${name}”? This cannot be undone. Type DELETE to continue.`,
+    )
+    if (confirmation !== 'DELETE') return
+
+    startTransition(async () => {
+      const result = await deleteProduct(id)
+      if (!result.success) {
+        window.alert(result.error ?? 'The product could not be deleted. It may be linked to an existing order.')
+      } else if (result.warning) {
+        window.alert(result.warning)
+      }
+    })
   }
 
   return (
     <button
       onClick={handleClick}
       disabled={isPending}
-      title="Deactivate product"
-      className="p-2 text-slate-400 hover:text-red-500 transition-colors disabled:opacity-40"
+      aria-label={`Permanently delete ${name}`}
+      title={`Permanently delete ${name}`}
+      className="grid h-11 w-11 place-items-center rounded-lg text-[#64748b] transition-colors hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 disabled:cursor-not-allowed disabled:opacity-40"
     >
-      <Trash2 className="w-4 h-4" />
+      {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
     </button>
   )
 }

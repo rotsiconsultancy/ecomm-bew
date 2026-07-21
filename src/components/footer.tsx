@@ -72,7 +72,7 @@ export async function Footer() {
             <h5 className="font-black text-sm uppercase tracking-wider mb-4 text-white">Support</h5>
             <ul className="space-y-2.5 text-white/55 text-sm font-bold">
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/shipping-policy">Shipping Policy</Link></li>
-              <li><Link className="hover:text-[#ff5f14] transition-colors" href="/returns-policy">Returns &amp; Refunds</Link></li>
+              <li><Link className="hover:text-[#ff5f14] transition-colors" href="/returns-policy">Returns &amp; Store Credit</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/quality-assurance">Quality Assurance</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/faq">FAQ</Link></li>
               <li><Link className="hover:text-[#ff5f14] transition-colors" href="/contact">Contact Us</Link></li>
