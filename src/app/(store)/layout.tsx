@@ -1,6 +1,7 @@
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { CartProvider } from '@/components/cart-provider'
+import { WhatsAppWidget } from '@/components/whatsapp-widget'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function StoreLayout({
@@ -31,6 +32,7 @@ export default async function StoreLayout({
       <Header user={authUser} profile={profile} />
       <main>{children}</main>
       <Footer />
+      <WhatsAppWidget />
     </CartProvider>
   )
 }
