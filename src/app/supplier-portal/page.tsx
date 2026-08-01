@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ElementType, ReactNode } from 'react'
-import { AlertTriangle, Bell, Building2, ChevronRight, ClipboardList, LayoutDashboard, MapPin, Package, Settings2, ShoppingBag, Truck, Users } from 'lucide-react'
+import { AlertTriangle, Bell, BellRing, Building2, CheckCircle2, ChevronRight, CircleAlert, ClipboardList, Clock3, LayoutDashboard, Mail, MapPin, Package, Settings2, ShoppingBag, Truck, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { createServiceClient } from '@/lib/supabase/server'
@@ -12,6 +12,9 @@ import {
   updateSupplierMember,
 } from './actions'
 import { DeliveryRuleDialog, NotificationDialog, ProductEditorDialog, StaffInviteDialog } from './portal-dialogs'
+import { FormSubmitButton } from './form-submit-button'
+import SupplierProductWorkbench, { type SupplierManagedProduct } from './supplier-product-workbench'
+import { SUPPLIER_NOTIFICATION_EVENTS } from '@/types/supplier'
 
 export const dynamic = 'force-dynamic'
 
@@ -130,32 +133,9 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
       {tab === 'products' && (
         <div className="grid gap-5">
           <SectionHeading title="Products" description="Manage what buyers can discover and order from your company." action={<ProductEditorDialog />} />
-          <Card className="overflow-hidden border-[#dce3eb] bg-white">
-            {productRows.length > 0 ? (
-              <div className="divide-y divide-[#edf1f5]">
-                {productRows.map((product) => (
-                  <div key={product.id} className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="truncate font-black text-[#061f3f]">{product.name}</h3>
-                        <StatusBadge active={Boolean(product.is_active)} paused={product.product_status === 'paused_by_admin'} />
-                      </div>
-                      <p className="mt-1 text-sm font-semibold text-[#728196]">
-                        {[product.brand, product.category, product.supplier_sku].filter(Boolean).join(' · ') || 'Product details incomplete'}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between gap-4 sm:justify-end">
-                      <div className="text-left sm:text-right">
-                        <p className="font-black text-[#061f3f]">{product.pricing_type === 'quote' ? 'Quote only' : `KES ${Number(product.price).toLocaleString()}`}</p>
-                        <p className="text-xs font-bold text-[#8a97a8]">{product.stock ?? 0} in stock</p>
-                      </div>
-                      <ProductEditorDialog product={product} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : <EmptyState icon={Package} title="No products yet" description="Add your first product to start building your supplier catalog." action={<ProductEditorDialog />} />}
-          </Card>
+          {productRows.length > 0
+            ? <SupplierProductWorkbench products={productRows as SupplierManagedProduct[]} />
+            : <Card><EmptyState icon={Package} title="No products yet" description="Add your first product to start building your supplier catalog." action={<ProductEditorDialog />} /></Card>}
         </div>
       )}
 
@@ -181,7 +161,7 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
                         {['accepted', 'rejected', 'preparing', 'ready', 'dispatched', 'delivered'].map((s) => <option key={s} value={s}>{s}</option>)}
                       </select>
                       <Input name="rejected_reason" placeholder="Reason if rejecting" />
-                      <Button variant="outline" className="font-black">Update</Button>
+                      <FormSubmitButton idleLabel="Update order" pendingLabel="Updating order…" variant="outline" />
                     </form>
                   </div>
                 </div>
@@ -212,7 +192,7 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
                     <option value="invited">Invited</option>
                     <option value="removed">Removed</option>
                   </select>
-                  <Button variant="outline">Save</Button>
+                  <FormSubmitButton idleLabel="Save member" pendingLabel="Saving member…" variant="outline" />
                 </form>
               ))}
             </div>
@@ -239,26 +219,60 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
 
       {tab === 'notifications' && (
         <div className="grid gap-5">
-          <SectionHeading title="Notifications" description="Choose who receives order and account alerts." action={<NotificationDialog />} />
+          <SectionHeading title="Notification routing" description="Send each operational alert to the inbox that can act on it." action={<NotificationDialog />} />
+          <Card className="overflow-hidden border-[#dce3eb] bg-[#061f3f] text-white">
+            <div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-white/10"><BellRing className="h-6 w-6 text-[#ff7a3d]" /></div>
+              <div>
+                <h2 className="text-lg font-black">How notification routing works</h2>
+                <p className="mt-1 max-w-2xl text-sm font-semibold leading-6 text-white/70">Choose an inbox, select the events it owns, and Bewama emails that recipient when an event occurs. You can pause an inbox without losing its setup.</p>
+              </div>
+              <div className="flex gap-5 text-sm">
+                <div><p className="text-2xl font-black">{notificationRows.filter((row) => row.is_active).length}</p><p className="font-bold text-white/60">active inboxes</p></div>
+                <div><p className="text-2xl font-black">{SUPPLIER_NOTIFICATION_EVENTS.length}</p><p className="font-bold text-white/60">alert types</p></div>
+              </div>
+            </div>
+          </Card>
           <div className="grid gap-5 xl:grid-cols-[1fr_0.8fr]">
             <Card className="p-5">
-              <h2 className="mb-4 text-lg font-black text-[#061f3f]">Recipients</h2>
+              <div className="mb-4"><h2 className="text-lg font-black text-[#061f3f]">Recipient inboxes</h2><p className="mt-1 text-sm font-semibold text-[#728196]">Who receives which alerts.</p></div>
               <div className="grid gap-2">
-                {notificationRows.map((n) => (
-                  <div key={n.id} className="flex flex-col gap-3 rounded-xl border border-[#e2e7ed] p-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-black text-[#061f3f]">{n.label}</p><p className="mt-1 text-sm font-semibold text-[#728196]">{n.email} · {(n.events ?? []).length} alert types</p></div><NotificationDialog recipient={n} /></div>
-                ))}
+                {notificationRows.map((n) => {
+                  const selectedEvents = SUPPLIER_NOTIFICATION_EVENTS.filter((event) => (n.events ?? []).includes(event.value))
+                  return (
+                    <div key={n.id} className="rounded-xl border border-[#e2e7ed] p-4">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex min-w-0 items-start gap-3">
+                          <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-lg ${n.is_active ? 'bg-[#fff1e8] text-[#e84f0a]' : 'bg-[#eef2f6] text-[#8a97a8]'}`}><Mail className="h-4 w-4" /></div>
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2"><p className="font-black text-[#061f3f]">{n.label}</p><span className={`rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${n.is_active ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`}>{n.is_active ? 'Sending' : 'Paused'}</span></div>
+                            <p className="mt-1 truncate text-sm font-semibold text-[#728196]">{n.email}</p>
+                          </div>
+                        </div>
+                        <NotificationDialog recipient={n} />
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {selectedEvents.map((event) => <span key={event.value} className="rounded-md bg-[#f4f7fa] px-2 py-1 text-xs font-bold text-[#526173]">{event.label}</span>)}
+                        {selectedEvents.length === 0 && <span className="text-xs font-bold text-amber-700">No alerts selected</span>}
+                      </div>
+                    </div>
+                  )
+                })}
+                {notificationRows.length === 0 && <EmptyState icon={Mail} title="No notification inboxes" description="Add an inbox and choose the alerts it should receive." action={<NotificationDialog />} />}
               </div>
             </Card>
             <Card className="p-5">
-              <h2 className="mb-4 text-lg font-black text-[#061f3f]">Notification log</h2>
+              <div className="mb-4"><h2 className="text-lg font-black text-[#061f3f]">Recent delivery activity</h2><p className="mt-1 text-sm font-semibold text-[#728196]">The latest emails Bewama attempted to send.</p></div>
               <div className="grid gap-2">
                 {logRows.map((log) => (
-                  <div key={log.id} className="rounded-lg bg-gray-50 px-3 py-2 text-xs">
-                    <span className="font-black text-[#061f3f]">{log.event_key}</span>
-                    <span className="text-gray-500"> · {log.recipient_email} · {log.status}</span>
+                  <div key={log.id} className="flex items-start gap-3 rounded-lg bg-[#f7f9fb] px-3 py-3 text-xs">
+                    <div className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full ${log.status === 'sent' ? 'bg-green-100 text-green-700' : log.status === 'failed' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'}`}>
+                      {log.status === 'sent' ? <CheckCircle2 className="h-3.5 w-3.5" /> : log.status === 'failed' ? <CircleAlert className="h-3.5 w-3.5" /> : <Clock3 className="h-3.5 w-3.5" />}
+                    </div>
+                    <div className="min-w-0"><p className="font-black text-[#061f3f]">{notificationEventLabel(log.event_key)}</p><p className="mt-1 truncate font-semibold text-[#728196]">{log.recipient_email} · {log.status}</p></div>
                   </div>
                 ))}
-                {logRows.length === 0 && <p className="text-sm font-semibold text-gray-400">No notifications logged yet.</p>}
+                {logRows.length === 0 && <p className="rounded-lg bg-[#f7f9fb] p-4 text-sm font-semibold leading-6 text-[#728196]">No alerts have been sent yet. Delivery activity will appear here after the first notification.</p>}
               </div>
             </Card>
           </div>
@@ -274,7 +288,7 @@ export default async function SupplierPortalPage({ searchParams }: Props) {
             <LabeledInput label="Website" name="website_url" type="url" defaultValue={ctx.supplier.website_url ?? ''} />
             <LabeledInput label="Product categories" name="product_categories" defaultValue={(ctx.supplier.product_categories ?? []).join(', ')} className="sm:col-span-2" />
             <label className="grid gap-1.5 text-xs font-black uppercase tracking-wider text-[#526173] sm:col-span-2">Business description<textarea name="business_description" defaultValue={ctx.supplier.business_description ?? ''} className="min-h-28 rounded-lg border border-[#d8e0ea] px-3 py-2 text-sm outline-none focus:border-[#ff5f14]" rows={4} /></label>
-            <div className="sm:col-span-2"><Button className="bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">Save company profile</Button></div>
+            <div className="sm:col-span-2"><FormSubmitButton idleLabel="Save company profile" pendingLabel="Saving company profile…" className="bg-[#ff5f14] text-white hover:bg-[#e84f0a]" /></div>
           </form>
         </Card></div>
       )}
@@ -344,12 +358,6 @@ function SectionHeading({ title, description, action }: { title: string; descrip
   return <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><h2 className="text-2xl font-black text-[#061f3f]">{title}</h2><p className="mt-1 max-w-2xl text-sm font-semibold leading-6 text-[#728196]">{description}</p></div><div className="shrink-0">{action}</div></div>
 }
 
-function StatusBadge({ active, paused }: { active: boolean; paused: boolean }) {
-  const label = paused ? 'Paused by Bewama' : active ? 'Live' : 'Draft'
-  const color = paused ? 'bg-red-50 text-red-700' : active ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'
-  return <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider ${color}`}>{label}</span>
-}
-
 function EmptyState({ icon: Icon, title, description, action }: { icon: ElementType; title: string; description: string; action: ReactNode }) {
   return <div className="grid place-items-center px-6 py-14 text-center"><div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[#eef2f6]"><Icon className="h-6 w-6 text-[#728196]" /></div><h3 className="text-lg font-black text-[#061f3f]">{title}</h3><p className="mb-5 mt-1 max-w-sm text-sm font-semibold leading-6 text-[#728196]">{description}</p>{action}</div>
 }
@@ -364,4 +372,9 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 function LabeledInput({ label, className = '', ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
   return <label className={`grid gap-1.5 text-xs font-black uppercase tracking-wider text-[#526173] ${className}`}>{label}<Input {...props} className="h-11 rounded-lg border-[#d8e0ea] font-semibold normal-case tracking-normal" /></label>
+}
+
+function notificationEventLabel(eventKey: string) {
+  return SUPPLIER_NOTIFICATION_EVENTS.find((event) => event.value === eventKey)?.label
+    ?? eventKey.replace(/^supplier_/, '').replaceAll('_', ' ')
 }

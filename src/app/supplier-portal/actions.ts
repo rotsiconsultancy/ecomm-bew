@@ -209,7 +209,7 @@ export async function saveSupplierDeliveryRule(formData: FormData) {
     max_fee: numberOrNull(formData.get('max_fee')),
     lead_time_min_days: Number(clean(formData.get('lead_time_min_days')) || 1),
     lead_time_max_days: Number(clean(formData.get('lead_time_max_days')) || 3),
-    is_active: formData.get('is_active') !== 'off',
+    is_active: formData.get('is_active') === 'on',
   }
 
   const query = id
@@ -232,7 +232,7 @@ export async function saveSupplierNotificationEmail(formData: FormData) {
     label: clean(formData.get('label')),
     email: clean(formData.get('email')).toLowerCase(),
     events,
-    is_active: formData.get('is_active') !== 'off',
+    is_active: formData.get('is_active') === 'on',
   }
 
   const query = id
@@ -240,6 +240,21 @@ export async function saveSupplierNotificationEmail(formData: FormData) {
     : supabase.from('supplier_notification_emails').insert(payload)
 
   const { error } = await query
+  if (error) return { success: false, error: error.message }
+  revalidatePath('/supplier-portal')
+  return { success: true }
+}
+
+export async function deleteSupplierNotificationEmail(recipientId: string) {
+  const ctx = await requireSupplierRole(['owner', 'manager'])
+  const supabase = await createServiceClient()
+
+  const { error } = await supabase
+    .from('supplier_notification_emails')
+    .delete()
+    .eq('id', recipientId)
+    .eq('supplier_id', ctx.supplier.id)
+
   if (error) return { success: false, error: error.message }
   revalidatePath('/supplier-portal')
   return { success: true }
