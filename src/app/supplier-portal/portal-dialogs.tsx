@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useRef, useState, useTransition, type ReactNode } from 'react'
+import { useEffect, useRef, useState, useTransition, type FormEvent, type ReactNode } from 'react'
 import {
   AlertCircle,
   BellRing,
@@ -68,6 +68,28 @@ const labelClass = 'grid gap-1.5 text-sm font-bold text-[#334155]'
 type ActionResult = { success: boolean; error?: string }
 type ServerAction = (formData: FormData) => Promise<ActionResult>
 
+function useServerAction(action: ServerAction) {
+  const [state, setState] = useState<ActionResult | null>(null)
+  const [pending, setPending] = useState(false)
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (pending) return
+
+    setPending(true)
+    setState(null)
+    try {
+      setState(await action(new FormData(event.currentTarget)))
+    } catch {
+      setState({ success: false, error: 'Something went wrong. Please try again.' })
+    } finally {
+      setPending(false)
+    }
+  }
+
+  return { state, submit, pending }
+}
+
 function descriptionText(value: string | null | undefined) {
   if (!value) return ''
   try {
@@ -84,10 +106,7 @@ export function ProductEditorDialog({ product }: { product?: SupplierProductValu
   const [successDismissed, setSuccessDismissed] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
   const steps = ['Product', 'Selling', 'Delivery', 'Publish']
-  const [state, formAction, pending] = useActionState<ActionResult | null, FormData>(
-    async (_previous, formData) => saveSupplierProduct(formData),
-    null,
-  )
+  const { state, submit, pending } = useServerAction(saveSupplierProduct)
 
   useEffect(() => {
     if (!state?.success) return
@@ -131,7 +150,7 @@ export function ProductEditorDialog({ product }: { product?: SupplierProductValu
           </div>
         </DialogHeader>
 
-        <form ref={formRef} action={formAction} className="grid gap-5 px-6 pb-6">
+        <form ref={formRef} onSubmit={submit} className="grid gap-5 px-6 pb-6">
           {product && <input type="hidden" name="id" value={product.id} />}
           <fieldset disabled={pending} className="contents">
           <div data-wizard-step="0" className={step === 0 ? 'grid gap-4 pt-1 sm:grid-cols-2' : 'hidden'}>
@@ -318,10 +337,7 @@ function SimpleDialog({
 }) {
   const [open, setOpen] = useState(false)
   const [successDismissed, setSuccessDismissed] = useState(false)
-  const [state, formAction, pending] = useActionState<ActionResult | null, FormData>(
-    async (_previous, formData) => action(formData),
-    null,
-  )
+  const { state, submit: handleSubmit, pending } = useServerAction(action)
 
   useEffect(() => {
     if (!state?.success) return
@@ -340,7 +356,7 @@ function SimpleDialog({
       </DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto bg-white sm:max-w-xl">
         <DialogHeader><DialogTitle className="text-xl font-black text-[#061f3f]">{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>
-        <form action={formAction} className={formClassName}>
+        <form onSubmit={handleSubmit} className={formClassName}>
           <fieldset disabled={pending} className="contents">{children}</fieldset>
           {state?.error && <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm font-bold text-red-700 sm:col-span-2"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{state.error}</p>}
           <ModalActions

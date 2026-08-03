@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HeaderUserMenu } from '@/components/header-user-menu'
 import { CartDrawer } from '@/components/cart-drawer'
@@ -70,9 +70,11 @@ export function Header({ user = null, profile = null }: HeaderProps) {
           ) : (
             <Link
               href="/login"
-              className="hidden text-sm font-black text-[#061f3f] transition-colors hover:text-[#ff5f14] md:inline-flex"
+              className="flex items-center justify-center rounded-lg p-2 text-gray-600 hover:text-[#061f3f] hover:bg-gray-100 transition-colors md:inline-flex md:p-0 md:bg-transparent md:text-sm md:font-black md:text-[#061f3f] md:hover:bg-transparent md:hover:text-[#ff5f14]"
+              aria-label="Log In"
             >
-              Log In
+              <User className="h-6 w-6 md:hidden" />
+              <span className="hidden md:inline">Log In</span>
             </Link>
           )}
 
@@ -130,6 +132,11 @@ export function Header({ user = null, profile = null }: HeaderProps) {
               </Link>
             ))}
           </div>
+          {!user && (
+            <Button asChild variant="outline" className="mt-2 rounded-lg border-[#d8e0ea] font-black text-[#061f3f] hover:bg-gray-50">
+              <Link href="/login" onClick={() => setMenuOpen(false)}>Log In</Link>
+            </Button>
+          )}
           <Button asChild className="mt-2 rounded-lg bg-[#ff5f14] font-black text-white hover:bg-[#e84f0a]">
             <Link href="/request-quote" onClick={() => setMenuOpen(false)}>Request Quote</Link>
           </Button>
