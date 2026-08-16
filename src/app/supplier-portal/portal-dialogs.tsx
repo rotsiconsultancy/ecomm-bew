@@ -335,6 +335,7 @@ function SimpleDialog({
   formClassName?: string
   deleteRecipient?: { id: string; label: string }
 }) {
+  
   const [open, setOpen] = useState(false)
   const [successDismissed, setSuccessDismissed] = useState(false)
   const { state, submit: handleSubmit, pending } = useServerAction(action)
